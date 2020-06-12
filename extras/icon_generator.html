@@ -45,6 +45,7 @@
 			}
 		</style>
 		<link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300&display=swap" rel="stylesheet">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	</head>
 	<body>
 		<div id="container">
@@ -82,6 +83,19 @@
 			};
 			
 			render_pixie();
+			fetch_library();
+			
+			function fetch_library(){
+				$.get( "https://raw.githubusercontent.com/connornishijima/Pixie/master/src/Pixie_Icons.h", function( data ) {
+				$( ".result" ).html( data );
+					parse_library(data);
+				});
+			}
+			
+			function parse_library(data){
+				var lines = data.split(/\r?\n/);
+				console.log(lines);
+			}
 			
 			function clear_pixie(){
 				pixels = [
