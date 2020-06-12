@@ -1,0 +1,209 @@
+<html>
+	<head>
+		<title>PIXIE ICON GENERATOR</title>
+		<style>
+			body{
+				background-color:#242424;
+				color:#cccccc;
+				font-family: 'Source Sans Pro', sans-serif;
+			}
+			#container{
+				text-align: center;
+				margin-top: 40px;
+			}
+			#title{
+				font-size:32px;
+			}
+			#clear{
+				margin-left:auto;
+				margin-right:auto;
+				width: 230;
+				padding:10px;
+				text-align: center;
+				background-color: #181818;
+				color: #fff;
+				border: none;
+				border-radius: 5px;
+				margin-bottom:10px;
+				font-size:20px;
+			}
+			#clear:hover{
+				cursor:pointer;
+				background-color: #fff;
+				color: #181818;
+			}
+			#output{
+				width: 250;
+				height: 40;
+				text-align: center;
+				background-color: #181818;
+				color: #fff;
+				border: none;
+				border-radius: 5px;
+				font-size:18px;
+				font-family: 'Source Sans Pro', sans-serif;
+			}
+		</style>
+		<link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300&display=swap" rel="stylesheet">
+	</head>
+	<body>
+		<div id="container">
+			<div id="title">
+				PIXIE CHARACTER GENERATOR
+			</div>
+			<br>
+			<div id="clear" onclick="clear_pixie();">
+				CLEAR
+			</div>
+			<canvas id="pixie" width="250" height="350"></canvas><br>
+			<br>
+			<input type="text" value="" id="output"></input>
+		</div>
+		
+		<script>
+			var c = document.getElementById("pixie");
+			var ctx = c.getContext("2d");
+				
+			var pixels = [
+				[0,0,0,0,0],
+				[0,1,0,1,0],
+				[0,1,0,1,0],
+				[0,0,0,0,0],
+				[1,0,0,0,1],
+				[0,1,1,1,0],
+				[0,0,0,0,0]
+			];
+			var pixel_size = 50;
+			var pixel_margin = 15;
+			var color = "GREEN";
+			var colors = {
+				"GREEN":[64,255,0],
+				"RED":[255,0,0]
+			};
+			
+			render_pixie();
+			
+			function clear_pixie(){
+				pixels = [
+					[0,0,0,0,0],
+					[0,0,0,0,0],
+					[0,0,0,0,0],
+					[0,0,0,0,0],
+					[0,0,0,0,0],
+					[0,0,0,0,0],
+					[0,0,0,0,0]
+				];
+				render_pixie();
+			}
+		
+			function render_pixie(){
+				ctx.fillStyle = "rgb(0,0,0)";
+				ctx.fillRect(0,0,250,350);
+				
+				for(var r in pixels){
+					var row = pixels[r];
+					for(var c in row){
+						var state = row[c];
+						render_pixel(r,c,state);
+					}
+				}
+				
+				generate_code();
+			}
+			
+			function generate_code(){
+				var cols = [
+					[0,0,0,0,0,0,0,0],
+					[0,0,0,0,0,0,0,0],
+					[0,0,0,0,0,0,0,0],
+					[0,0,0,0,0,0,0,0],
+					[0,0,0,0,0,0,0,0]
+				];
+				
+				for(var i = 0; i < 5; i++){
+					for(var b = 0; b < 7; b++){
+						cols[i][b+1] = pixels[6-b][i];
+					}
+				}
+				
+				var col_strings = [];
+				for(var i = 0; i < 5; i++){
+					var out = "";
+					out += cols[i][0];
+					out += cols[i][1];
+					out += cols[i][2];
+					out += cols[i][3];
+					out += cols[i][4];
+					out += cols[i][5];
+					out += cols[i][6];
+					out += cols[i][7];
+					col_strings.push(out);
+				}
+
+				var col_bytes = [];
+
+				for(var i = 0; i < 5; i++){		
+					var hex_val = parseInt(col_strings[i], 2).toString(16).toUpperCase();
+					while(hex_val.length < 2){
+						hex_val = "0"+hex_val;
+					}
+					col_bytes.push("0x"+hex_val);
+				}
+				
+				var out_line = "{";
+				for(var i = 0; i < 5; i++){				
+					out_line += col_bytes[i]; 
+					if(i < 4){
+						out_line += ",";
+					}
+				}
+				out_line += "};";
+				console.log(out_line);
+				document.getElementById("output").value = out_line;
+			}
+			
+			function render_pixel(row,col,state){
+				var r = colors[color][0];
+				var g = colors[color][1];
+				var b = colors[color][2];
+				
+				if(state == 0){
+					r *= 0.1;
+					g *= 0.1;
+					b *= 0.1;
+				}
+				
+				ctx.fillStyle = "rgb("+r+","+g+","+b+")";
+				ctx.fillRect(col*pixel_size+pixel_margin, row*pixel_size+pixel_margin, pixel_size-pixel_margin*2, pixel_size-pixel_margin*2);
+			}
+			
+			function get_mouse_position(canvas, event) { 
+				let rect = canvas.getBoundingClientRect(); 
+				let x_pix = event.clientX - rect.left; 
+				let y_pix = event.clientY - rect.top;
+				x_pix = Math.floor(x_pix/pixel_size);
+				y_pix = Math.floor(y_pix/pixel_size);
+				
+				toggle_pixel(x_pix,y_pix);
+			}
+			
+			function toggle_pixel(x,y){
+				if(pixels[y][x] == 0){
+					pixels[y][x] = 1;
+				}
+				else{
+					pixels[y][x] = 0;
+				}
+				
+				console.log(pixels[y][x]);
+				render_pixie();
+			}
+
+			let canvas_elem = document.querySelector("canvas"); 
+
+			canvas_elem.addEventListener("mousedown", function(e) { 
+				get_mouse_position(canvas_elem, e); 
+			}); 
+		</script>
+	</body>
+</html>
