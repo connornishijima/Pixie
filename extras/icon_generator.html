@@ -12,7 +12,8 @@
 				margin-top: 60px;
 			}
 			#title{
-				font-size:32px;
+				font-size:48px;
+				font-weight:bold;
 			}
 			#clear{
 				margin-left:auto;
@@ -56,8 +57,8 @@
 			}
 			.library_item{
 				display:inline-block;
-				margin-left:5px;
-				margin-right:5px;
+				margin-left:10px;
+				margin-right:10px;
 				margin-bottom:10px;
 				opacity:0.75;
 			}
@@ -89,10 +90,7 @@
 			</div>
 			<canvas id="pixie" width="250" height="350"></canvas><br>
 			<br>
-			<input type="text" value="" id="output"></input>
-			<br>
-			<br>
-			<input type="text" value="" id="code"></input>
+			<input type="text" value="pix.set_icon(PIX_SMILE, 0);" id="code"></input>
 			<br>
 			<br>
 			<br>
@@ -120,6 +118,7 @@
 				"GREEN":[64,255,0],
 				"RED":[255,0,0]
 			};
+			var skip_bytes = true;
 			
 			var library_visible = {
 				
@@ -129,7 +128,7 @@
 			fetch_library();
 			
 			function fetch_library(){
-				$.get( "https://raw.githubusercontent.com/connornishijima/Pixie/master/src/Pixie_Icons.h", function( data ) {
+				$.get( "https://raw.githubusercontent.com/connornishijima/Pixie/master/src/Pixie_Icon_Pack.h", function( data ) {
 				$( ".result" ).html( data );
 					library_visible = {};
 					parse_library(data);
@@ -216,8 +215,9 @@
 				}
 				var code = "pix.set_icon("+variable+", 0);";
 				document.getElementById("code").value = code;
-				$("#code").show();
+				skip_bytes = true;
 				render_pixie();
+				window.scrollTo({top: 0, behavior: 'smooth'});
 			}
 
 			function render_item(name, category, variable, bytes, pixels_temp){
@@ -324,7 +324,12 @@
 					}
 				}
 				
-				generate_code();
+				if(!skip_bytes){
+					generate_code();
+				}
+				else{
+					skip_bytes = false;
+				}
 			}
 			
 			function generate_code(){
@@ -366,16 +371,16 @@
 					col_bytes.push("0x"+hex_val);
 				}
 				
-				var out_line = "{";
+				var out_line = "pix.set_icon(";
 				for(var i = 0; i < 5; i++){				
 					out_line += col_bytes[i]; 
 					if(i < 4){
 						out_line += ",";
 					}
 				}
-				out_line += "};";
+				out_line += ",  0);";
 				console.log(out_line);
-				document.getElementById("output").value = out_line;
+				document.getElementById("code").value = out_line;
 			}
 			
 			function get_mouse_position(canvas, event) { 
@@ -398,7 +403,6 @@
 				
 				console.log(pixels[y][x]);
 				render_pixie();
-				$("#code").hide();
 			}
 
 			let canvas_elem = document.querySelector("canvas"); 
