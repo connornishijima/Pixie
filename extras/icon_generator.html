@@ -9,7 +9,7 @@
 			}
 			#container{
 				text-align: center;
-				margin-top: 40px;
+				margin-top: 60px;
 			}
 			#title{
 				font-size:32px;
@@ -43,6 +43,37 @@
 				font-size:18px;
 				font-family: 'Source Sans Pro', sans-serif;
 			}
+			#code{
+				width: 500;
+				height: 40;
+				text-align: center;
+				background-color: #181818;
+				color: #fff;
+				border: none;
+				border-radius: 5px;
+				font-size:18px;
+				font-family: 'Source Sans Pro', sans-serif;
+			}
+			.library_item{
+				display:inline-block;
+				margin-left:5px;
+				margin-right:5px;
+				margin-bottom:10px;
+				opacity:0.75;
+			}
+			.library_item:hover{
+				cursor:pointer;
+				font-weight:bold;
+				opacity:1.0;
+			}
+			.library_item_info{
+				padding-bottom:10px;
+			}
+			.library_category{
+				font-size: 32px;
+				margin-bottom: 10px;
+				margin-top: 10px;
+			}
 		</style>
 		<link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300&display=swap" rel="stylesheet">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -59,6 +90,14 @@
 			<canvas id="pixie" width="250" height="350"></canvas><br>
 			<br>
 			<input type="text" value="" id="output"></input>
+			<br>
+			<br>
+			<input type="text" value="" id="code"></input>
+			<br>
+			<br>
+			<br>
+			<br>
+			<div id="library"></div>
 		</div>
 		
 		<script>
@@ -76,10 +115,14 @@
 			];
 			var pixel_size = 50;
 			var pixel_margin = 15;
-			var color = "GREEN";
-			var colors = {
+			var pixel_color = "GREEN";
+			var pixel_colors = {
 				"GREEN":[64,255,0],
 				"RED":[255,0,0]
+			};
+			
+			var library_visible = {
+				
 			};
 			
 			render_pixie();
@@ -88,13 +131,160 @@
 			function fetch_library(){
 				$.get( "https://raw.githubusercontent.com/connornishijima/Pixie/master/src/Pixie_Icons.h", function( data ) {
 				$( ".result" ).html( data );
+					library_visible = {};
 					parse_library(data);
 				});
 			}
 			
 			function parse_library(data){
 				var lines = data.split(/\r?\n/);
-				console.log(lines);
+				var category = "";
+				for(var x in lines){
+					if(lines[x].substring(0,3) == "// "){
+						category = lines[x].substring(3);
+					}
+					else if(lines[x].includes("=")){
+						var name_raw = lines[x].split(" ")[1].replace("[]","");
+						var name = title_case( replace_all( replace_all( name_raw, "PIX_",""), "_"," "));
+						var bytes = lines[x].split(" = ")[1];
+						try{
+							library_visible[category][name_raw] = {							
+								"name":name,
+								"bytes":bytes
+							}
+						}
+						catch(e){
+							library_visible[category] = {}
+							library_visible[category][name_raw] = {							
+								"name":name,
+								"bytes":bytes
+							}
+						}
+					}
+				}
+				console.log(library_visible);
+				render_library();
+			}
+			
+			function render_library(){
+				var out_html = "";
+				for(var x in library_visible){
+					var cat = document.createElement('div');
+					cat.setAttribute('id', x);
+					cat.setAttribute('class', 'library_category');
+					cat.innerHTML = x;
+					document.getElementById("library").appendChild(cat);
+					for(var y in library_visible[x]){
+						var name  = library_visible[x][y]["name"];
+						var bytes_raw = library_visible[x][y]["bytes"];
+						var bytes_split = bytes_raw.replace("{","").replace("}","").replace(";","").split(",");
+						var bytes_bin = [];
+						for(var i in bytes_split){
+							var byte_hex = bytes_split[i].substring(2);
+							bytes_bin.push(hex2bin(byte_hex));
+						}
+						
+						var pixels_temp = [
+							[0,0,0,0,0],
+							[0,0,0,0,0],
+							[0,0,0,0,0],
+							[0,0,0,0,0],
+							[0,0,0,0,0],
+							[0,0,0,0,0],
+							[0,0,0,0,0]
+						];
+						
+						for(var i in bytes_bin){						
+							for(var c = 0; c < 7; c++){
+								var bit = bytes_bin[i].charAt((6-c)+1);
+								pixels_temp[c][i] = bit;
+							}
+						}
+						
+						library_visible[x][y]["pixels"] = pixels_temp;
+						
+						render_item(name, x, y, bytes_raw, pixels_temp);
+					}
+				}
+			}
+			
+			function set_pixels(category, variable){
+				for(var y = 0; y < pixels.length; y++){
+					for(var x = 0; x < pixels[y].length; x++){
+						pixels[y][x] = library_visible[category][variable]["pixels"][y][x];
+					}
+				}
+				var code = "pix.set_icon("+variable+", 0);";
+				document.getElementById("code").value = code;
+				$("#code").show();
+				render_pixie();
+			}
+
+			function render_item(name, category, variable, bytes, pixels_temp){
+				var dc = document.createElement('canvas');
+				dc.setAttribute('width', 125);
+				dc.setAttribute('height', 175);				
+				var dctx = dc.getContext("2d");
+
+				dctx.fillStyle = "rgb(0,0,0)";
+				dctx.fillRect(0,0,125,175);
+				
+				for(var r in pixels_temp){
+					var row = pixels_temp[r];
+					for(var c in row){
+						var state = row[c];
+						
+						var rc = pixel_colors[pixel_color][0];
+						var gc = pixel_colors[pixel_color][1];
+						var bc = pixel_colors[pixel_color][2];
+
+						if(state == 0){
+							rc *= 0.1;
+							gc *= 0.1;
+							bc *= 0.1;
+						}
+				
+						dctx.fillStyle = "rgb("+rc+","+gc+","+bc+")";
+						dctx.fillRect(
+							(c*pixel_size+pixel_margin)/2,
+							(r*pixel_size+pixel_margin)/2,
+							(pixel_size-pixel_margin*2)/2,
+							(pixel_size-pixel_margin*2)/2
+						);
+					}
+				}
+				
+				var dv = document.createElement('div');
+				dv.setAttribute('id', variable);
+				dv.setAttribute('class', 'library_item');
+				dv.setAttribute('onclick',      'set_pixels("'+category+'","'+variable+'");');
+				
+				var iv = document.createElement('div');
+				iv.setAttribute('id', variable+"_info");
+				iv.setAttribute('class', "library_item_info");
+				
+				
+				document.getElementById("library").appendChild(dv);
+				document.getElementById(variable).appendChild(iv);
+				document.getElementById(variable).appendChild(dc);
+
+				document.getElementById(variable+"_info").innerHTML = name;
+			}
+			
+			function hex2bin(hex){
+				return (parseInt(hex, 16).toString(2)).padStart(8, '0');
+			}
+			
+			function replace_all(str, find, replace) {
+				return str.replace(new RegExp(find, 'g'), replace);
+			}
+			
+			function title_case(str) {
+				str = str.toLowerCase().split(' ');
+				for (var i = 0; i < str.length; i++) {
+					str[i] = str[i].charAt(0).toUpperCase() + str[i].slice(1); 
+				}
+				return str.join(' ');
 			}
 			
 			function clear_pixie(){
@@ -118,7 +308,19 @@
 					var row = pixels[r];
 					for(var c in row){
 						var state = row[c];
-						render_pixel(r,c,state);
+						
+						var rc = pixel_colors[pixel_color][0];
+						var gc = pixel_colors[pixel_color][1];
+						var bc = pixel_colors[pixel_color][2];
+
+						if(state == 0){
+							rc *= 0.1;
+							gc *= 0.1;
+							bc *= 0.1;
+						}
+
+						ctx.fillStyle = "rgb("+rc+","+gc+","+bc+")";
+						ctx.fillRect(c*pixel_size+pixel_margin, r*pixel_size+pixel_margin, pixel_size-pixel_margin*2, pixel_size-pixel_margin*2);
 					}
 				}
 				
@@ -176,21 +378,6 @@
 				document.getElementById("output").value = out_line;
 			}
 			
-			function render_pixel(row,col,state){
-				var r = colors[color][0];
-				var g = colors[color][1];
-				var b = colors[color][2];
-				
-				if(state == 0){
-					r *= 0.1;
-					g *= 0.1;
-					b *= 0.1;
-				}
-				
-				ctx.fillStyle = "rgb("+r+","+g+","+b+")";
-				ctx.fillRect(col*pixel_size+pixel_margin, row*pixel_size+pixel_margin, pixel_size-pixel_margin*2, pixel_size-pixel_margin*2);
-			}
-			
 			function get_mouse_position(canvas, event) { 
 				let rect = canvas.getBoundingClientRect(); 
 				let x_pix = event.clientX - rect.left; 
@@ -211,6 +398,7 @@
 				
 				console.log(pixels[y][x]);
 				render_pixie();
+				$("#code").hide();
 			}
 
 			let canvas_elem = document.querySelector("canvas"); 
