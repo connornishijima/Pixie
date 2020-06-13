@@ -183,6 +183,20 @@ void Pixie::set_icon(uint8_t* icon, uint8_t pos) {
 	}
 }
 
+void Pixie::set_icon(uint8_t byte1, uint8_t byte2, uint8_t byte3, uint8_t byte4, uint8_t byte5, uint8_t pos){
+	if(pos < disp_count){		
+		display_buffer[8*pos+0] = 0;
+		display_buffer[8*pos+1] = bright;
+		display_buffer[8*pos+2] = 0;
+		
+		display_buffer[8*pos+3] = byte1;
+		display_buffer[8*pos+4] = byte2;
+		display_buffer[8*pos+5] = byte3;
+		display_buffer[8*pos+6] = byte4;
+		display_buffer[8*pos+7] = byte5;
+	}
+}
+
 void Pixie::reset() {
 	GPOS = (1 << CLK_pin);
 	delay(15);

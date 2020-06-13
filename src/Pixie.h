@@ -19,6 +19,7 @@ class Pixie{
 	void push_char(char chr);
 	void set_char(char chr, uint8_t pos);
 	void set_icon(uint8_t* icon, uint8_t pos);
+	void set_icon(uint8_t byte1, uint8_t byte2, uint8_t byte3, uint8_t byte4, uint8_t byte5, uint8_t pos);
 	
 	void write(char input,    uint8_t pos = 0);
 	void write(char* input,   uint8_t pos = 0);
