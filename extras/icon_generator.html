@@ -104,18 +104,18 @@
 				
 			var pixels = [
 				[0,0,0,0,0],
-				[0,1,0,1,0],
-				[0,1,0,1,0],
 				[0,0,0,0,0],
-				[1,0,0,0,1],
-				[0,1,1,1,0],
+				[0,0,0,0,0],
+				[0,0,0,0,0],
+				[0,0,0,0,0],
+				[0,0,0,0,0],
 				[0,0,0,0,0]
 			];
 			var pixel_size = 50;
-			var pixel_margin = 15;
+			var pixel_margin = 12;
 			var pixel_color = "GREEN";
 			var pixel_colors = {
-				"GREEN":[64,255,0],
+				"GREEN":[64,255,64],
 				"RED":[255,0,0]
 			};
 			var skip_bytes = true;
@@ -124,7 +124,6 @@
 				
 			};
 			
-			render_pixie();
 			fetch_library();
 			
 			function fetch_library(){
@@ -132,6 +131,7 @@
 				$( ".result" ).html( data );
 					library_visible = {};
 					parse_library(data);
+					set_pixels("SYMBOLS","PIX_SMILE");
 				});
 			}
 			

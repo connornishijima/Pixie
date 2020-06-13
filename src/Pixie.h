@@ -20,12 +20,20 @@ class Pixie{
 	void set_char(char chr, uint8_t pos);
 	void set_icon(uint8_t* icon, uint8_t pos);
 	void set_icon(uint8_t byte1, uint8_t byte2, uint8_t byte3, uint8_t byte4, uint8_t byte5, uint8_t pos);
+	void push_icon(uint8_t* icon);
+	void push_icon(uint8_t byte1, uint8_t byte2, uint8_t byte3, uint8_t byte4, uint8_t byte5);
 	
 	void write(char input,    uint8_t pos = 0);
 	void write(char* input,   uint8_t pos = 0);
 	void write(int32_t input, uint8_t pos = 0);
 	void write(uint32_t input, uint8_t pos = 0);
 	void write(float input, uint8_t places = 2, uint8_t pos = 0);
+	
+	void push(char input);
+	void push(char* input);
+	void push(int32_t input);
+	void push(uint32_t input);
+	void push(float input, uint8_t places = 2);
 	
 	void scroll_message(char* input, uint16_t wait_ms = 150, bool instant = false);
 		

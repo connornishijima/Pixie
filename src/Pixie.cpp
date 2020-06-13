@@ -90,6 +90,50 @@ void Pixie::write(char* input, uint8_t pos){
 	}
 }
 
+void Pixie::push(float input, uint8_t places){
+	char char_buf[48];
+	sprintf(char_buf, "%.*f", places, input);
+	for(uint8_t i = 0; i < 48; i++){
+		if(char_buf[i] == 0){
+			break;
+		}
+		push_char(char_buf[i]);
+	}
+}
+
+void Pixie::push(int32_t input){
+	char char_buf[48];
+	ltoa(input,char_buf,10);
+	for(uint8_t i = 0; i < 48; i++){
+		if(char_buf[i] == 0){
+			break;
+		}
+		push_char(char_buf[i]);
+	}
+}
+
+void Pixie::push(uint32_t input){
+	char char_buf[48];
+	ultoa(input,char_buf,10);
+	for(uint8_t i = 0; i < 48; i++){
+		if(char_buf[i] == 0){
+			break;
+		}
+		push_char(char_buf[i]);
+	}
+}
+
+void Pixie::push(char input){
+	push_char(input);
+}
+
+void Pixie::push(char* input){
+	uint8_t len = strlen(input);
+	for(uint8_t i = 0; i < len; i++){
+		push_char(input[i]);
+	}
+}
+
 void Pixie::scroll_message(char* input, uint16_t wait_ms, bool instant){
 	clear();
 	uint16_t len = strlen(input);
@@ -149,6 +193,28 @@ void Pixie::push_char(char chr) {
 	push_byte(pgm_read_byte_far(col+(chr * 5 + 2)));
 	push_byte(pgm_read_byte_far(col+(chr * 5 + 3)));
 	push_byte(pgm_read_byte_far(col+(chr * 5 + 4)));
+}
+
+void Pixie::push_icon(uint8_t* icon){
+	push_byte(0);
+	push_byte(bright);
+	push_byte(0);
+	push_byte(icon[0]);
+	push_byte(icon[1]);
+	push_byte(icon[2]);
+	push_byte(icon[3]);
+	push_byte(icon[4]);
+}
+
+void Pixie::push_icon(uint8_t byte1, uint8_t byte2, uint8_t byte3, uint8_t byte4, uint8_t byte5){
+	push_byte(0);
+	push_byte(bright);
+	push_byte(0);
+	push_byte(byte1);
+	push_byte(byte2);
+	push_byte(byte3);
+	push_byte(byte4);
+	push_byte(byte5);
 }
 
 void Pixie::set_char(char chr, uint8_t pos) {
