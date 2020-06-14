@@ -215,15 +215,19 @@
 				display:inline-block;
 				margin-right:30px;
 			}
-			#page_link{
+			#page_link, #git_link{
 				color:#b2ff68;
 				font-size:25px;
 				display:inline-block;
 				opacity:0.75;
 			}
-			#page_link:hover{
+			#page_link:hover, #git_link:hover{
 				cursor:pointer;
 				opacity:1.00;
+			}
+			#git_link{
+				margin-top:5px;
+				float:right;
 			}
 			
 			#container{
@@ -245,6 +249,7 @@
 			<div id="menu_title"><strong><span style="color:#b2ff68;">PIXIE</span></strong> | <span style="color:#999">Lixie Labs <strong>Livesheet</strong></span></div>
 			<div id="page_num">Page 1</div>
 			<div id="page_link" onclick="get_page_link();">Link to this page</div>
+			<div id="git_link"><a href="https://github.com/connornishijima/Pixie">Visit GitHub Repository</a></div>
 		</div>
 		<div id="container">
 			<div id="chainable_led_matrix_displays"></div>
