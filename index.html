@@ -1,0 +1,907 @@
+<html>
+	<head>
+		<title>Pixie Datasheet</title>
+		<style>
+			body{
+				background-color:#080808;
+				color:#ccc;
+				font-size:32px;
+				font-family: 'Source Sans Pro', sans-serif;
+			}
+			.page{
+				margin-left:auto;
+				margin-right:auto;
+				width:1540px;
+				height:2200px;
+				background-color:#212121;
+				margin-top:40px;
+				border:1px solid #484848;
+				padding:80px;
+			}
+			.logo{
+				width: 400px;
+			}
+			.vendor{
+				position:relative;
+				width: 300px;
+				float:right;
+				top:20px;
+			}
+			.divider{
+				width:100%;
+				height:2px;
+				background-color:#999;
+				margin-top:20px;
+				margin-bottom:20px;
+			}
+			.page_title, .section_title{
+				text-transform:uppercase;
+				font-weight:bold;
+				margin-bottom:20px;
+				border-bottom: 1px solid #ccc;
+				padding-bottom: 10px;
+			}
+			.page_title{
+				font-size:45px;
+				margin-bottom:60px;
+			}
+			.left{
+				width:735px;
+				margin-right:60px;
+				display:inline-block;
+				float:left;
+				text-align: justify;
+			}
+			.right{
+				width:735px;
+				display:inline-block;
+				float:right;
+				text-align: justify;
+			}
+			.footer{
+				color:#b2ff68;
+				margin-left:auto;
+				margin-right:auto;
+				width:1540px;
+				position:relative;
+				top:-200px;
+			}
+			.foot_info{
+				float:left;
+			}
+			.page_num{
+				font-weight: bold;
+				float: right;
+			}
+			.table{
+				width: calc(100% - 20px);
+				border: 2px solid #ccc;
+			}
+			.table_fit{
+				display:contents;
+				border: 2px solid #ccc;
+			}
+			.table_labels{
+				font-weight:bold;
+				background-color:#ccc;
+				color:#000;
+				text-transform:uppercase;
+			}
+			td{
+			    border: 1px solid #888;
+				padding: 10px;
+				font-size: 30px;
+			}
+			.split{
+				display: inline-block;
+			}
+			.note{
+				font-size:25px;
+				margin-top:10px;
+				margin-bottom:10px;
+				text-align: justify;
+			}
+			.page_id{
+				position:relative;
+				top:-70px;
+			}
+			.figure{
+				text-align: center;
+				//width: 100%;
+			}
+			.figure_label{
+				text-align: center;
+				margin-top: 20px;
+				font-style: italic;
+				opacity: 0.75;
+			}
+			.jump_button{
+			    background-color: #b2ff68;
+				color: #000;
+				font-weight: bold;
+				padding: 10px;
+				border-radius: 5px;
+				opacity: 0.75;
+				margin-bottom: 15px;
+				display: inline-block;
+			}
+			.jump_button:hover{
+				cursor:pointer;
+				opacity: 1.0;
+			}
+			
+			a{
+				color:#b2ff68;
+				text-decoration:none;
+			}
+			a:hover{
+				color:#eeeeee;
+			}
+			
+			notelink, pinlink, figurelink{
+				color:#b2ff68;
+				font-style:italic;
+			}
+			notelink:hover, pinlink:hover, figurelink:hover{
+				cursor:pointer;
+			}
+			figurelink{
+				font-size:25px;
+			}
+			oline{
+				text-decoration:overline;
+			}
+			uline{
+				text-decoration:underline;
+			}
+			
+			#popup{
+				width: calc(100% - 40px);
+				background-color: #383838;
+				padding: 20px;
+				position: fixed;
+				top: 0px;
+				left: 0px;
+				z-index: 100;
+				border-bottom: 5px solid #b2ff68;
+				display: none;
+			}
+			#popup_close{
+				float:right;
+				display:block;
+				margin:20px;
+				opacity:0.75;
+			}
+			#popup_close:hover{
+				cursor:pointer;
+				opacity:1.0;
+			}
+			
+			#popup_title{
+				color: #b2ff68;
+				font-size: 30px;
+				font-weight: bold;
+				float: left;
+				display: block;
+				margin: 20px;
+				border-bottom: 2px solid #b2ff68;
+				padding-bottom: 20px;
+			}
+			
+			#popup_content{
+				font-size: 30px;
+				width: calc(100% - 40px);
+				display: inline-block;
+				padding: 20px;
+				text-align: justify;
+			}
+			
+			#menu{
+				background-color:#181818;
+				width: calc(100% - 40px);
+				height:45px;
+				padding: 20px;
+				position: fixed;
+				top: 0px;
+				left: 0px;
+				z-index: 50;
+				border-bottom: 5px solid #b2ff68;
+			}
+			#menu_title{
+				display:inline-block;
+				margin-right:30px;
+			}
+			#page_num{
+				display:inline-block;
+				margin-right:30px;
+			}
+			#page_link{
+				color:#b2ff68;
+				font-size:25px;
+				display:inline-block;
+				opacity:0.75;
+			}
+			#page_link:hover{
+				cursor:pointer;
+				opacity:1.00;
+			}
+			
+			#container{
+				padding-top:80px;
+			}
+		</style>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+		<link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
+	</head>
+	<body>
+		<div id="popup">
+			<img id="popup_close" src="extras/datasheet/img/close.png" width="20px" onclick="close_popup();"></img>
+			<div id="popup_title">TITLE</div>
+			<div id="popup_content">
+				CONTENT <!--<img src="extras/datasheet/img/modules.png" width="100%"></img> -->
+			</div>
+		</div>
+		<div id="menu">
+			<div id="menu_title"><strong><span style="color:#b2ff68;">PIXIE</span></strong> | <span style="color:#999">Lixie Labs <strong>Livesheet</strong></span></div>
+			<div id="page_num">Page 1</div>
+			<div id="page_link" onclick="get_page_link();">Link to this page</div>
+		</div>
+		<div id="container">
+			<div id="chainable_led_matrix_displays"></div>
+			<div class="page">
+				<div class="header"></div>
+				<div class="page_title">Chainable LED Matrix Displays</div>
+				<img src="extras/datasheet/img/modules.png" width="100%"></img><br>
+				<br>
+				<br>
+				<div class="split">
+					<div class="left">
+						<div class="section_title">General Description</div>
+						<p>
+							PIXIE is a compact, chainable, dual 5x7 LED dot-matrix display platform (compatible with Arduino) that offers full bitmap control with 7-bit global PWM and high refresh rates.<br>
+							<br>
+							Using only two GPIO for <strong>DATA</strong> and <strong>CLOCK</strong>, bits can be simultaneously shifted in and out of each PIXIE at up to 41.6KHz. <figurelink>(Figure 1)</figurelink>   Final frame rate depends on the number of displays in the chain. For example - assuming a 41.6KHz clock speed:<br>
+							<br>
+							<table class="table">
+								<tr class="table_labels">
+									<td>Character / Display Count</td>
+									<td>Frame Rate</td>
+								</tr>
+								<tr>
+									<td><strong>2</strong> - (1 PIXIE)</td>
+									<td>~325.0</td>
+								</tr>
+								<tr>
+									<td><strong>4</strong> - (2 PIXIES)</td>
+									<td>~162.5</td>
+								</tr>
+								<tr>
+									<td><strong>6</strong> - (3 PIXIES)</td>
+									<td>~108.3</td>
+								</tr>
+								<tr>
+									<td><strong>8</strong> - (4 PIXIES)</td>
+									<td>~81.2</td>
+								</tr>
+								<tr>
+									<td><strong>12</strong> - (6 PIXIES)</td>
+									<td>~54.1</td>
+								</tr>
+								<tr>
+									<td><strong>24</strong> - (12 PIXIES)</td>
+									<td>~27.0</td>
+								</tr>
+							</table>
+							<br>
+							After 3<em>ms</em> since the last clock pulse was receieved, the internal 16-byte display buffer is latched and sent to the on-board IS31FL3730 driver over I<sup>2</sup>C to update the PIXIE's displays.
+						</p>
+					</div>
+					<div class="right">
+						<div class="section_title">Features</div>
+						<ul>
+							<li>Dual 5x7 LED matrices</li>
+							<li>2.7V to 5.5V supply</li>
+							<li>Fast bitmap control</li>
+							<li>7-bit global PWM (128 brightness levels)</li>
+							<li>Over-temperature protection</li>
+							<li>Resettable from controlling device</li>
+							<li>Reprogrammable ATTINY45 microcontroller</li>
+							<li>5.1mm * 7.6mm matrix size (19.92 ppi)</li>
+							<li>20.6mm * 34.7mm package</li>
+							<li>M2.5 mouting holes</li>
+						</ul>
+						<div class="section_title">Applications</div>
+						<ul>
+							<li>Time-keeping</li>
+							<li>Stock tracking</li>
+							<li>Analytics</li>
+							<li>Notifications</li>
+							<li>Signage</li>
+							<li>Point of Sale</li>
+						</ul>
+						<div class="section_title">Internal Devices</div>
+						<ul>
+							<li>ATTINY45 microcontroller</li>
+							<li>IS31FL3730 LED matrix driver</li>
+							<li>LTP-305G/HR 5x7 matrices</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="footer"></div>
+			
+			<div id="pin_configuration" class="page_id"></div>
+			<div class="page">
+				<div class="header"></div>
+				<div class="page_title">Pin Configuration</div>
+				
+				<img src="extras/datasheet/img/pinout.png" style="float: left; display: inline-block; width: 480px; margin-right: 40px;"></img>
+				<table class="table_fit">
+					<tr class="table_labels">
+						<td>Pin</td>
+						<td>Number</td>
+						<td>Function</td>
+					</tr>
+					<tr id="GND_row">
+						<td>GND</td>
+						<td>1</td>
+						<td>Ground / Common (ATTINY / IS31FL3730 GND)</td>
+					</tr>
+					<tr id="VCC_row">
+						<td>VCC</td>
+						<td>2</td>
+						<td>Power Supply (ATTINY / IS31FL3730 VCC)</td>
+					</tr>
+					<tr id="DAT_OUT_row">
+						<td>DAT_OUT</td>
+						<td>3</td>
+						<td>Bitmap data OUTPUT</td>
+					</tr>
+					<tr id="DAT_IN_row">
+						<td>DAT_IN</td>
+						<td>4</td>
+						<td>Bitmap data INPUT, no pullup <notelink>(Note 1)</notelink></td>
+					</tr>
+					<tr id="CLK_row">
+						<td>CLK</td>
+						<td>5</td>
+						<td>Bitmap clock INPUT, no pullup <notelink>(Note 1)</notelink> (ATTINY MISO)</td>
+					</tr>
+					<tr>
+						<td>CLK</td>
+						<td>6</td>
+						<td>(Same as above)</td>
+					</tr>
+					<tr id="RESET_row">
+						<td><oline>RESET</oline></td>
+						<td>7</td>
+						<td>(ATTINY RESET)</td>
+					</tr>
+					<tr>
+						<td>NC</td>
+						<td>8</td>
+						<td>(Not Connected)</td>
+					</tr>
+					<tr id="SCL_row">
+						<td><oline>SCL</oline></td>
+						<td>9</td>
+						<td>(ATTINY SCK / IS31FL3730 I<sup>2</sup>C SCL line)</td>
+					</tr>
+					<tr id="SDA_row">
+						<td><oline>SDA</oline></td>
+						<td>10</td>
+						<td>(ATTINY MOSI / IS31FL3730 I<sup>2</sup>C SDA line)</td>
+					</tr>
+					<tr>
+						<td>GND</td>
+						<td>11</td>
+						<td>(Same as above)</td>
+					</tr>
+					<tr>
+						<td>VCC</td>
+						<td>12</td>
+						<td>(Same as above)</td>
+					</tr>
+				</table>
+				<br>
+				<br>
+				<div class="note" id="note1">
+					<strong>NOTE 1:</strong> <pinlink>DAT_IN</pinlink> and <pinlink>CLK</pinlink> are INPUTS <strong>without pullups</strong>. This is done to prevent damage in the scenario that a PIXIE is powered with 5V on V<sub>cc</sub> but is receiving data from 3.3V-tolerant pins. <em>(i.e. ESP8266 / 32)</em>
+				</div>
+			</div>
+			<div class="footer"></div>
+			
+			<div class="page">
+				<div class="header"></div>
+				<div class="page_title">Absolute Maximum Ratings</div>
+				
+				<table class="table_fit">
+					<tr>
+						<td>Supply voltage, V<sub>CC</sub></td>
+						<td>-0.3V  ~  +6.0V</td>
+					</tr>
+					<tr>
+						<td>Storage Temperature Range</td>
+						<td>-40°C  ~  +85°C</td>
+					</tr>
+					<tr>
+						<td>Operating Temperature Range</td>
+						<td>-40°C  ~  +85°C </td>
+					</tr>
+				</table>
+				<br>
+				<div class="note" id="note2">
+					<strong>NOTE 2:</strong> Stresses beyond those listed under “Absolute Maximum Ratings” may cause permanent damage to the device. These are stress ratings only and functional operation of the device at these or any other condition beyond those indicated in the operational sections of the specifications is not implied. Exposure to absolute maximum rating conditions for extended periods may affect device reliability.
+				</div>
+				<br>
+				<div class="section_title">Electrical Characteristics</div>
+				<table class="table">
+					<tr class="table_labels">
+						<td>Parameter</td>
+						<td>Condition</td>
+						<td>Min.</td>
+						<td>Typ.</td>
+						<td>Max.</td>
+						<td>Units</td>
+					</tr>
+					<tr>
+						<td>Supply Voltage (V<sub>cc</sub>)</td>
+						<td><notelink>(Note 2)</notelink></td>
+						<td>1.8</td>
+						<td>5.0</td>
+						<td>5.5</td>
+						<td>V</td>
+					</tr>
+					<tr>
+						<td>Matrix Output Current</td>
+						<td></td>
+						<td> </td>
+						<td>40</td>
+						<td> </td>
+						<td>mA</td>
+					</tr>
+					<tr>
+						<td>Peak Emission Wavelength</td>
+						<td></td>
+						<td> </td>
+						<td>565</td>
+						<td> </td>
+						<td>nm</td>
+					</tr>					
+				</table>
+				<br>
+				<div class="section_title">Digital Input Switching Characteristics</div>
+				<table class="table">
+					<tr class="table_labels">
+						<td>Parameter</td>
+						<td>Condition</td>
+						<td>Min.</td>
+						<td>Typ.</td>
+						<td>Max.</td>
+						<td>Units</td>
+					</tr>
+					<tr>
+						<td>DATA CLOCK frequency</td>
+						<td><notelink>(Note 3)</notelink></td>
+						<td>~330</td>
+						<td>41,000</td>
+						<td>41,600</td>
+						<td>Hz</td>
+					</tr>
+					<tr>
+						<td>DATA CLOCK <uline>LOW</uline> time for display latch</td>
+						<td></td>
+						<td>3</td>
+						<td>5</td>
+						<td></td>
+						<td>milliseconds</td>
+					</tr>
+					<tr>
+						<td>Minimum TTL Logical "1" Level (<oline>HIGH</oline>)</td>
+						<td><notelink>(Note 4)</notelink></td>
+						<td>V<sub>cc</sub> * 0.52</td>
+						<td>V<sub>cc</sub></td>
+						<td>V<sub>cc</sub></td>
+						<td>V</td>
+					</tr>
+					<tr>
+						<td>Maximum TTL Logical "0" Level (<uline>LOW</uline>)</td>
+						<td><notelink>(Note 4)</notelink></td>
+						<td>0V</td>
+						<td>0V</td>
+						<td>V<sub>cc</sub> * 0.42</sub></td>
+						<td>V</td>
+					</tr>
+					<tr>
+						<td>Display Reset CLK <oline>HIGH</oline> Pulse Length</td>
+						<td></td>
+						<td>10</td>
+						<td></td>
+						<td></td>
+						<td>milliseconds</td>
+					</tr>
+				</table>
+				<br>
+				<div class="note" id="note3">
+					<strong>NOTE 3:</strong> Max DATA CLOCK frequency depends on a minimum of 5V on V<sub>cc</sub>. While it is possible to maintain the 16MHz clock of the ATTINY with only 3.3V on V<sub>cc</sub>, this is not recommended or guaranteed.
+				</div>
+				<div class="note" id="note4">
+					<strong>NOTE 4:</strong> Due to the logic level <oline>HIGH</oline> at 5V (on V<sub>cc</sub>) being 2.6V, it is possible to control PIXIE with 3.3V TTL logic and a 5V power supply. (i.e. ESP8266 / 32) However, the PIXIE will output V<sub>cc</sub>'s voltage on the DAT_OUT pin, regardless of the voltage sent to <pinlink>DAT_IN</pinlink> / <pinlink>CLK</pinlink>.
+				</div><br>
+				<br>
+			</div>
+			<div class="footer"></div>
+			<div class="page">
+				<div class="header"></div>
+				<div class="page_title">DETAILED DESCRIPTION</div>
+				<div class="split">
+					<div class="left">
+						<div class="section_title">DATA / CLOCK Interface</div>
+						PIXIE uses a data / clock interface similar to SPI, but with a few distinctions:
+						
+						<ul>
+							<li>Uni-directional communication (One way - master controller to dependents)</li>
+							<li>No "Chip Select" line (only one PIXIE chain per GPIO pair)</li>
+							<li>Data is shifted OUT of the internal buffer on <pinlink>CLK</pinlink> <oline>HIGH</oline> transition, and read IN to the internal buffer on <pinlink>CLK</pinlink> <uline>LOW</uline> &nbsp;&nbsp;<figurelink>(Figure 1)</figurelink></li>
+							<li>Each PIXIE is the "master" to the next in the chain</li>
+						</ul>
+						
+						The <pinlink>CLK</pinlink> line is shared between all units in the chain, and each PIXIE's <pinlink>DAT_OUT</pinlink> will connect to the next display's <pinlink>DAT_IN</pinlink>.<br>
+						<br>
+						The master controller controller <strong>must</strong> drive the <pinlink>CLK</pinlink> and <pinlink>DAT_IN</pinlink> lines <oline>HIGH</oline> and <uline>LOW</uline>, and not release them at anytime, as these input pins <strong>do not have pullup resistors attached/enabled</strong>. <notelink>(Note 1)</notelink><br>
+						<br>
+					</div>
+					<div class="right">
+						Once the <pinlink>CLK</pinlink> line is <uline>LOW</uline> and hasn't changed state in at least 3ms, the display buffer is latched, and it's contents are sent over I<sup>2</sup>C to the IS31FL3730 LED driver, updating the matrices.<br>
+						<br>
+						<div class="section_title">Reset Function</div>
+						If the <pinlink>CLK</pinlink> line is held <oline>HIGH</oline> for more than 10ms, then set <uline>LOW</uline>, the on-board ATTINY will reset to vector 0x0000 in ROM and reset the registers of the IS31FL3730 LED driver, blanking all displays in the chain.<br>
+						<br>
+						Due to this, it's necessary to have the master controller keep the <pinlink>CLK</pinlink> line <uline>LOW</uline> when not in use.
+					</div>
+				</div><br>
+				<br>
+				<div class="figure" id="figure1">
+					<img src="extras/datasheet/img/timing.png" class="figure" width="80%"></img>
+					<div class="figure_label"><strong>FIGURE 1</strong> - Timing Diagram</div>
+				</div><br>
+				<br>
+				<table class="table">
+					<tr class="table_labels">
+						<td>Marker</td>
+						<td>Event</td>
+					</tr>
+					<tr>
+						<td>A</td>
+						<td>DAT_IN State Change</td>
+					</tr>
+					<tr>
+						<td>B</td>
+						<td>CLK rise, DAT_OUT set to last bit shifted out of current display buffer</td>
+					</tr>
+					<tr>
+						<td>C</td>
+						<td>CLK fall, DAT_IN line read and bit written to 0th index of display buffer</td>
+					</tr>
+				</table>
+			</div>
+			<div class="footer"></div>
+			<div class="page">
+				<div class="header"></div>
+				<div class="page_title">DETAILED DESCRIPTION (CONTD.)</div>
+				<div class="split">
+					<div class="left">
+						<div class="section_title">Internal Display Buffer</div>
+					</div>
+					<div class="right">
+					</div>
+				</div><br>
+				<br>
+			</div>
+			<div class="footer"></div>
+			<div class="page">
+				<div class="header"></div>
+				<div class="page_title">Schematic</div>
+				<img src="extras/datasheet/img/schematic.png" width="100%"></img>
+			</div>
+			<div class="footer"></div>
+			<div class="page">
+				<div class="header"></div>
+				<div class="page_title">Package Dimensions</div>
+				<div class="split">
+					<div class="left">
+						<img src="extras/datasheet/img/dimensions.png" width="100%"></img>
+						<img src="extras/datasheet/img/dimensions_2.png" width="50%"></img>
+					</div>
+					<div class="right">
+						<em>(All dimensions are in millimeters)</em><br>
+						<br>
+						<table class="table">
+							<tr class="table_labels">
+								<td>Label</td>
+								<td>Desc.</td>
+								<td>Dimension</td>
+							</tr>
+							<tr>
+								<td>W</td>
+								<td>Package Width</td>
+								<td>20.6</td>
+							</tr>
+							<tr>
+								<td>H</td>
+								<td>Package Height</td>
+								<td>34.7</td>
+							</tr>
+							<tr>
+								<td>Wd</td>
+								<td>Display Width</td>
+								<td>9.8</td>
+							</tr>
+							<tr>
+								<td>Hd</td>
+								<td>Display Height</td>
+								<td>18.5</td>
+							</tr>
+							<tr>
+								<td>Wm</td>
+								<td>Matrix Width</td>
+								<td>5.1</td>
+							</tr>
+							<tr>
+								<td>Hm</td>
+								<td>Matrix Height</td>
+								<td>7.6</td>
+							</tr>
+							<tr>
+								<td>D</td>
+								<td>Hole Diameter</td>
+								<td>2.5</td>
+							</tr>
+							<tr>
+								<td>X</td>
+								<td>Hole X Offset</td>
+								<td>5.1</td>
+							</tr>
+							<tr>
+								<td>Y</td>
+								<td>Hole Y Offset</td>
+								<td>1.6</td>
+							</tr>
+							<tr>
+								<td>A</td>
+								<td>Display Top Margin</td>
+								<td>11.1</td>
+							</tr>
+							<tr>
+								<td>B</td>
+								<td>Display Bottom Margin</td>
+								<td>5.0</td>
+							</tr>
+							<tr>
+								<td>d</td>
+								<td>Hole / Display Pitch</td>
+								<td>10.2</td>
+							</tr>
+							<tr>
+								<td>P</td>
+								<td>Pin Pitch</td>
+								<td>2.54</td>
+							</tr>
+							<tr>
+								<td>Pt</td>
+								<td>PCB Thickness</td>
+								<td>1.6mm</td>
+							</tr>
+							<tr>
+								<td>Hh</td>
+								<td>Header Height</td>
+								<td>2.5mm</td>
+							</tr>
+							<tr>
+								<td>Dd</td>
+								<td>Display Depth</td>
+								<td>9.1mm</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+			</div>
+			<div class="footer"></div>
+			<div class="page">
+				<div class="header"></div>
+				<div class="page_title">Hardware Specifications</div>
+				<table class="table">
+					<tr class="table_labels">
+						<td>Item</td>
+						<td>Details</td>
+						<td>Note</td>
+					</tr>
+					<tr>
+						<td>Solder (SMT)</td>
+						<td>Sn63/Pb37</td>
+						<td>Melting Point: 183°C (361°F)</td>
+					</tr>
+					<tr>
+						<td>Solder (THT)</td>
+						<td>Sn99.3/Cu0.7 (Lead Free)</td>
+						<td>Melting Point: 227°C (441°F)</td>
+					</tr>
+					<tr>
+						<td>PCB Material</td>
+						<td>FR-4</td>
+						<td>Thermal Grade: 130°C-140°C</td>
+					</tr>
+					<tr>
+						<td>PCB Thickness</td>
+						<td>1.6mm</td>
+						<td>Tolerance: ±10%</td>
+					</tr>
+					<tr>
+						<td>PCB Dimension</td>
+						<td>20.6mm * 34.7mm</td>
+						<td>Tolerance: ±0.4mm</td>
+					</tr>
+					<tr>
+						<td>Copper Weight</td>
+						<td>1oz</td>
+						<td>Copper per sq. foot</td>
+					</tr>
+				</table>
+			</div>
+			<div class="footer"></div>
+			<div class="page">
+				<div class="header"></div>
+				<div class="page_title">Revision History</div>
+				<table class="table">
+					<tr class="table_labels">
+						<td>Revision</td>
+						<td>Details</td>
+						<td>Date</td>
+					</tr>
+					<tr>
+						<td>A</td>
+						<td>Initial Release</td>
+						<td>6/13/2020</td>
+					</tr>
+				</table>
+			</div>
+			<div class="footer"></div>
+		</div>
+		
+		<script>
+			var page_num = 1;
+			var page_count = 1;
+			
+			render_pages();
+			setInterval(render_pages,1000);
+			setInterval(monitor_page,100);
+			url_jump();
+			
+			/*
+			document.addEventListener('click', function(){
+				var selection = window.getSelection();
+				console.log(selection);
+			});
+			*/
+			
+			function url_jump(){
+				var info = window.location.href.split("?")[1].split("&");
+				for(var i in info){
+					var key = info[i].split("=")[0];
+					var val = info[i].split("=")[1];
+					if(key == "page"){
+						page_jump(val);
+					}
+				}
+			}
+			
+			function page_jump(page_num){
+				$('html, body').animate({
+					scrollTop: $("#page_"+page_num).prev().offset().top-100
+				}, 500);
+			}
+			
+			function get_page_link(){
+				var url = window.location.href.split("?")[0]+"?page="+page_num;
+				var contents = "Share this link to <strong>Page "+page_num+"</strong> of this datasheet:<br><br><strong><a href='"+url+"'>"+url+"</a></strong>";
+				$("#popup_title").html("SHARE PAGE");
+				$("#popup_content").html(contents);
+				$("#popup").fadeIn("fast");
+			}
+			
+			function monitor_page(){
+				page_num = (Math.floor((window.scrollY+window.innerHeight/2-500)/(2364)))+1;
+				console.log(page_num);
+				$("#page_num").html("Page "+page_num+" / "+page_count);
+			}
+		
+			function render_pages(){
+				$('.header').each(function(i, obj) {
+					var out_html = "";
+					out_html += "<img src='extras/datasheet/img/logo.png' class='logo'></img>";
+					out_html += "<img src='extras/datasheet/img/vendor.png' class='vendor'></img>";
+					out_html += "<div class='divider'></div>";
+					$(obj).html(out_html);
+				});
+				$('.footer').each(function(i, obj) {
+					$(obj).attr("id", "page_"+(i+1));
+					var out_html = "";
+					out_html += "<div class='divider'></div>";
+					out_html += "<div class='foot_info'>Lixie Labs LLC / Connor Nishijima<br>REV. A (6/13/2020)</div>";
+					out_html += "<div class='page_num'>"+(i+1)+"</div>";
+					$(obj).html(out_html);
+					if((i+1) > page_count){
+						page_count = (i+1);
+					}
+				});
+				
+				$('notelink').each(function(i, obj) {
+					var note_num = parseInt($(obj).html().toLowerCase().replace("(","").replace(")","").replace("note ",""));
+					$(obj).click(function(){ show_note(note_num) });
+				});
+				
+				$('figurelink').each(function(i, obj) {
+					var figure_num = parseInt($(obj).html().toLowerCase().replace("(","").replace(")","").replace("figure ",""));
+					$(obj).click(function(){ show_figure(figure_num) });
+				});
+				
+				$('pinlink').each(function(i, obj) {
+					var pin = $(obj).html().toUpperCase();
+					$(obj).click(function(){ pinout_jump(pin); });
+				});
+			}
+			
+			function close_popup(){
+				$("#popup").fadeOut("fast");
+			}
+			
+			function show_note(note_num){
+				var contents = $("#note"+note_num).html().substring(31)+"<br><br><span class='jump_button' onclick='note_jump(\"note"+note_num+"\");'>JUMP TO LOCATION</span>";;
+				$("#popup_title").html("NOTE "+note_num);
+				$("#popup_content").html(contents);
+				$("#popup").fadeIn("fast");
+			}
+			
+			function show_figure(figure_num){
+				var contents = $("#figure"+figure_num).html()+"<br><br><span class='jump_button' onclick='figure_jump(\"figure"+figure_num+"\");'>JUMP TO LOCATION</span>";
+				$("#popup_title").html("Figure "+figure_num);
+				$("#popup_content").html(contents);
+				$("#popup").fadeIn("fast");
+			}
+			
+			function note_jump(note){
+				close_popup();
+				var y = document.getElementById(note).getBoundingClientRect().top + window.pageYOffset + -200;
+				document.getElementById(note).scrollIntoView({top: y, behavior: "smooth", block: "center", inline: "nearest"});
+			}
+			
+			function figure_jump(figure){
+				close_popup();
+				var y = document.getElementById(figure).getBoundingClientRect().top + window.pageYOffset + -200;
+				document.getElementById(figure).scrollIntoView({top: y, behavior: "smooth", block: "center", inline: "nearest"});
+			}
+			
+			function pinout_jump(pin){
+				close_popup();
+				var pins = [
+					"VCC",
+					"GND",
+					"DAT_IN",
+					"DAT_OUT",
+					"CLK",
+					"RESET",
+					"SDA",
+					"SCL"
+				];
+				document.getElementById('pin_configuration').scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"});
+				for(var i in pins){
+					$("#"+pins[i]+"_row").css("color","#cccccc");
+				}
+				$("#"+pin+"_row").css("color","#b2ff68");
+				//setTimeout(function(){
+				//	$("#"+pin+"_row").css("color","#cccccc");
+				//},2000);
+			}
+		</script>
+	</body>
+</html>
