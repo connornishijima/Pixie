@@ -115,6 +115,9 @@
 				font-style: italic;
 				opacity: 0.75;
 			}
+			#figure_wrapper{
+				width: 50%;
+			}
 			.jump_button{
 			    background-color: #b2ff68;
 				color: #000;
@@ -265,7 +268,7 @@
 						<p>
 							PIXIE is a compact, chainable, dual 5x7 LED dot-matrix display platform (compatible with Arduino) that offers full bitmap control with 7-bit global PWM and high refresh rates.<br>
 							<br>
-							Using only two GPIO for <strong>DATA</strong> and <strong>CLOCK</strong>, bits can be simultaneously shifted in and out of each PIXIE at up to 41.6KHz. <figurelink>(Figure 1)</figurelink>   Final frame rate depends on the number of displays in the chain. For example - assuming a 41.6KHz clock speed:<br>
+							Using only two GPIO for <strong>DATA</strong> and <strong>CLOCK</strong>, bits can be simultaneously shifted in and out of each PIXIE at up to 41.6KHz. <figurelink>(Figure 1)</figurelink>   Final frame rate depends on the number of displays in the chain. For example - assuming a full 41.6KHz clock speed:<br>
 							<br>
 							<table class="table">
 								<tr class="table_labels">
@@ -298,7 +301,7 @@
 								</tr>
 							</table>
 							<br>
-							After 3<em>ms</em> since the last clock pulse was receieved, the internal 16-byte display buffer is latched and sent to the on-board IS31FL3730 driver over I<sup>2</sup>C to update the PIXIE's displays.
+							After 3<em>ms</em> since the last clock pulse was receieved, the internal 16-byte display buffer is latched and sent to the on-board IS31FL3730 driver over I<sup>2</sup>C to update the PIXIE's displays. <figurelink>(Figure 2)</figurelink>
 						</p>
 					</div>
 					<div class="right">
@@ -502,6 +505,14 @@
 						<td>milliseconds</td>
 					</tr>
 					<tr>
+						<td>DATA CLOCK <oline>HIGH</oline> time for reset</td>
+						<td></td>
+						<td>10</td>
+						<td></td>
+						<td></td>
+						<td>milliseconds</td>
+					</tr>
+					<tr>
 						<td>Minimum TTL Logical "1" Level (<oline>HIGH</oline>)</td>
 						<td><notelink>(Note 4)</notelink></td>
 						<td>V<sub>cc</sub> * 0.52</td>
@@ -517,28 +528,20 @@
 						<td>V<sub>cc</sub> * 0.42</sub></td>
 						<td>V</td>
 					</tr>
-					<tr>
-						<td>Display Reset CLK <oline>HIGH</oline> Pulse Length</td>
-						<td></td>
-						<td>10</td>
-						<td></td>
-						<td></td>
-						<td>milliseconds</td>
-					</tr>
 				</table>
 				<br>
 				<div class="note" id="note3">
 					<strong>NOTE 3:</strong> Max DATA CLOCK frequency depends on a minimum of 5V on V<sub>cc</sub>. While it is possible to maintain the 16MHz clock of the ATTINY with only 3.3V on V<sub>cc</sub>, this is not recommended or guaranteed.
 				</div>
 				<div class="note" id="note4">
-					<strong>NOTE 4:</strong> Due to the logic level <oline>HIGH</oline> at 5V (on V<sub>cc</sub>) being 2.6V, it is possible to control PIXIE with 3.3V TTL logic and a 5V power supply. (i.e. ESP8266 / 32) However, the PIXIE will output V<sub>cc</sub>'s voltage on the DAT_OUT pin, regardless of the voltage sent to <pinlink>DAT_IN</pinlink> / <pinlink>CLK</pinlink>.
+					<strong>NOTE 4:</strong> Due to the logic level <oline>HIGH</oline> at 5V (on V<sub>cc</sub>) being 2.6V, it is possible to control PIXIE with 3.3V TTL logic and a 5V power supply. (i.e. ESP8266 / 32) However, the PIXIE will output V<sub>cc</sub>'s voltage on the <pinlink>DAT_OUT</pinlink> pin, regardless of the voltage sent to <pinlink>DAT_IN</pinlink> / <pinlink>CLK</pinlink>.
 				</div><br>
 				<br>
 			</div>
 			<div class="footer"></div>
 			<div class="page">
 				<div class="header"></div>
-				<div class="page_title">DETAILED DESCRIPTION</div>
+				<div class="page_title">USAGE</div>
 				<div class="split">
 					<div class="left">
 						<div class="section_title">DATA / CLOCK Interface</div>
@@ -557,7 +560,8 @@
 						<br>
 					</div>
 					<div class="right">
-						Once the <pinlink>CLK</pinlink> line is <uline>LOW</uline> and hasn't changed state in at least 3ms, the display buffer is latched, and it's contents are sent over I<sup>2</sup>C to the IS31FL3730 LED driver, updating the matrices.<br>
+						<br>
+						Once the <pinlink>CLK</pinlink> line is <uline>LOW</uline> and hasn't changed state in at least 3ms, the 128-bit display buffer is latched, and it's contents are parsed and sent over I<sup>2</sup>C to the IS31FL3730 LED driver, updating the matrices.<br>
 						<br>
 						<div class="section_title">Reset Function</div>
 						If the <pinlink>CLK</pinlink> line is held <oline>HIGH</oline> for more than 10ms, then set <uline>LOW</uline>, the on-board ATTINY will reset to vector 0x0000 in ROM and reset the registers of the IS31FL3730 LED driver, blanking all displays in the chain.<br>
@@ -567,7 +571,7 @@
 				</div><br>
 				<br>
 				<div class="figure" id="figure1">
-					<img src="extras/datasheet/img/timing.png" class="figure" width="80%"></img>
+					<img src="extras/datasheet/img/timing.png" class="figure" width="90%"></img>
 					<div class="figure_label"><strong>FIGURE 1</strong> - Timing Diagram</div>
 				</div><br>
 				<br>
@@ -593,15 +597,69 @@
 			<div class="footer"></div>
 			<div class="page">
 				<div class="header"></div>
-				<div class="page_title">DETAILED DESCRIPTION (CONTD.)</div>
+				<div class="page_title">USAGE (CONTD.)</div>
 				<div class="split">
 					<div class="left">
 						<div class="section_title">Internal Display Buffer</div>
+						PIXIE has an internal 128-bit (16 byte) display buffer, parsed as a 16x8 matrix. <figurelink>(Figure 2)</figurelink> The first 5 columns (C0-C4) pertain to the righthand LED matrix, and C8-C12 are the lefthand LED matrix.<br>
+						<br>
+						*Some columns/bits in the buffer are not visible in the physical LED matrix, and are used as "dead space" for smooth scrolling across the gap between displays.<br>
+						<br>
+						Columns C6 and C14 redundantly store the 7-bit PWM brightness of the PIXIE display in bits B1-B7. Only the PWM columns have B0 set to 1, allowing the PIXIE to recognize and treat them as blank columns when scrolling them across the visible areas.<br>
+						<br>
+						Some columns between visible displays are unused completely. <notelink>(Note 5)</notelink><br>
 					</div>
 					<div class="right">
+						<div class="section_title">SHIFTING DATA IN / OUT</div>
+						When the <pinlink>CLK</pinlink> line goes <oline>HIGH</oline>, the bit at C15:B7 is set on the <pinlink>DAT_OUT</pinlink> line, and the whole buffer is shifted forward by one bit, overwriting the former value of C15:B7. (i.e. C15:B7 = C15:B6, C15:B0 = C14:B7, C0:B1 = C0:B0, etc.) <notelink>(Note 6)</notelink><br>
+						<br>
+						(The output of C15:B7/<pinlink>DAT_OUT</pinlink> will arrive at the <pinlink>DAT_IN</pinlink>/C0:B0 of the next PIXIE in the chain.)<br>
+						<br>
+						Next, when the <pinlink>CLK</pinlink> line goes <uline>LOW</uline> again, the logic level (0/1) of this PIXIE's <pinlink>DAT_IN</pinlink> line is written to C0:B0.<br>
+						<br>
+						Because of this bitwise shifting of the buffer, it is crucial that the master controller <strong>sends a multiple of 128 bits every time the PIXIE chain is updated.</strong>
 					</div>
 				</div><br>
 				<br>
+				<br>
+				<div class="figure" id="figure2">
+					<img src="extras/datasheet/img/buffer_mapping.png" class="figure" width="80%"></img>
+					<div class="figure_label"><strong>FIGURE 2</strong> - Display Buffer Mapping</div>
+				</div><br>
+				<div class="note" id="note5">
+					<strong>NOTE 5:</strong> Columns C5, C7, C13 and C15 are left blank, and are reserved for future development.
+				</div>
+				<div class="note" id="note6">
+					<strong>NOTE 6:</strong> In actuality, the buffer is not shifted in RAM, just a pointer for accessing it. (Circular buffer)
+				</div><br>
+			</div>
+			<div class="footer"></div>
+			<div class="page">
+				<div class="header"></div>
+				<div class="page_title">Circuit Notes</div>
+				<div class="split">
+					<div class="left">
+						<div class="section_title">ATTINY45 Microcontroller</div>
+						<ul>
+							<li>The ATTINY45 manages the passing of data between PIXIES, and communicating with the IS31FL3730 over I<sup>2</sup>C when the display buffer is latched.</li>
+							<li>It runs at ~16MHz using the Internal PLL as a source for the CPU Clock.</li>
+							<li>Upon booting, the ATTINY writes 0x19 to the 0x00 register of the IS31FL3730, putting it in "dual display" mode, allowing the use of two matrixes wired in reverse of each other.</li>
+							<li>It can be reprogrammed with an ISCP programmer using <pinlink>SCL</pinlink> as SCLK, <pinlink>SDA</pinlink> as MOSI, <pinlink>CLK</pinlink> as MISO, and <pinlink>RESET</pinlink> as RESET.</li>
+						</ul>
+						<div class="section_title">LTP-305 5*7 LED Matrix</div>
+						<ul>
+							<li>The LTP-305 contains an extra LED in the bottom-left to be used as a decimal point. For simplicity of code and to allow "flipping" of the display buffer in software for upside-down mounting, this decimal point LED is currently ignored.</li>
+						</ul>
+					</div>
+					<div class="right">
+						<div class="section_title">IS31FL3730 LED Matrix Driver</div>
+						<ul>
+							<li>The IS31FL3730 LED driver has its AD pin connected to V<sub>cc</sub>, setting its I<sup>2</sup>C address to 0x63.</li>
+							<li>It can be controlled directly through the <pinlink>SDA</pinlink> and <pinlink>SCL</pinlink> pins on the PIXIE header, however this limits you to a single PIXIE display without an I<sup>2</sup>C multiplexer and suitable code to account for things like the display buffer "dead space" and PWM bytes.</li>
+							<li>Two decoupling capacitors (C1 and C2) are used to reduce noise in the communication lines of the PCB.
+						</ul>
+					</div>
+				</div><br>
 			</div>
 			<div class="footer"></div>
 			<div class="page">
@@ -868,7 +926,7 @@
 			}
 			
 			function show_figure(figure_num){
-				var contents = $("#figure"+figure_num).html()+"<br><br><span class='jump_button' onclick='figure_jump(\"figure"+figure_num+"\");'>JUMP TO LOCATION</span>";
+				var contents = "<div id='figure_wrapper'>"+$("#figure"+figure_num).html()+"</div><br><br><span class='jump_button' onclick='figure_jump(\"figure"+figure_num+"\");'>JUMP TO LOCATION</span>";
 				$("#popup_title").html("Figure "+figure_num);
 				$("#popup_content").html(contents);
 				$("#popup").fadeIn("fast");
