@@ -41,6 +41,14 @@
 				border-bottom: 1px solid #ccc;
 				padding-bottom: 10px;
 			}
+			.section_number{
+				position: relative;
+				top: -66px;
+				float: right;
+				opacity: 0.75;
+				margin-bottom: -50px;
+				font-size: 25px;
+			}
 			.page_title{
 				font-size:45px;
 				margin-bottom:60px;
@@ -65,6 +73,8 @@
 				width:1540px;
 				position:relative;
 				top:-200px;
+				width: 1540px;
+				padding: 0px 80px;
 			}
 			.foot_info{
 				float:left;
@@ -131,6 +141,13 @@
 			.jump_button:hover{
 				cursor:pointer;
 				opacity: 1.0;
+			}
+			.header_num{
+				float: right;
+				color: #b2ff68;
+				font-size:32px;
+				position: relative;
+				top: 5px;
 			}
 			
 			a{
@@ -239,6 +256,7 @@
 		</style>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 		<link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
 	</head>
 	<body>
 		<div id="popup">
@@ -258,13 +276,14 @@
 			<div id="chainable_led_matrix_displays"></div>
 			<div class="page">
 				<div class="header"></div>
-				<div class="page_title">Chainable LED Matrix Displays</div>
+				<div class="page_title">Chainable LED Matrix Displays <span class="header_num"></span></div>
 				<img src="extras/datasheet/img/modules.png" width="100%"></img><br>
 				<br>
 				<br>
 				<div class="split">
 					<div class="left">
 						<div class="section_title">General Description</div>
+						<div class="section_number">S.1</div>
 						<p>
 							PIXIE is a compact, chainable, dual 5x7 LED dot-matrix display platform (compatible with Arduino) that offers full bitmap control with 7-bit global PWM and high refresh rates.<br>
 							<br>
@@ -306,6 +325,7 @@
 					</div>
 					<div class="right">
 						<div class="section_title">Features</div>
+						<div class="section_number">S.2</div>
 						<ul>
 							<li>Dual 5x7 LED matrices</li>
 							<li>2.7V to 5.5V supply</li>
@@ -319,6 +339,7 @@
 							<li>M2.5 mouting holes</li>
 						</ul>
 						<div class="section_title">Applications</div>
+						<div class="section_number">S.3</div>
 						<ul>
 							<li>Time-keeping</li>
 							<li>Stock tracking</li>
@@ -328,6 +349,7 @@
 							<li>Point of Sale</li>
 						</ul>
 						<div class="section_title">Internal Devices</div>
+						<div class="section_number">S.4</div>
 						<ul>
 							<li>ATTINY45 microcontroller</li>
 							<li>IS31FL3730 LED matrix driver</li>
@@ -341,7 +363,7 @@
 			<div id="pin_configuration" class="page_id"></div>
 			<div class="page">
 				<div class="header"></div>
-				<div class="page_title">Pin Configuration</div>
+				<div class="page_title">Pin Configuration <span class="header_num"></span></div>
 				
 				<img src="extras/datasheet/img/pinout.png" style="float: left; display: inline-block; width: 480px; margin-right: 40px;"></img>
 				<table class="table_fit">
@@ -421,7 +443,7 @@
 			
 			<div class="page">
 				<div class="header"></div>
-				<div class="page_title">Absolute Maximum Ratings</div>
+				<div class="page_title">Absolute Maximum Ratings <span class="header_num"></span></div>
 				
 				<table class="table_fit">
 					<tr>
@@ -443,6 +465,7 @@
 				</div>
 				<br>
 				<div class="section_title">Electrical Characteristics</div>
+				<div class="section_number">S.5</div>
 				<table class="table">
 					<tr class="table_labels">
 						<td>Parameter</td>
@@ -479,6 +502,7 @@
 				</table>
 				<br>
 				<div class="section_title">Digital Input Switching Characteristics</div>
+				<div class="section_number">S.6</div>
 				<table class="table">
 					<tr class="table_labels">
 						<td>Parameter</td>
@@ -541,10 +565,11 @@
 			<div class="footer"></div>
 			<div class="page">
 				<div class="header"></div>
-				<div class="page_title">USAGE</div>
+				<div class="page_title">USAGE <span class="header_num"></span></div>
 				<div class="split">
 					<div class="left">
 						<div class="section_title">DATA / CLOCK Interface</div>
+						<div class="section_number">S.7</div>
 						PIXIE uses a data / clock interface similar to SPI, but with a few distinctions:
 						
 						<ul>
@@ -564,6 +589,7 @@
 						Once the <pinlink>CLK</pinlink> line is <uline>LOW</uline> and hasn't changed state in at least 3ms, the 128-bit display buffer is latched, and it's contents are parsed and sent over I<sup>2</sup>C to the IS31FL3730 LED driver, updating the matrices.<br>
 						<br>
 						<div class="section_title">Reset Function</div>
+						<div class="section_number">S.8</div>
 						If the <pinlink>CLK</pinlink> line is held <oline>HIGH</oline> for more than 10ms, then set <uline>LOW</uline>, the on-board ATTINY will reset to vector 0x0000 in ROM and reset the registers of the IS31FL3730 LED driver, blanking all displays in the chain.<br>
 						<br>
 						Due to this, it's necessary to have the master controller keep the <pinlink>CLK</pinlink> line <uline>LOW</uline> when not in use.
@@ -597,10 +623,11 @@
 			<div class="footer"></div>
 			<div class="page">
 				<div class="header"></div>
-				<div class="page_title">USAGE (CONTD.)</div>
+				<div class="page_title">USAGE (CONTD.) <span class="header_num"></span></div>
 				<div class="split">
 					<div class="left">
 						<div class="section_title">Internal Display Buffer</div>
+						<div class="section_number">S.9</div>
 						PIXIE has an internal 128-bit (16 byte) display buffer, parsed as a 16x8 matrix. <figurelink>(Figure 2)</figurelink> The first 5 columns (C0-C4) pertain to the righthand LED matrix, and C8-C12 are the lefthand LED matrix.<br>
 						<br>
 						*Some columns/bits in the buffer are not visible in the physical LED matrix, and are used as "dead space" for smooth scrolling across the gap between displays.<br>
@@ -611,6 +638,7 @@
 					</div>
 					<div class="right">
 						<div class="section_title">SHIFTING DATA IN / OUT</div>
+						<div class="section_number">S.10</div>
 						When the <pinlink>CLK</pinlink> line goes <oline>HIGH</oline>, the bit at C15:B7 is set on the <pinlink>DAT_OUT</pinlink> line, and the whole buffer is shifted forward by one bit, overwriting the former value of C15:B7. (i.e. C15:B7 = C15:B6, C15:B0 = C14:B7, C0:B1 = C0:B0, etc.) <notelink>(Note 6)</notelink><br>
 						<br>
 						(The output of C15:B7/<pinlink>DAT_OUT</pinlink> will arrive at the <pinlink>DAT_IN</pinlink>/C0:B0 of the next PIXIE in the chain.)<br>
@@ -636,10 +664,11 @@
 			<div class="footer"></div>
 			<div class="page">
 				<div class="header"></div>
-				<div class="page_title">Circuit Notes</div>
+				<div class="page_title">Circuit Notes <span class="header_num"></span></div>
 				<div class="split">
 					<div class="left">
 						<div class="section_title">ATTINY45 Microcontroller</div>
+						<div class="section_number">S.11</div>
 						<ul>
 							<li>The ATTINY45 manages the passing of data between PIXIES, and communicating with the IS31FL3730 over I<sup>2</sup>C when the display buffer is latched.</li>
 							<li>It runs at ~16MHz using the Internal PLL as a source for the CPU Clock.</li>
@@ -647,12 +676,14 @@
 							<li>It can be reprogrammed with an ISCP programmer using <pinlink>SCL</pinlink> as SCLK, <pinlink>SDA</pinlink> as MOSI, <pinlink>CLK</pinlink> as MISO, and <pinlink>RESET</pinlink> as RESET.</li>
 						</ul>
 						<div class="section_title">LTP-305 5*7 LED Matrix</div>
+						<div class="section_number">S.12</div>
 						<ul>
 							<li>The LTP-305 contains an extra LED in the bottom-left to be used as a decimal point. For simplicity of code and to allow "flipping" of the display buffer in software for upside-down mounting, this decimal point LED is currently ignored.</li>
 						</ul>
 					</div>
 					<div class="right">
 						<div class="section_title">IS31FL3730 LED Matrix Driver</div>
+						<div class="section_number">S.13</div>
 						<ul>
 							<li>The IS31FL3730 LED driver has its AD pin connected to V<sub>cc</sub>, setting its I<sup>2</sup>C address to 0x63.</li>
 							<li>It can be controlled directly through the <pinlink>SDA</pinlink> and <pinlink>SCL</pinlink> pins on the PIXIE header, however this limits you to a single PIXIE display without an I<sup>2</sup>C multiplexer and suitable code to account for things like the display buffer "dead space" and PWM bytes.</li>
@@ -664,7 +695,7 @@
 			<div class="footer"></div>
 			<div class="page">
 				<div class="header"></div>
-				<div class="page_title">Schematic</div>
+				<div class="page_title">Schematic <span class="header_num"></span></div>
 				<img src="extras/datasheet/img/schematic.png" width="100%"></img>
 			</div>
 			<div class="footer"></div>
@@ -772,7 +803,7 @@
 			<div class="footer"></div>
 			<div class="page">
 				<div class="header"></div>
-				<div class="page_title">Hardware Specifications</div>
+				<div class="page_title">Hardware Specifications <span class="header_num"></span></div>
 				<table class="table">
 					<tr class="table_labels">
 						<td>Item</td>
@@ -814,7 +845,7 @@
 			<div class="footer"></div>
 			<div class="page">
 				<div class="header"></div>
-				<div class="page_title">Revision History</div>
+				<div class="page_title">Revision History <span class="header_num"></span></div>
 				<table class="table">
 					<tr class="table_labels">
 						<td>Revision</td>
@@ -896,6 +927,11 @@
 					if((i+1) > page_count){
 						page_count = (i+1);
 					}
+				});
+				
+				$('.header_num').each(function(i, obj) {
+					var out_html = (i+1);
+					$(obj).html(out_html);
 				});
 				
 				$('notelink').each(function(i, obj) {
