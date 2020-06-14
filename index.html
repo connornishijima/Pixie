@@ -289,9 +289,9 @@
 						<div class="section_title">General Description</div>
 						<div class="section_number">S.1</div>
 						<p>
-							PIXIE is a compact, chainable, dual 5x7 LED dot-matrix display platform (compatible with Arduino) that offers full bitmap control with 7-bit global PWM and high refresh rates.<br>
+							PIXIE is a compact, chainable, <figurelink>(Figure 1)</figurelink> dual 5x7 LED dot-matrix display platform (compatible with Arduino) that offers full bitmap control with 7-bit global PWM and high refresh rates.<br>
 							<br>
-							Using only two GPIO for <em><strong>DATA</strong></em> and <em><strong>CLOCK</strong></em>, bits can be simultaneously shifted in and out of each PIXIE at up to 41.6KHz. <figurelink>(Figure 1)</figurelink>   Final frame rate depends on the number of displays in the chain. For example - assuming a full 41.6KHz clock speed:<br>
+							Using only two GPIO for <em><strong>DATA</strong></em> and <em><strong>CLOCK</strong></em>, bits can be simultaneously shifted in and out of each PIXIE at up to 41.6KHz. <figurelink>(Figure 2)</figurelink>   Final frame rate depends on the number of displays in the chain. For example - assuming a full 41.6KHz clock speed:<br>
 							<br>
 							<table class="table">
 								<tr class="table_labels">
@@ -324,7 +324,7 @@
 								</tr>
 							</table>
 							<br>
-							After 3<em>ms</em> since the last clock pulse was receieved, the internal 16-byte display buffer is latched and sent to the on-board IS31FL3730 driver over I<sup>2</sup>C to update the PIXIE's displays. <figurelink>(Figure 2)</figurelink>
+							After 3<em>ms</em> since the last clock pulse was receieved, the internal 16-byte display buffer is latched and sent to the on-board IS31FL3730 driver over I<sup>2</sup>C to update the PIXIE's displays. <figurelink>(Figure 3)</figurelink>
 						</p>
 					</div>
 					<div class="right">
@@ -402,7 +402,7 @@
 						<td>Bitmap clock INPUT, no pullup <notelink>(Note 1)</notelink> (ATTINY MISO)</td>
 					</tr>
 					<tr>
-						<td>CLK</td>
+						<td>CLK*</td>
 						<td>6</td>
 						<td>(Same as above)</td>
 					</tr>
@@ -427,12 +427,12 @@
 						<td>(ATTINY MOSI / IS31FL3730 I<sup>2</sup>C SDA line)</td>
 					</tr>
 					<tr>
-						<td>GND</td>
+						<td>GND*</td>
 						<td>11</td>
 						<td>(Same as above)</td>
 					</tr>
 					<tr>
-						<td>VCC</td>
+						<td>VCC*</td>
 						<td>12</td>
 						<td>(Same as above)</td>
 					</tr>
@@ -440,8 +440,15 @@
 				<br>
 				<br>
 				<div class="note" id="note1">
-					<strong>NOTE 1:</strong> <pinlink>DAT_IN</pinlink> and <pinlink>CLK</pinlink> are INPUTS <strong>without pullups</strong>. This is done to prevent damage in the scenario that a PIXIE is powered with 5V on V<sub>cc</sub> but is receiving data from 3.3V-tolerant pins. <em>(i.e. ESP8266 / 32)</em>
-				</div>
+					<strong>NOTE 1:</strong> <pinlink>DAT_IN</pinlink> and <pinlink>CLK</pinlink> are INPUTS <strong>without pullups</strong>. This is done to prevent damage in the scenario that a PIXIE is powered with 5V on V<sub>cc</sub> but is receiving data from 3.3V-tolerant pins. <em>(i.e. ESP8266 / 32 / Teensy)</em> The master controller must drive these pins both <oline>HIGH</oline> and <uline>LOW</uline> <em>and not release these floating pins.</em>
+				</div><br>
+				<div class="section_title">Typical Application Circuit</div>
+				<div class="section_number">S.5</div>
+				<br>
+				<div class="figure" id="figure1">
+					<img src="extras/datasheet/img/application.png" class="figure" width="100%"></img>
+					<div class="figure_label"><strong>FIGURE 1</strong> - Typical Application Circuit</div>
+				</div><br>
 			</div>
 			<div class="footer"></div>
 			
@@ -469,7 +476,7 @@
 				</div>
 				<br>
 				<div class="section_title">Electrical Characteristics</div>
-				<div class="section_number">S.5</div>
+				<div class="section_number">S.6</div>
 				<table class="table">
 					<tr class="table_labels">
 						<td>Parameter</td>
@@ -506,7 +513,7 @@
 				</table>
 				<br>
 				<div class="section_title">Digital Input Switching Characteristics</div>
-				<div class="section_number">S.6</div>
+				<div class="section_number">S.7</div>
 				<table class="table">
 					<tr class="table_labels">
 						<td>Parameter</td>
@@ -562,7 +569,7 @@
 					<strong>NOTE 3:</strong> Max DATA CLOCK frequency depends on a minimum of 5V on V<sub>cc</sub>. While it is possible to maintain the 16MHz clock of the ATTINY with only 3.3V on V<sub>cc</sub>, this is not recommended or guaranteed.
 				</div>
 				<div class="note" id="note4">
-					<strong>NOTE 4:</strong> Due to the logic level <oline>HIGH</oline> at 5V (on V<sub>cc</sub>) being 2.6V, it is possible to control PIXIE with 3.3V TTL logic and a 5V power supply. (i.e. ESP8266 / 32) However, the PIXIE will output V<sub>cc</sub>'s voltage on the <pinlink>DAT_OUT</pinlink> pin, regardless of the voltage sent to <pinlink>DAT_IN</pinlink> / <pinlink>CLK</pinlink>.
+					<strong>NOTE 4:</strong> Due to the logic level <oline>HIGH</oline> at 5V (on V<sub>cc</sub>) being 2.6V, it is possible to control PIXIE with 3.3V TTL logic and a 5V power supply. (i.e. ESP8266 / 32 / Teensy) However, the PIXIE will output V<sub>cc</sub>'s voltage on the <pinlink>DAT_OUT</pinlink> pin, regardless of the voltage sent to <pinlink>DAT_IN</pinlink> / <pinlink>CLK</pinlink>.
 				</div><br>
 				<br>
 			</div>
@@ -573,17 +580,17 @@
 				<div class="split">
 					<div class="left">
 						<div class="section_title">DATA / CLOCK Interface</div>
-						<div class="section_number">S.7</div>
+						<div class="section_number">S.8</div>
 						PIXIE uses a data / clock interface similar to SPI, but with a few distinctions:
 						
 						<ul>
 							<li>Uni-directional communication (One way - master controller to dependents)</li>
 							<li>No "Chip Select" line (only one PIXIE chain per GPIO pair)</li>
-							<li>Data is shifted OUT of the internal buffer on <pinlink>CLK</pinlink> <oline>HIGH</oline> transition, and read IN to the internal buffer on <pinlink>CLK</pinlink> <uline>LOW</uline> &nbsp;&nbsp;<figurelink>(Figure 1)</figurelink></li>
+							<li>Data is shifted OUT of the internal buffer on <pinlink>CLK</pinlink> <oline>HIGH</oline> transition, and read IN to the internal buffer on <pinlink>CLK</pinlink> <uline>LOW</uline> &nbsp;&nbsp;<figurelink>(Figure 2)</figurelink></li>
 							<li>Each PIXIE is the "master" to the next in the chain</li>
 						</ul>
 						
-						The <pinlink>CLK</pinlink> line is shared between all units in the chain, and each PIXIE's <pinlink>DAT_OUT</pinlink> will connect to the next display's <pinlink>DAT_IN</pinlink>.<br>
+						The <pinlink>CLK</pinlink> line is shared between all units in the chain, and each PIXIE's <pinlink>DAT_OUT</pinlink> will connect to the next display's <pinlink>DAT_IN</pinlink>. <figurelink>(Figure 1)</figurelink><br>
 						<br>
 						The master controller controller <strong>must</strong> drive the <pinlink>CLK</pinlink> and <pinlink>DAT_IN</pinlink> lines <oline>HIGH</oline> and <uline>LOW</uline>, and not release them at anytime, as these input pins <strong>do not have pullup resistors attached/enabled</strong>. <notelink>(Note 1)</notelink><br>
 						<br>
@@ -595,16 +602,16 @@
 						In summary, the master controller must toggle the <pinlink>DAT_IN</pinlink> line before each <oline>HIGH</oline> <pinlink>CLK</pinlink> pulse, and the PIXIES in the chain will manage the passing of data before reading it on the <pinlink>CLK</pinlink> <uline>LOW</uline> transition.<br>
 						<br>
 						<div class="section_title">Reset Function</div>
-						<div class="section_number">S.8</div>
+						<div class="section_number">S.9</div>
 						If the <pinlink>CLK</pinlink> line is held <oline>HIGH</oline> for more than 10ms (then set <uline>LOW</uline>) the on-board ATTINY will reset to vector 0x0000 in ROM and reset the registers of the IS31FL3730 LED driver, blanking all displays in the chain.<br>
 						<br>
 						Due to this, it's necessary to have the master controller keep the <pinlink>CLK</pinlink> line <uline>LOW</uline> when not in use.
 					</div>
 				</div><br>
 				<br>
-				<div class="figure" id="figure1">
+				<div class="figure" id="figure2">
 					<img src="extras/datasheet/img/timing.png" class="figure" width="90%"></img>
-					<div class="figure_label"><strong>FIGURE 1</strong> - Timing Diagram</div>
+					<div class="figure_label"><strong>FIGURE 2</strong> - Timing Diagram</div>
 				</div><br>
 				<br>
 				<table class="table">
@@ -633,8 +640,8 @@
 				<div class="split">
 					<div class="left">
 						<div class="section_title">Internal Display Buffer</div>
-						<div class="section_number">S.9</div>
-						PIXIE has an internal 128-bit (16 byte) display buffer, parsed as a 16x8 matrix. <figurelink>(Figure 2)</figurelink> The first 5 columns (C0-C4) pertain to the righthand LED matrix, and C8-C12 are the lefthand LED matrix.<br>
+						<div class="section_number">S.10</div>
+						PIXIE has an internal 128-bit (16 byte) display buffer, parsed as a 16x8 matrix. <figurelink>(Figure 3)</figurelink> The first 5 columns (C0-C4) pertain to the righthand LED matrix, and C8-C12 are the lefthand LED matrix.<br>
 						<br>
 						*Some columns/bits in the buffer are not visible in the physical LED matrix, and are used as "dead space" for smooth scrolling across the gap between displays.<br>
 						<br>
@@ -644,7 +651,7 @@
 					</div>
 					<div class="right">
 						<div class="section_title">SHIFTING DATA IN / OUT</div>
-						<div class="section_number">S.10</div>
+						<div class="section_number">S.11</div>
 						When the <pinlink>CLK</pinlink> line goes <oline>HIGH</oline>, the bit at C15:B7 is set on the <pinlink>DAT_OUT</pinlink> line, and the whole buffer is shifted forward by one bit, overwriting the former value of C15:B7. (i.e. C15:B7 = C15:B6, C15:B0 = C14:B7, C0:B1 = C0:B0, etc.) <notelink>(Note 6)</notelink><br>
 						<br>
 						(The output of C15:B7/<pinlink>DAT_OUT</pinlink> will arrive at the <pinlink>DAT_IN</pinlink>/C0:B0 of the next PIXIE in the chain.)<br>
@@ -656,9 +663,9 @@
 				</div><br>
 				<br>
 				<br>
-				<div class="figure" id="figure2">
+				<div class="figure" id="figure3">
 					<img src="extras/datasheet/img/buffer_mapping.png" class="figure" width="80%"></img>
-					<div class="figure_label"><strong>FIGURE 2</strong> - Display Buffer Mapping</div>
+					<div class="figure_label"><strong>FIGURE 3</strong> - Display Buffer Mapping</div>
 				</div><br>
 				<div class="note" id="note5">
 					<strong>NOTE 5:</strong> Columns C5, C7, C13 and C15 are left blank, and are reserved for future development.
@@ -674,7 +681,7 @@
 				<div class="split">
 					<div class="left">
 						<div class="section_title">ATTINY45 Microcontroller</div>
-						<div class="section_number">S.11</div>
+						<div class="section_number">S.12</div>
 						<ul>
 							<li>The ATTINY45 manages the passing of data between PIXIES, and communicating with the IS31FL3730 over I<sup>2</sup>C when the display buffer is latched.</li>
 							<li>It runs at ~16MHz using the Internal PLL as a source for the CPU Clock.</li>
@@ -682,14 +689,14 @@
 							<li>It can be reprogrammed with an ISCP programmer using <pinlink>SCL</pinlink> as SCLK, <pinlink>SDA</pinlink> as MOSI, <pinlink>CLK</pinlink> as MISO, and <pinlink>RESET</pinlink> as RESET.</li>
 						</ul>
 						<div class="section_title">LTP-305 5*7 LED Matrix</div>
-						<div class="section_number">S.12</div>
+						<div class="section_number">S.13</div>
 						<ul>
 							<li>The LTP-305 contains an extra LED in the bottom-left to be used as a decimal point. For simplicity of code and to allow "flipping" of the display buffer in software for upside-down mounting, this decimal point LED is currently ignored.</li>
 						</ul>
 					</div>
 					<div class="right">
 						<div class="section_title">IS31FL3730 LED Matrix Driver</div>
-						<div class="section_number">S.13</div>
+						<div class="section_number">S.14</div>
 						<ul>
 							<li>The IS31FL3730 LED driver has its AD pin connected to V<sub>cc</sub>, setting its I<sup>2</sup>C address to 0x63.</li>
 							<li>It can be controlled directly through the <pinlink>SDA</pinlink> and <pinlink>SCL</pinlink> pins on the PIXIE header, however this limits you to a single PIXIE display without an I<sup>2</sup>C multiplexer and suitable code to account for things like the display buffer "dead space" and PWM bytes.</li>
