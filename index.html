@@ -641,22 +641,22 @@
 					<div class="left">
 						<div class="section_title">Internal Display Buffer</div>
 						<div class="section_number">S.10</div>
-						PIXIE has an internal 128-bit (16 byte) display buffer, parsed as a 16x8 matrix. <figurelink>(Figure 3)</figurelink> The first 5 columns (C0-C4) pertain to the righthand LED matrix, and C8-C12 are the lefthand LED matrix.<br>
+						PIXIE has an internal 128-bit (16 byte) display buffer, parsed as a 16x8 matrix. <figurelink>(Figure 3)</figurelink> The 5 columns C3-C7 pertain to the lefthand LED matrix, and C11-C15 are the righthand LED matrix.<br>
 						<br>
 						*Some columns/bits in the buffer are not visible in the physical LED matrix, and are used as "dead space" for smooth scrolling across the gap between displays.<br>
 						<br>
-						Columns C6 and C14 redundantly store the 7-bit PWM brightness of the PIXIE display in bits B1-B7. Only the PWM columns have B0 set to 1, allowing the PIXIE to recognize and treat them as blank columns when scrolling them across the visible areas.<br>
+						Columns C1 and C9 redundantly store the 7-bit PWM brightness of the PIXIE display in bits B0-B6. Only the PWM columns have B7 (MSB) set to 1, allowing the PIXIE to recognize and treat them as blank columns when scrolling them across the visible areas.<br>
 						<br>
 						Some columns between visible displays are unused completely. <notelink>(Note 5)</notelink><br>
 					</div>
 					<div class="right">
 						<div class="section_title">SHIFTING DATA IN / OUT</div>
 						<div class="section_number">S.11</div>
-						When the <pinlink>CLK</pinlink> line goes <oline>HIGH</oline>, the bit at C15:B7 is set on the <pinlink>DAT_OUT</pinlink> line, and the whole buffer is shifted forward by one bit, overwriting the former value of C15:B7. (i.e. C15:B7 = C15:B6, C15:B0 = C14:B7, C0:B1 = C0:B0, etc.) <notelink>(Note 6)</notelink><br>
+						When the <pinlink>CLK</pinlink> line goes <oline>HIGH</oline>, the bit at C0:B0 is set on the <pinlink>DAT_OUT</pinlink> line, and the whole buffer is shifted left by one bit, overwriting the former value of C0:B0. (i.e. C0:B0 = C0:B1, C0:B7 = C1:B0, C15:B6 = C15:B7, etc.) <notelink>(Note 6)</notelink><br>
 						<br>
-						(The output of C15:B7/<pinlink>DAT_OUT</pinlink> will arrive at the <pinlink>DAT_IN</pinlink>/C0:B0 of the next PIXIE in the chain.)<br>
+						(The output of C0:B0/<pinlink>DAT_OUT</pinlink> will arrive at the <pinlink>DAT_IN</pinlink>/C15:B7 of the next PIXIE in the chain.)<br>
 						<br>
-						Next, when the <pinlink>CLK</pinlink> line goes <uline>LOW</uline> again, the logic level (0/1) of this PIXIE's <pinlink>DAT_IN</pinlink> line is written to C0:B0.<br>
+						Next, when the <pinlink>CLK</pinlink> line goes <uline>LOW</uline> again, the logic level (0/1) of this PIXIE's <pinlink>DAT_IN</pinlink> line is written to C15:B7.<br>
 						<br>
 						Because of this bitwise shifting of the buffer, it is crucial that the master controller <strong>sends a multiple of 128 bits every time the PIXIE chain is updated.</strong>
 					</div>
@@ -668,7 +668,7 @@
 					<div class="figure_label"><strong>FIGURE 3</strong> - Display Buffer Mapping</div>
 				</div><br>
 				<div class="note" id="note5">
-					<strong>NOTE 5:</strong> Columns C5, C7, C13 and C15 are left blank, and are reserved for future development.
+					<strong>NOTE 5:</strong> Columns C0, C2, C8 and C10 are left blank, and are reserved for future development.
 				</div>
 				<div class="note" id="note6">
 					<strong>NOTE 6:</strong> In actuality, the buffer is not shifted in RAM, just a pointer for accessing it. (Circular buffer)

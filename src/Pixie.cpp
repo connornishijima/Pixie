@@ -42,8 +42,8 @@ void Pixie::show(){
 }
 
 void Pixie::brightness(uint8_t b){
-	b += 128;
 	bright = b;
+	bitWrite(bright,7,1); // set bit 7 (MSB) to 1 to signify PWM byte to PIXIE
 }
 
 void Pixie::clear(){
@@ -373,10 +373,11 @@ void Pixie::scroll_message(char* input, uint16_t wait_ms, bool instant){
 				chr -= 32;
 			}
 			
+			
 			push_byte(0);
 			show();
 			delay(10);
-			push_byte(255);
+			push_byte(bright);
 			show();
 			delay(10);
 			push_byte(0);
@@ -398,13 +399,13 @@ void Pixie::scroll_message(char* input, uint16_t wait_ms, bool instant){
 			show();
 			delay(10);
 			
-			delay(150);
+			delay(wait_ms);
 		}
 		for(uint8_t i = 0; i < disp_count; i++){
 			push_byte(0);
 			show();
 			delay(10);
-			push_byte(255);
+			push_byte(bright);
 			show();
 			delay(10);
 			push_byte(0);
@@ -426,7 +427,38 @@ void Pixie::scroll_message(char* input, uint16_t wait_ms, bool instant){
 			show();
 			delay(10);
 			
-			delay(150);
+			delay(wait_ms);
+		}
+	}
+	else{
+		for(uint16_t c = 0; c < len; c++){
+			char chr = input[c];
+			if (chr >= 32) {
+				chr -= 32;
+			}
+			
+			push_byte(0);
+			push_byte(bright);
+			push_byte(0);
+			push_byte(pgm_read_byte_far(col+(chr * 5 + 0)));
+			push_byte(pgm_read_byte_far(col+(chr * 5 + 1)));
+			push_byte(pgm_read_byte_far(col+(chr * 5 + 2)));
+			push_byte(pgm_read_byte_far(col+(chr * 5 + 3)));
+			push_byte(pgm_read_byte_far(col+(chr * 5 + 4)));
+			show();			
+			delay(wait_ms);
+		}
+		for(uint8_t i = 0; i < disp_count; i++){
+			push_byte(0);
+			push_byte(bright);
+			push_byte(0);
+			push_byte(0);
+			push_byte(0);
+			push_byte(0);
+			push_byte(0);
+			push_byte(0);
+			show();			
+			delay(wait_ms);
 		}
 	}
 }
