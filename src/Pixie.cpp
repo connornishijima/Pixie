@@ -58,6 +58,20 @@ void Pixie::set_pix(uint16_t x, uint16_t y, uint8_t state){
 	}
 }
 
+void Pixie::push_pix(bool state){
+	if(state){
+		GPOS = (1 << DAT_pin);
+	}
+	else{
+		GPOC = (1 << DAT_pin);
+	}
+
+	GPOS = (1 << CLK_pin);
+	delayMicroseconds(clk_us);
+	GPOC = (1 << CLK_pin);
+	delayMicroseconds(clk_us);
+}
+
 void Pixie::write(float input, uint8_t places, uint8_t pos){
 	char char_buf[48];	
 	sprintf(char_buf, "%.*f", places, input);
@@ -361,31 +375,74 @@ void Pixie::scroll_message(char* input, uint16_t wait_ms, bool instant){
 			
 			push_byte(0);
 			show();
-			push_byte(bright);
+			delay(10);
+			push_byte(255);
 			show();
+			delay(10);
 			push_byte(0);
 			show();
+			delay(10);
 			push_byte(pgm_read_byte_far(col+(chr * 5 + 0)));
 			show();
+			delay(10);
 			push_byte(pgm_read_byte_far(col+(chr * 5 + 1)));
 			show();
+			delay(10);
 			push_byte(pgm_read_byte_far(col+(chr * 5 + 2)));
 			show();
+			delay(10);
 			push_byte(pgm_read_byte_far(col+(chr * 5 + 3)));
 			show();
+			delay(10);
 			push_byte(pgm_read_byte_far(col+(chr * 5 + 4)));
 			show();
+			delay(10);
 			
 			delay(150);
 		}
 		for(uint8_t i = 0; i < disp_count; i++){
-			for(uint8_t s = 0; s < 8; s++){
-				push_byte(0);
-				show();
-			}
+			push_byte(0);
+			show();
+			delay(10);
+			push_byte(255);
+			show();
+			delay(10);
+			push_byte(0);
+			show();
+			delay(10);
+			push_byte(0);
+			show();
+			delay(10);
+			push_byte(0);
+			show();
+			delay(10);
+			push_byte(0);
+			show();
+			delay(10);
+			push_byte(0);
+			show();
+			delay(10);
+			push_byte(0);
+			show();
+			delay(10);
+			
 			delay(150);
 		}
 	}
+}
+
+void Pixie::dump_buffer(){
+	for (uint16_t b = 0; b < disp_count * 8; b++) {
+		for (uint8_t i = 0; i < 8; i++) {
+			if(bitRead(display_buffer[b], 7 - i)){
+				Serial.print(1);
+			}
+			else{
+				Serial.print(0);
+			}
+		}
+	}
+	Serial.println("\n");
 }
 
 void Pixie::reset() {

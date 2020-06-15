@@ -34,6 +34,7 @@ class Pixie{
 	void push(float input, uint8_t places = 2);
 	void push(uint8_t* icon);
 	void push(uint8_t byte1, uint8_t byte2, uint8_t byte3, uint8_t byte4, uint8_t byte5);
+	void push_pix(bool state);
 	
 	void shift_char(char chr);	
 	void shift_byte(uint8_t col);
@@ -52,6 +53,8 @@ class Pixie{
 	void scroll_message(char* input, uint16_t wait_ms = 150, bool instant = false);
 		
 	void set_pix(uint16_t x, uint16_t y, uint8_t state);
+	
+	void dump_buffer();
 	
 	void reset();
 	
