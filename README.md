@@ -15,6 +15,14 @@ Pixies are 5x7 microdot LED matrices great for showing... just about anything yo
 - 20.6mm * 34.7mm package
 - M2.5 mouting holes
 
+Included in this repository:
+
+- Arduino Library Source Code
+- Software Documentation
+- [Hardware Datasheet](https://connornishijima.github.io/Pixie/extras/datasheet.html)
+- [Pixie Icon Generator](https://connornishijima.github.io/Pixie/extras/icon_generator.html)
+- PCB Gerbers
+
 ----------
 # Arduino Library Installation
 
