@@ -1,4 +1,4 @@
-![Pixie](extras/img/modules_transparent.png)
+![Pixie](extras/img/modules_banner.png)
 
 # Pixie for Arduino
 
