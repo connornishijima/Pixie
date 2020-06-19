@@ -21,13 +21,17 @@ Pixies are 5x7 microdot LED matrices great for showing... just about anything yo
 ~**With Arduino Library Manager:**~ COMING SOON!
 
 ~1. Open *Sketch > Include Library > Manage Libraries* in the Arduino IDE.~
+
 ~2. Search for "Pixie" by Connor Nishijima, and select the latest version.~
+
 ~3. Click the Install button and Arduino will prepare the library and examples for you!~
 
 **Manual Install:**
 
 1. Click "Clone or Download" above to get an "Pixie-master.zip" file.
+
 2. Extract its contents to the libraries folder in your Arduino sketchbook. ("C:/Users/**YOUR_USERNAME**/Documents/Arduino/libraries" on Windows)
+
 3. Rename the folder from "Pixie-master" to "Pixie".
 
 
