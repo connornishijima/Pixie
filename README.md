@@ -15,13 +15,25 @@ Pixies are 5x7 microdot LED matrices great for showing... just about anything yo
 - 20.6mm * 34.7mm package
 - M2.5 mouting holes
 
-Included in this repository:
+## Included in this repository:
 
 - Arduino Library Source Code
 - Software Documentation
-- [Hardware Datasheet](https://connornishijima.github.io/Pixie/extras/datasheet.html)
-- [Pixie Icon Generator](https://connornishijima.github.io/Pixie/extras/icon_generator.html)
+- Hardware Datasheet
+- Pixie Icon Generator
 - PCB Gerbers
+
+## Software Documentation
+
+Documentation for the Pixie library is available in both the /examples directory for Arduino, and at the site below:
+
+SOFTWARE DOCUMENTATION LINK HERE
+
+## Hardware Documentation
+
+Pixie has a comprehensive hardware datasheet (including internal firmware documentation) available here:
+
+**[PIXIE DATASHEET](https://connornishijima.github.io/Pixie/extras/datasheet.html)**
 
 ----------
 # Arduino Library Installation
@@ -40,12 +52,12 @@ Included in this repository:
 2. Extract its contents to the libraries folder in your Arduino sketchbook. ("C:/Users/**YOUR_USERNAME**/Documents/Arduino/libraries" on Windows)
 3. Rename the folder from "Pixie-master" to "Pixie".
 
+----------
+# Contributing
+Any advice or pull requests are welcome. :)
 
+----------
+# License and Credits
+**Developed by Connor Nishijima (2020)**
 
-
-
-
-# Pixie
-An Arduino library for controlling 5x7 "Pixie" LED Displays!
-
-#### [PIXIE HARDWARE DATASHEET](https://connornishijima.github.io/Pixie)
+**Released under the [GPLv3 license](http://www.gnu.org/licenses/gpl-3.0.en.html).**
