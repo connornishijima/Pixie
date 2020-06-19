@@ -1,5 +1,5 @@
 {
-  "name": "TinySnore",
+  "name": "Pixie",
   "description": "Library for controlling Pixie Displays!",
   "keywords": "pixie,displays,lixie,nishijima",
   "authors":
@@ -17,6 +17,8 @@
   "frameworks": "arduino",
   "platforms":
   [
-    "esp8266"
+    "esp8266",
+	"esp32",
+	"atmelavr",
   ]
 }

@@ -22,7 +22,9 @@ class Pixie{
 	void write(char* input,   uint8_t pos = 0);
 	void write(int32_t input, uint8_t pos = 0);
 	void write(uint32_t input, uint8_t pos = 0);
-	void write(long unsigned int input, uint8_t pos = 0); // same as uint32_t, but Arduino is stupid
+	#if defined(ESP8266) || defined(ESP32)
+		void write(long unsigned int input, uint8_t pos = 0); // same as uint32_t, but Arduino is stupid
+	#endif
 	void write(float input, uint8_t places = 2, uint8_t pos = 0);
 	void write(double input, uint8_t places = 2, uint8_t pos = 0);
 	void write(uint8_t* icon, uint8_t pos = 0);
@@ -35,7 +37,9 @@ class Pixie{
 	void push(char* input);
 	void push(int32_t input);
 	void push(uint32_t input);
-	void push(long unsigned int input); // same as uint32_t, but Arduino is stupid
+	#if defined(ESP8266) || defined(ESP32)
+		void push(long unsigned int input); // same as uint32_t, but Arduino is stupid
+	#endif
 	void push(float input, uint8_t places = 2);
 	void push(double input, uint8_t places = 2);
 	void push(uint8_t* icon);
@@ -47,7 +51,9 @@ class Pixie{
 	void shift(char* input);
 	void shift(int32_t input);
 	void shift(uint32_t input);
-	void shift(long unsigned int input); // same as uint32_t, but Arduino is stupid
+	#if defined(ESP8266) || defined(ESP32)
+		void shift(long unsigned int input); // same as uint32_t, but Arduino is stupid
+	#endif
 	void shift(float input, uint8_t places = 2);
 	void shift(double input, uint8_t places = 2);
 	void shift(uint8_t* icon);
@@ -56,7 +62,9 @@ class Pixie{
 	void draw_line(int16_t x1, int16_t y1, int16_t x2, int16_t y2);
 	
 	uint8_t get_length(uint32_t input);
-	uint8_t get_length(long unsigned int input);
+	#if defined(ESP8266) || defined(ESP32)
+		uint8_t get_length(long unsigned int input);
+	#endif
 	uint8_t get_length(int32_t input);
 	uint8_t get_length(float input, uint8_t places);
 		

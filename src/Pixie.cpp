@@ -30,15 +30,49 @@ void Pixie::show(){
 	for (uint16_t b = 0; b < disp_count * 8; b++) {
 		for (uint8_t i = 0; i < 8; i++) {
 			if(bitRead(display_buffer[b], 7 - i)){
-				GPOS = (1 << DAT_pin);
+				#ifdef ESP8266
+					GPOS = (1 << DAT_pin);
+				#endif
+				#ifdef ESP32
+					GPIO.out_w1ts = ((uint32_t)1 << DAT_pin);
+				#endif
+				
+				#if !defined(ESP8266) && !defined(ESP32)
+					digitalWrite(DAT_pin, HIGH);
+				#endif
 			}
 			else{
-				GPOC = (1 << DAT_pin);
+				#ifdef ESP8266
+					GPOC = (1 << DAT_pin);
+				#endif
+				#ifdef ESP32
+					GPIO.out_w1tc = ((uint32_t)1 << DAT_pin);
+				#endif
+				
+				#if !defined(ESP8266) && !defined(ESP32)
+					digitalWrite(DAT_pin, LOW);
+				#endif
 			}
 
-			GPOS = (1 << CLK_pin);
+			#ifdef ESP8266
+				GPOS = (1 << CLK_pin);
+			#endif
+			#ifdef ESP32
+				GPIO.out_w1ts = ((uint32_t)1 << CLK_pin);
+			#endif
+			#if !defined(ESP8266) && !defined(ESP32)
+				digitalWrite(CLK_pin, HIGH);
+			#endif
 			delayMicroseconds(clk_us);
-			GPOC = (1 << CLK_pin);
+			#ifdef ESP8266
+				GPOC = (1 << CLK_pin);
+			#endif
+			#ifdef ESP32
+				GPIO.out_w1tc = ((uint32_t)1 << CLK_pin);
+			#endif
+			#if !defined(ESP8266) && !defined(ESP32)
+				digitalWrite(CLK_pin, LOW);
+			#endif
 			delayMicroseconds(clk_us);
 		}
 		delayMicroseconds(clk_us);
@@ -95,11 +129,13 @@ void Pixie::write(uint32_t input, uint8_t pos){
 	write(char_buf, pos);
 }
 
-void Pixie::write(long unsigned int input, uint8_t pos){
-	char char_buf[48];
-	ultoa(input,char_buf,10);
-	write(char_buf, pos);
-}
+#if defined(ESP8266) || defined(ESP32)
+	void Pixie::write(long unsigned int input, uint8_t pos){
+		char char_buf[48];
+		ultoa(input,char_buf,10);
+		write(char_buf, pos);
+	}
+#endif
 
 void Pixie::write(char input, uint8_t pos){
 	write_char(input, pos);
@@ -240,16 +276,18 @@ void Pixie::push(uint32_t input){
 	}
 }
 
-void Pixie::push(long unsigned int input){
-	char char_buf[48];
-	ultoa(input,char_buf,10);
-	for(uint8_t i = 0; i < 48; i++){
-		if(char_buf[i] == 0){
-			break;
+#if defined(ESP8266) || defined(ESP32)
+	void Pixie::push(long unsigned int input){
+		char char_buf[48];
+		ultoa(input,char_buf,10);
+		for(uint8_t i = 0; i < 48; i++){
+			if(char_buf[i] == 0){
+				break;
+			}
+			push_char(char_buf[i]);
 		}
-		push_char(char_buf[i]);
 	}
-}
+#endif
 
 void Pixie::push(char input){
 	push_char(input);
@@ -407,14 +445,16 @@ void Pixie::shift(uint32_t input){
 	}
 }
 
-void Pixie::shift(long unsigned int input){
-	const uint8_t len = get_length(input);
-	char char_buf[len];
-	ultoa(input,char_buf,10);
-	for(uint8_t i = 0; i < len; i++){
-		shift_char(char_buf[len-1-i]);
+#if defined(ESP8266) || defined(ESP32)
+	void Pixie::shift(long unsigned int input){
+		const uint8_t len = get_length(input);
+		char char_buf[len];
+		ultoa(input,char_buf,10);
+		for(uint8_t i = 0; i < len; i++){
+			shift_char(char_buf[len-1-i]);
+		}
 	}
-}
+#endif
 
 void Pixie::shift(char input){
 	shift_char(input);
@@ -643,17 +683,19 @@ uint8_t Pixie::get_length(uint32_t input){
 	return places;
 }
 
-uint8_t Pixie::get_length(long unsigned int input){
-	if(input == 0){
-		return 1;
+#if defined(ESP8266) || defined(ESP32)
+	uint8_t Pixie::get_length(long unsigned int input){
+		if(input == 0){
+			return 1;
+		}
+		uint8_t places = 0;
+		while(abs(input) >= 1){
+			input /= 10;
+			places++;
+		}
+		return places;
 	}
-	uint8_t places = 0;
-	while(abs(input) >= 1){
-		input /= 10;
-		places++;
-	}
-	return places;
-}
+#endif
 
 void Pixie::scroll_message(char* input, uint16_t wait_ms, bool instant){
 	clear();
@@ -668,40 +710,56 @@ void Pixie::scroll_message(char* input, uint16_t wait_ms, bool instant){
 				
 				push_byte(pgm_read_byte_far(col+(chr * 5 + 0)));
 				show();
+				delay(2);
 				push_byte(pgm_read_byte_far(col+(chr * 5 + 1)));
 				show();
+				delay(2);
 				push_byte(pgm_read_byte_far(col+(chr * 5 + 2)));
 				show();
+				delay(2);
 				push_byte(pgm_read_byte_far(col+(chr * 5 + 3)));
 				show();
+				delay(2);
 				push_byte(pgm_read_byte_far(col+(chr * 5 + 4)));
 				show();
+				delay(2);
 				push_byte(0);
 				show();
+				delay(2);
 				push_byte(bright);
 				show();
+				delay(2);
 				push_byte(0);
 				show();
+				delay(2);
 				
 				delay(wait_ms);
 			}
 			for(uint8_t i = 0; i < disp_count; i++){
 				push_byte(0);
 				show();
+				delay(2);
 				push_byte(0);
 				show();
+				delay(2);
 				push_byte(0);
 				show();
+				delay(2);
 				push_byte(0);
 				show();
+				delay(2);
 				push_byte(0);
 				show();
+				delay(2);
 				push_byte(0);
 				show();
+				delay(2);
 				push_byte(bright);
 				show();
+				delay(2);
 				push_byte(0);
 				show();
+				delay(2);
 				
 				delay(wait_ms);
 			}
@@ -715,40 +773,56 @@ void Pixie::scroll_message(char* input, uint16_t wait_ms, bool instant){
 				
 				push_byte(0);
 				show();
+				delay(2);
 				push_byte(bright);
 				show();
+				delay(2);
 				push_byte(0);
 				show();
+				delay(2);
 				push_byte(pgm_read_byte_far(col+(chr * 5 + 0)));
 				show();
+				delay(2);
 				push_byte(pgm_read_byte_far(col+(chr * 5 + 1)));
 				show();
+				delay(2);
 				push_byte(pgm_read_byte_far(col+(chr * 5 + 2)));
 				show();
+				delay(2);
 				push_byte(pgm_read_byte_far(col+(chr * 5 + 3)));
 				show();
+				delay(2);
 				push_byte(pgm_read_byte_far(col+(chr * 5 + 4)));
 				show();
+				delay(2);
 				
 				delay(wait_ms);
 			}
 			for(uint8_t i = 0; i < disp_count; i++){
 				push_byte(0);
 				show();
+				delay(2);
 				push_byte(bright);
 				show();
+				delay(2);
 				push_byte(0);
 				show();
+				delay(2);
 				push_byte(0);
 				show();
+				delay(2);
 				push_byte(0);
 				show();
+				delay(2);
 				push_byte(0);
 				show();
+				delay(2);
 				push_byte(0);
 				show();
+				delay(2);
 				push_byte(0);
 				show();
+				delay(2);
 				
 				delay(wait_ms);
 			}
@@ -835,9 +909,25 @@ void Pixie::dump_buffer(){
 }
 
 void Pixie::reset() {
-	GPOS = (1 << CLK_pin);
+	#ifdef ESP8266
+		GPOS = (1 << CLK_pin);
+	#endif
+	#ifdef ESP32
+		GPIO.out_w1ts = ((uint32_t)1 << CLK_pin);
+	#endif
+	#if !defined(ESP8266) && !defined(ESP32)
+		digitalWrite(CLK_pin, HIGH);
+	#endif
 	delay(15);
-	GPOC = (1 << CLK_pin);
+	#ifdef ESP8266
+		GPOC = (1 << CLK_pin);
+	#endif
+	#ifdef ESP32
+		GPIO.out_w1tc = ((uint32_t)1 << CLK_pin);
+	#endif
+	#if !defined(ESP8266) && !defined(ESP32)
+		digitalWrite(CLK_pin, LOW);
+	#endif
 	delay(10);
 }
 
