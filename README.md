@@ -23,6 +23,7 @@ Pixies are chainable 5x7 microdot LED matrices great for showing... just about a
 - Software Documentation
 - Hardware Datasheet
 - Pixie Icon Generator
+- Raspberry Pi Python Driver (Beta)
 - PCB Gerbers
 
 ## Software Documentation
