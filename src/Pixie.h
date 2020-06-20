@@ -10,7 +10,7 @@ Released under the GPLv3 license.
 
 class Pixie{
   public:
-    Pixie(uint8_t d_count, uint8_t c_pin, uint8_t d_pin);
+    Pixie(uint8_t p_count, uint8_t c_pin, uint8_t d_pin);
     void begin();
 	void flipped(bool enable);
 	void show();
