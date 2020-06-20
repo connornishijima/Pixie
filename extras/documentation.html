@@ -1,0 +1,295 @@
+<html>
+	<head>
+		<title>Pixie Library Documentation</title>
+		<style>
+			body{
+				background-color:#080808;
+				color:#ccc;
+				font-size:22px;
+				font-family: 'Source Sans Pro', sans-serif;
+			}			
+			a{
+				color:#b2ff68;
+				text-decoration:none;
+			}
+			a:hover{
+				color:#eeeeee;
+			}
+			#menu{
+				background-color:#181818;
+				width: calc(100% - 30px);
+				height:34px;
+				padding: 15px;
+				position: fixed;
+				top: 0px;
+				left: 0px;
+				z-index: 50;
+				border-bottom: 5px solid #b2ff68;
+			}
+			#menu_title{
+				display:inline-block;
+				margin-right:22px;
+			}
+			#page_num{
+				display:inline-block;
+				margin-right:22px;
+			}
+			#page_link, #git_link{
+				color:#b2ff68;
+				font-size:19px;
+				display:inline-block;
+				opacity:0.75;
+			}
+			#page_link:hover, #git_link:hover{
+				cursor:pointer;
+				opacity:1.00;
+			}
+			#git_link{
+				margin-top:4px;
+				float:right;
+			}
+			#container{
+				padding-top:80px;
+			}
+			
+			.function{
+				padding: 10px;
+				margin:0px 10px;
+				background-color: #242424;
+				border-top: 5px solid #b2ff68;
+				margin-bottom:20px;
+			}
+			.function_name{
+				color: #b2ff68;
+				margin-right: 10px;
+				font-weight: bold;
+			}
+			.function_def{
+				font-size:25px;
+				margin-bottom:15px;
+			}
+			.var_type{
+				color: #9dc578;
+			}
+		</style>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+		<link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+	</head>
+	<body>
+		<div id="menu">
+			<div id="menu_title"><strong><span style="color:#b2ff68;">PIXIE</span></strong> | <span style="color:#999">Library <strong>Documentation</strong></span></div>
+			<div id="git_link"><a href="https://github.com/connornishijima/Pixie">Visit GitHub Repository</a></div>
+		</div>
+		<div id="container">
+			<div class="function">
+				<div class="function_def">Pixie pix(uint8_t pixie_count, uint8_t CLK_pin, uint8_t DAT_pin)</div>
+				<div class="function_desc">
+					Pixie class instance initializer. (<em>pixie_count</em> is the number of Pixies in the chain)<br>
+					<br>
+					"pix" is the nickname for the instance, and will be used throughout the rest of your code. For example: <em>pix.write("Hello");</em><br>
+					<br>
+					Must be called after <strong>#include "Pixie.h"</strong> and before <strong>setup()</strong>
+				</div>
+			</div>
+			<div class="function">
+				<div class="function_def">begin()</div>
+				<div class="function_desc">
+					Initializes the display buffer and clears the displays<br>
+					(Should be called once in the Arduino setup() function)
+				</div>
+			</div>
+			<div class="function">
+				<div class="function_def">clear()</div>
+				<div class="function_desc">
+					Clears the display buffer<br>
+				</div>
+			</div>
+			<div class="function">
+				<div class="function_def">show()</div>
+				<div class="function_desc">
+					Writes the current display buffer to the Pixie chain<br>
+				</div>
+			</div>
+			<div class="function">
+				<div class="function_def">write(var input, uint8_t pos = 0)</div>
+				<div class="function_desc">
+					Writes the input to the display at the position from the left side of the chain<br>
+					<br>
+					"var" can be: uint8_t, uint16_t, uint32_t, int16_t, int32_t, float, double, char or char*
+				</div>
+			</div>
+			<div class="function">
+				<div class="function_def">write(uint8_t input*, uint8_t pos = 0)</div>
+				<div class="function_desc">
+					Writes a built-in Pixie Icon to the display at the position from the left side of the chain<br>
+					<br>
+					Example: pix.write(PIX_HEART, 0);<br>
+					<br>
+					Built-in icons can be found in the <a href="https://connornishijima.github.io/Pixie/extras/icon_generator.html">ICON GENERATOR</a>
+				</div>
+			</div>
+			<div class="function">
+				<div class="function_def">write(uint8_t col0, uint8_t col1, uint8_t col2, uint8_t col3, uint8_t col4, uint8_t pos = 0)</div>
+				<div class="function_desc">
+					Writes a custom Pixie Icon to the display (encoded as column data) at the position from the left side of the chain<br>
+					<br>
+					Example: pix.write(0x10,0x26,0x20,0x26,0x10, 0);<br>
+					<br>
+					Custom icons can be made in the <a href="https://connornishijima.github.io/Pixie/extras/icon_generator.html">ICON GENERATOR</a>
+				</div>
+			</div>
+			<div class="function">
+				<div class="function_def">push(var input)</div>
+				<div class="function_desc">
+					Adds the var to the RIGHT side of the display chain, shifting all content LEFT.<br>
+					<br>
+					"var" can be: uint8_t, uint16_t, uint32_t, int16_t, int32_t, float, double, char or char*
+				</div>
+			</div>
+			<div class="function">
+				<div class="function_def">push(uint8_t input*, uint8_t pos = 0)</div>
+				<div class="function_desc">
+					Adds a built-in Pixie Icon to the RIGHT side of the display chain, shifting all content LEFT.<br>
+					<br>
+					Example: pix.push(PIX_HEART, 0);<br>
+					<br>
+					Built-in icons can be found in the <a href="https://connornishijima.github.io/Pixie/extras/icon_generator.html">ICON GENERATOR</a>
+				</div>
+			</div>
+			<div class="function">
+				<div class="function_def">push(uint8_t col0, uint8_t col1, uint8_t col2, uint8_t col3, uint8_t col4, uint8_t pos = 0)</div>
+				<div class="function_desc">
+					Adds a custom Pixie Icon to the RIGHT side of the display buffer, (encoded as column data) shifting all content LEFT.<br>
+					<br>
+					Example: pix.push(0x10,0x26,0x20,0x26,0x10, 0);<br>
+					<br>
+					Custom icons can be made in the <a href="https://connornishijima.github.io/Pixie/extras/icon_generator.html">ICON GENERATOR</a>
+				</div>
+			</div>
+			<div class="function">
+				<div class="function_def">push_byte(uint8_t col)</div>
+				<div class="function_desc">
+					Adds a single column to the RIGHT side of the display buffer, shifting all content LEFT.<br>
+				</div>
+			</div>
+			<div class="function">
+				<div class="function_def">shift(var input)</div>
+				<div class="function_desc">
+					Adds the var to the LEFT side of the display buffer, shifting all content RIGHT.<br>
+					<br>
+					"var" can be: uint8_t, uint16_t, uint32_t, int16_t, int32_t, float, double, char or char*
+				</div>
+			</div>
+			<div class="function">
+				<div class="function_def">shift(uint8_t input*, uint8_t pos = 0)</div>
+				<div class="function_desc">
+					Adds a built-in Pixie Icon to the LEFT side of the display buffer, shifting all content RIGHT.<br>
+					<br>
+					Example: pix.shift(PIX_HEART, 0);<br>
+					<br>
+					Built-in icons can be found in the <a href="https://connornishijima.github.io/Pixie/extras/icon_generator.html">ICON GENERATOR</a>
+				</div>
+			</div>
+			<div class="function">
+				<div class="function_def">shift(uint8_t col0, uint8_t col1, uint8_t col2, uint8_t col3, uint8_t col4, uint8_t pos = 0)</div>
+				<div class="function_desc">
+					Adds a custom Pixie Icon to the LEFT side of the display buffer, (encoded as column data) shifting all content RIGHT.<br>
+					<br>
+					Example: pix.shift(0x10,0x26,0x20,0x26,0x10, 0);<br>
+					<br>
+					Custom icons can be made in the <a href="https://connornishijima.github.io/Pixie/extras/icon_generator.html">ICON GENERATOR</a>
+				</div>
+			</div>
+			<div class="function">
+				<div class="function_def">shift_byte(uint8_t col)</div>
+				<div class="function_desc">
+					Adds a single column to the LEFT side of the display buffer, shifting all content RIGHT.<br>
+				</div>
+			</div>
+			<div class="function">
+				<div class="function_def">scroll_message(char* input, uint16_t wait_ms = 100, bool instant = false)</div>
+				<div class="function_desc">
+					Blocking function that scrolls a string right to left, stopping at each display for <em>wait_ms</em>, or skipping the scrolling animation if <em>instant</em> == true.
+				</div>
+			</div>
+			<div class="function">
+				<div class="function_def">draw_line(int16_t x1, int16_t y1, int16_t x2, int16_t y2)</div>
+				<div class="function_desc">
+					Draws a line using Bresenham's line algorithm. Uses set_pix() internally<br>
+					<br>
+					<em>Note: These coordinates include the three columns of "dead space" between displays, meaning (0,0) is off-screen. Please refer to the <a href="https://connornishijima.github.io/Pixie/extras/datasheet.html?page=5">HARDWARE DATASHEET (P.5-S.10)</a> to see how dead-space in the internal display buffer is handled.</em>
+				</div>
+			</div>
+			<div class="function">
+				<div class="function_def">set_pix(uint16_t x, uint16_t y, bool state)</div>
+				<div class="function_desc">
+					Sets the pixel at (x,y) to boolean state.<br>
+					<br>
+					<em>Note: These coordinates include the three columns of "dead space" between displays, meaning (0,0) is off-screen. Please refer to the <a href="https://connornishijima.github.io/Pixie/extras/datasheet.html?page=5">HARDWARE DATASHEET (P.5-S.10)</a> to see how dead-space in the internal display buffer is handled.</em>
+				</div>
+			</div>
+			<div class="function">
+				<div class="function_def">flipped(bool enable)</div>
+				<div class="function_desc">
+					Rotates the output upside-down to allow for mounting Pixie displays upside down if necessary.
+				</div>
+			</div>
+			<div class="function">
+				<div class="function_def">brightness(uint8_t level)</div>
+				<div class="function_desc">
+					Sets the display chain to a 7-bit brightness level between 0 and 127.
+				</div>
+			</div>
+			<div class="function">
+				<div class="function_def">dump_buffer()</div>
+				<div class="function_desc">
+					Prints all binary bits of the internal display buffer over Serial.<br>
+					<br>
+					Your code must call Serial.begin(baud_rate); before dump_buffer() is called.
+				</div>
+			</div>
+			<div class="function">
+				<div class="function_def">reset()</div>
+				<div class="function_desc">
+					Drives the CLK pin high for 10ms, then LOW to reset all Pixies in the chain.
+				</div>
+			</div>
+		</div>
+		
+		<script>
+			render_functions();
+			
+			function render_functions(){
+				$('.function_def').each(function(i, obj) {
+					var input = $(obj).html();
+					input = "<span class='function_name'>"+input;
+					input = input.replace("(", "</span>(");
+					
+					var types = [
+						"var",
+						"uint8_t",
+						"uint16_t",
+						"uint32_t",
+						"int16_t",
+						"int32_t",
+						"float",
+						"double",
+						"char",
+						"bool"
+					];
+					
+					for(var x in types){
+						input = replaceAll(input, types[x], "<span class='var_type'>"+types[x]+"</span>");
+					}
+
+					$(obj).html(input);
+				});
+			}
+			
+			function replaceAll(str, find, replace) {
+				return str.replace(new RegExp(find, 'g'), replace);
+			}
+		</script>
+	</body>
+</html>
