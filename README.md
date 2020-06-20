@@ -31,7 +31,7 @@ Documentation for the Pixie library is available in both the /examples directory
 
 ## Hardware Documentation
 
-Pixie has a comprehensive hardware datasheet (including internal firmware documentation) available here:
+Pixie has a comprehensive hardware datasheet (including internal firmware documentation and package dimensions for mounting) available here:
 
 **[PIXIE DATASHEET](https://connornishijima.github.io/Pixie/extras/datasheet.html)**
 
