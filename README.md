@@ -17,6 +17,8 @@ Pixies are chainable 5x7 microdot LED matrices great for showing... just about a
 
 ## Included in this repository:
 
+[PIXIE WEBSITE](https://connornishijima.github.io/Pixie/) (Contains all documentation and tools in one spot)
+
 - Arduino Library Source Code
 - Software Documentation
 - Hardware Datasheet
