@@ -1,7 +1,7 @@
 /*
 Pixie.h - Library for controlling Pixie Displays!
 Created by Connor Nishijima, June 8th 2020.
-Released under the GPLv3 license.
+Released under the GPLv3 license. 
 */
 
 #ifndef pixie_h
