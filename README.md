@@ -27,7 +27,7 @@ Pixies are 5x7 microdot LED matrices great for showing... just about anything yo
 
 Documentation for the Pixie library is available in both the /examples directory for Arduino, and at the site below:
 
-SOFTWARE DOCUMENTATION LINK HERE
+**[Library Documentation & Usage](https://connornishijima.github.io/Pixie/extras/documentation.html)**
 
 ## Hardware Documentation
 
