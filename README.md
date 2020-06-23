@@ -41,13 +41,11 @@ Pixie has a comprehensive hardware datasheet (including internal firmware docume
 ----------
 # Arduino Library Installation
 
-~**With Arduino Library Manager:**~ COMING SOON!
+**With Arduino Library Manager:**
 
-~1. Open *Sketch > Include Library > Manage Libraries* in the Arduino IDE.~
-
-~2. Search for "Pixie" by Connor Nishijima, and select the latest version.~
-
-~3. Click the Install button and Arduino will prepare the library and examples for you!~
+1. Open *Sketch > Include Library > Manage Libraries* in the Arduino IDE.
+2. Search for "Pixie" by Connor Nishijima, and select the latest version.
+3. Click the Install button and Arduino will prepare the library and examples for you!
 
 **Manual Install:**
 
