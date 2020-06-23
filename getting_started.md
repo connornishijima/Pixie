@@ -6,7 +6,7 @@
 
 ## Microcontroller
 
-Any AVR/Arduino or ESP8266/derivative microcontroller can be used to control Pixie displays. There is a Pixie library available for the Arduino IDE:
+Any AVR/Arduino or ESP8266/32/derivative microcontroller can be used to control Pixie displays. There is a Pixie library available for the Arduino IDE:
 
 ### Installing the Pixie Library
 
