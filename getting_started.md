@@ -24,7 +24,7 @@ Any AVR/Arduino or ESP8266/32/derivative microcontroller can be used to control 
 
 When finished, an example folder structure for Windows should be:
 
-    C:\Users\[USERNAME]\Documents\Arduino\libraries\Pixie\src\Lixie_II.cpp
+    C:\Users\[USERNAME]\Documents\Arduino\libraries\Pixie\src\Pixie.cpp
 
 ## Powering Pixies
 
