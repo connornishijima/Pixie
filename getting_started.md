@@ -32,7 +32,7 @@ When finished, an example folder structure for Windows should be:
 
 The on-board ATTINY45 is nominally powered with 5 volts DC to maintain the 16MHz clock. If you have a 3V3-logic microcontroller (ESP8266/32), you may or may not have to use [a level shifter](https://www.adafruit.com/product/1787). However, I have successfully run Pixies off of a 3.3V Wemos D1 Mini (ESP8266 controller) without needing a level shifter - even with the ATTINY45 powered by the 5 volt line.
 
-A potential workaround is underpowering the PIXIESs with a 3.3V power line, but this will only be 66% of the brightness 5V power provides.
+A potential workaround is underpowering the Pixies with a 3.3V power line, but this will only be 66% of the brightness 5V power provides.
 
 #### Full Brightness
 
