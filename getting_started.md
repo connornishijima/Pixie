@@ -49,7 +49,7 @@ Hookup looks like this:
 
 Pixies are designed to be daisy-chained, and run from right-to-left. Connecting one display to the next is like this:
 
-    ETC...   <----   PIXIE #2 5V    <----   PIXIE #1 5V          <----              MASTER CONTROLLER 5V
+    ETC...   <----   PIXIE #2 VCC   <----   PIXIE #1 VCC         <----              MASTER CONTROLLER 3.3V/5V
     ETC...   <----   PIXIE #2 GND   <----   PIXIE #1 GND         <----              MASTER CONTROLLER GND
     ETC...   <----   PIXIE #2 DIN   <----   PIXIE #1 DOUT <- PIXIE #1 DIN   <----   MASTER CONTROLLER DAT_PIN
     ETC...   <----   PIXIE #2 CLK   <----   PIXIE #1 CLK         <----              MASTER CONTROLLER CLK_PIN
