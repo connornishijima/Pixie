@@ -1,5 +1,7 @@
 # Getting Started with PIXIE
 
+![PIXIE](https://i.imgur.com/rmpfoyw.jpg)
+
 ## *I know you're excited, but we have a few things to cover to make sure you're ready to run Pixie displays!*
 
 # THINGS TO NOTE:
