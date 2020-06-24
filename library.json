@@ -12,13 +12,13 @@
     "type": "git",
     "url": "https://github.com/connornishijima/Pixie.git"
   },
-  "version": "1.0.0",
+  "version": "1.0.3",
   "examples": "examples/*.ino",
   "frameworks": "arduino",
   "platforms":
   [
     "esp8266",
-	"esp32",
-	"atmelavr",
+    "esp32",
+    "atmelavr",
   ]
 }
