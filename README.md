@@ -32,6 +32,8 @@ Documentation for the Pixie library is available in both the /examples directory
 
 **[Library Documentation & Usage](https://connornishijima.github.io/Pixie/extras/documentation.html)**
 
+We also have a **[Getting Started Guide](https://github.com/connornishijima/Pixie/blob/master/getting_started.md)** to help you get set up for the very first time!
+
 ## Hardware Documentation
 
 Pixie has a comprehensive hardware datasheet (including internal firmware documentation and package dimensions for mounting) available here:
