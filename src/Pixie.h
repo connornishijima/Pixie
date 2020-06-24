@@ -1,7 +1,7 @@
 /*
 Pixie.h - Library for controlling Pixie Displays!
 Created by Connor Nishijima, June 8th 2020.
-Released under the GPLv3 license. 
+Released under the GPLv3 license.
 */
 
 #ifndef pixie_h
@@ -10,11 +10,12 @@ Released under the GPLv3 license.
 
 class Pixie{
   public:
-    Pixie(uint8_t p_count, uint8_t c_pin, uint8_t d_pin);
+    Pixie(uint8_t d_count, uint8_t c_pin, uint8_t d_pin);
     void begin();
 	void flipped(bool enable);
 	void show();
 	void brightness(uint8_t b);
+	void write_brightness(uint8_t bright, uint8_t pos);
 	void clear();
 	
 	void write_char(char input, uint8_t pos = 0);

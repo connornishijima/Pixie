@@ -238,7 +238,13 @@
 			<div class="function">
 				<div class="function_def">brightness(uint8_t level)</div>
 				<div class="function_desc">
-					Sets the display chain to a 7-bit brightness level between 0 and 127.
+					Sets the display chain to a 7-bit brightness level between 0 and 127. Uses write_brightness() internally.
+				</div>
+			</div>
+			<div class="function">
+				<div class="function_def">write_brightness(uint8_t level, uint8_t pos)</div>
+				<div class="function_desc">
+					Sets the display at <em>pos</em> to a 7-bit brightness level between 0 and 127.
 				</div>
 			</div>
 			<div class="function">

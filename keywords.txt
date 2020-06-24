@@ -19,6 +19,7 @@ brightness	KEYWORD2
 clear	KEYWORD2
 write_char	KEYWORD2
 write	KEYWORD2
+write_brightness	KEYWORD2
 push_char	KEYWORD2
 push_byte	KEYWORD2
 push	KEYWORD2

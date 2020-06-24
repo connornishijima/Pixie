@@ -83,6 +83,9 @@ void Pixie::show(){
 void Pixie::brightness(uint8_t b){
 	bright = b;
 	bitWrite(bright,7,1); // set bit 7 (MSB) to 1 to signify PWM byte to PIXIE
+	for(uint8_t i = 0; i < disp_count; i++){
+		write_brightness(bright, i);
+	}
 }
 
 void Pixie::clear(){
@@ -180,13 +183,6 @@ void Pixie::write(char* input, uint8_t pos){
 }
 
 void Pixie::write_char(char chr, uint8_t pos) {
-	
-	/*
-	Flip columns (whole byte)
-	Flip rows (B0-B6)
-	Send chars in reverse order
-	*/
-
 	if(pos < disp_count){		
 		if (chr >= 32) {
 			chr -= 32;
@@ -213,6 +209,23 @@ void Pixie::write_char(char chr, uint8_t pos) {
 			write_byte(pgm_read_byte_far(col+(chr * 5 + 2)),  8*pos+5);
 			write_byte(pgm_read_byte_far(col+(chr * 5 + 3)),  8*pos+6);
 			write_byte(pgm_read_byte_far(col+(chr * 5 + 4)),  8*pos+7);
+		}
+	}
+}
+
+void Pixie::write_brightness(uint8_t br, uint8_t pos) {
+	if(pos < disp_count){		
+		if(display_flipped){
+			pos = disp_count-1-pos;
+			
+			write_byte(0,      8*pos+0);
+			write_byte(br,     8*pos+1);
+			write_byte(0,      8*pos+2);
+		}
+		else{
+			write_byte(0,      8*pos+0);
+			write_byte(br,     8*pos+1);
+			write_byte(0,      8*pos+2);
 		}
 	}
 }
@@ -378,15 +391,7 @@ void Pixie::push_char(char chr) {
 	if (chr >= 32) {
 		chr -= 32;
 	}
-	
-	/*
-	Flip columns (whole byte)
-	Flip rows (B0-B6)
-	Send chars in reverse order
-	*/
 
-	
-	
 	if(display_flipped){
 		push_byte(pgm_read_byte_far(col+(chr * 5 + 0)));
 		push_byte(pgm_read_byte_far(col+(chr * 5 + 1)));
@@ -930,8 +935,3 @@ void Pixie::reset() {
 	#endif
 	delay(10);
 }
-
-// function for line generation 
-void bresenham(int16_t x1, int16_t y1, int16_t x2, int16_t y2){ 
-	
-} 
