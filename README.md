@@ -16,7 +16,7 @@ Pixies are chainable 5x7 microdot LED matrices great for showing... just about a
 - M2.5 mouting holes
 
 ![PIXIE](https://i.imgur.com/s4ye4Uu.jpg)
-*Pixies mounted into to a home-made case!*
+*Pixies mounted into a home-made case!*
 
 ## Included in this repository:
 
