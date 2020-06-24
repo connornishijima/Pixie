@@ -40,6 +40,8 @@ Pixie has a comprehensive hardware datasheet (including internal firmware docume
 
 **[PIXIE DATASHEET](https://connornishijima.github.io/Pixie/extras/datasheet.html)**
 
+This library also contains a Pixie EAGLE library (In "extras > hardware") for adding Pixies into your own PCB layouts!
+
 ----------
 # Arduino Library Installation
 
