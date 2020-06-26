@@ -1,12 +1,17 @@
 /*
-Pixie.h - Library for controlling Pixie Displays!
-Created by Connor Nishijima, June 8th 2020.
-Released under the GPLv3 license.
+  Pixie.h - Library for controlling Pixie Displays!
+  Created by Connor Nishijima, June 8th 2020.
+  Released under the GPLv3 license.
 */
 
 #ifndef pixie_h
 #define pixie_h
 #include "Arduino.h"
+
+// FONT SELECTION ---------
+	#include "font.h"
+//	#include "font_alt.h"
+// ------------------------
 
 class Pixie{
   public:

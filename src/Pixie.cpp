@@ -1,11 +1,10 @@
 /*
-Pixie.cpp - Library for controlling Pixie Displays!
-Created by Connor Nishijima, June 8th 2020.
-Released under the GPLv3 license.
+  Pixie.cpp - Library for controlling Pixie Displays!
+  Created by Connor Nishijima, June 8th 2020.
+  Released under the GPLv3 license.
 */
 
 #include "Pixie.h"
-#include "chars.h"
 
 Pixie::Pixie(uint8_t p_count, uint8_t c_pin, uint8_t d_pin){
 	CLK_pin = c_pin;
