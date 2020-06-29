@@ -181,7 +181,7 @@
 			
 			#popup{
 				width: calc(100% - 30px);
-				background-color: #383838;
+				background-color: #212121;
 				padding: 15px;
 				position: fixed;
 				top: 0px;
@@ -369,7 +369,7 @@
 				<div class="header"></div>
 				<div class="page_title">Pin Configuration <span class="header_num"></span></div>
 				
-				<img src="img/pinout.png" style="float: left; display: inline-block; width: 360px; margin-right: 30px;"></img>
+				<img src="img/pinout.jpg" style="float: left; display: inline-block; width: 360px; margin-right: 30px;"></img>
 				<table class="table_fit">
 					<tr class="table_labels">
 						<td>Pin</td>
@@ -446,7 +446,7 @@
 				<div class="section_number">S.5</div>
 				<br>
 				<div class="figure" id="figure1">
-					<img src="img/application.png" class="figure" width="100%"></img>
+					<img src="img/application.jpg" class="figure" width="100%"></img>
 					<div class="figure_label"><strong>FIGURE 1</strong> - Typical Application Circuit</div>
 				</div><br>
 			</div>
@@ -610,7 +610,7 @@
 				</div><br>
 				<br>
 				<div class="figure" id="figure2">
-					<img src="img/timing.png" class="figure" width="90%"></img>
+					<img src="img/timing.jpg" class="figure" width="90%"></img>
 					<div class="figure_label"><strong>FIGURE 2</strong> - Timing Diagram</div>
 				</div><br>
 				<br>
@@ -664,7 +664,7 @@
 				<br>
 				<br>
 				<div class="figure" id="figure3">
-					<img src="img/buffer_mapping.png" class="figure" width="80%"></img>
+					<img src="img/buffer_mapping.jpg" class="figure" width="80%"></img>
 					<div class="figure_label"><strong>FIGURE 3</strong> - Display Buffer Mapping</div>
 				</div><br>
 				<div class="note" id="note5">
@@ -704,7 +704,7 @@
 						</ul><br>
 						<br>
 						<div class="figure" id="figure4">
-							<img src="img/3d_view.png" class="figure" width="80%" style="max-width: 400px;"></img>
+							<img src="img/3d_view.jpg" class="figure" width="80%" style="max-width: 400px;"></img>
 							<div class="figure_label"><strong>FIGURE 4</strong> - 3D View</div>
 						</div><br>
 					</div>
@@ -714,7 +714,7 @@
 			<div class="page">
 				<div class="header"></div>
 				<div class="page_title">Schematic <span class="header_num"></span></div>
-				<img src="img/schematic.png" width="100%"></img>
+				<img src="img/schematic.jpg" width="100%"></img>
 			</div>
 			<div class="footer"></div>
 			<div class="page">
@@ -722,8 +722,8 @@
 				<div class="page_title">Package Dimensions <span class="header_num"></span></div>
 				<div class="split">
 					<div class="left">
-						<img src="img/dimensions.png" width="100%"></img>
-						<img src="img/dimensions_2.png" width="50%"></img>
+						<img src="img/dimensions.jpg" width="100%"></img>
+						<img src="img/dimensions_2.jpg" width="50%"></img>
 					</div>
 					<div class="right">
 						<em>(All dimensions are in millimeters)</em><br>
@@ -772,7 +772,7 @@
 							<tr>
 								<td>X</td>
 								<td>Hole X Offset</td>
-								<td>5.1</td>
+								<td>5.2</td>
 							</tr>
 							<tr>
 								<td>Y</td>
@@ -875,6 +875,11 @@
 						<td>Initial Release</td>
 						<td>6/13/2020</td>
 					</tr>
+					<tr>
+						<td>1A</td>
+						<td>Fixed Hole X Offset dimension error (Alex @tinyledmatrix)</td>
+						<td>6/29/2020</td>
+					</tr>
 				</table>
 			</div>
 			<div class="footer"></div>
@@ -939,7 +944,7 @@
 					$(obj).attr("id", "page_"+(i+1));
 					var out_html = "";
 					out_html += "<div class='divider'></div>";
-					out_html += "<div class='foot_info'>Lixie Labs LLC / Connor Nishijima<br>REV. 1 (6/13/2020)</div>";
+					out_html += "<div class='foot_info'>Lixie Labs LLC / Connor Nishijima<br>REV. 1A (6/29/2020)</div>";
 					out_html += "<div class='page_num'>"+(i+1)+"</div>";
 					$(obj).html(out_html);
 					if((i+1) > page_count){
