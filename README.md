@@ -3,7 +3,9 @@
 ----------
 # Pixie for Arduino
 
-Pixies are chainable 5x7 microdot LED matrices great for showing... just about anything you can throw at them!
+https://www.tindie.com/products/connornishijima/pixie-chainable-dual-57-micro-led-displays/
+
+**Pixies are chainable 5x7 microdot LED matrices great for showing... just about anything you can throw at them!**
 
 - Dual 5x7 LED matrices
 - 2.7V to 5.5V supply
