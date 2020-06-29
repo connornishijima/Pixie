@@ -114,7 +114,7 @@ void loop() {
 void init_display() {
   i2c_start_wait((I2C_7BITADDR << 1) | I2C_WRITE); //  write i2c address 0x63
   i2c_write(0xFF);                  // write to reset register
-  i2c_write(0x00);                  // write row data - sets dual display mode
+  i2c_write(0x00);                  // write row data - resets registers
   i2c_stop();
   delayMicroseconds(i2c_wait);
 
