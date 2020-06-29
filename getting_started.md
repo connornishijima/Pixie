@@ -44,10 +44,10 @@ If you want to allow for any possible lighting scenario, you'll need to have a p
 
 Hookup looks like this:
 
-    MASTER CONTROLLER 5V        ---->   PIXIE VCC
-    MASTER CONTROLLER GND       ---->   PIXIE GND
-    MASTER CONTROLLER DAT_PIN   ---->   PIXIE DAT_IN
-    MASTER CONTROLLER CLK_PIN   ---->   PIXIE CLK
+    MICROCONTROLLER 5V        ---->   PIXIE VCC
+    MICROCONTROLLER GND       ---->   PIXIE GND
+    MICROCONTROLLER DAT_PIN   ---->   PIXIE DAT_IN
+    MICROCONTROLLER CLK_PIN   ---->   PIXIE CLK
 
 Pixies are designed to be daisy-chained, and run from right-to-left. Connecting one display to the next is like this:
 
