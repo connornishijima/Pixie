@@ -2,7 +2,7 @@
 
 ![PIXIE](https://i.imgur.com/rmpfoyw.jpg)
 
-## *I know you're excited, but we have a few things to cover to make sure you're ready to run Pixie displays!*
+### *I know you're excited, but we have a few things to cover to make sure you're ready to run Pixie displays!*
 
 # THINGS TO NOTE:
 
@@ -44,19 +44,22 @@ If you want to allow for any possible lighting scenario, you'll need to have a p
 
 Hookup looks like this:
 
-    MASTER CONTROLLER 5V        ---->   PIXIE VCC
-    MASTER CONTROLLER GND       ---->   PIXIE GND
-    MASTER CONTROLLER DAT_PIN   ---->   PIXIE DAT_IN
-    MASTER CONTROLLER CLK_PIN   ---->   PIXIE CLK
+    MICROCONTROLLER 5V        ---->   PIXIE VCC
+    MICROCONTROLLER GND       ---->   PIXIE GND
+    MICROCONTROLLER DAT_PIN   ---->   PIXIE DAT_IN
+    MICROCONTROLLER CLK_PIN   ---->   PIXIE CLK
 
 Pixies are designed to be daisy-chained, and run from right-to-left. Connecting one display to the next is like this:
 
-    ETC...   <----   PIXIE #2 VCC   <----   PIXIE #1 VCC         <----              MASTER CONTROLLER 3.3V/5V
-    ETC...   <----   PIXIE #2 GND   <----   PIXIE #1 GND         <----              MASTER CONTROLLER GND
-    ETC...   <----   PIXIE #2 DIN   <----   PIXIE #1 DOUT <- PIXIE #1 DIN   <----   MASTER CONTROLLER DAT_PIN
-    ETC...   <----   PIXIE #2 CLK   <----   PIXIE #1 CLK         <----              MASTER CONTROLLER CLK_PIN
+![CHAIN](https://i.imgur.com/ikhDXa2.png)
 
 *You can use Dupont female-to-female jumpers to connect the displays, or solder directly to the headers. We also have [an EAGLE library available](https://github.com/connornishijima/Pixie/tree/master/extras/hardware) to work Pixie into your own PCBs!*
+
+## PIXIE PINOUT
+
+(From [the hardware datasheet](https://connornishijima.github.io/Pixie/extras/datasheet.html))
+
+![PINOUT](https://i.imgur.com/LnHboKm.png)
 
 If you have 4 or more displays in the chain, I recommend connecting *BOTH* ends of the chain to the 5V/GND lines of the power supply to avoid having dimmer characters at the end of the chain. (Due to the voltage drop across displays) Without doing so, you may notice the displays on the far end of the chain gradually falling into a darker color.
 
@@ -81,5 +84,7 @@ Once you've installed the Pixie library, go ahead and try this example code to m
     }
     
 Change the **NUM_PIXIES** variable to match the number of Pixie PCBs you have wired up. When uploaded, you should see the seconds since boot (with hundreths) on your Pixies!
+
+## Moving Forward
 
 From here, I suggest trying out the other examples included with the Pixie library, as it covers many of the neat writing and bitmap functions that Pixie is capable of!
