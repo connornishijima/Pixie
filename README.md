@@ -1,5 +1,6 @@
 ![Pixie](extras/img/modules_banner.png)
 
+----------
 # Pixie for Arduino
 
 Pixies are chainable 5x7 microdot LED matrices great for showing... just about anything you can throw at them!
