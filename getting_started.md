@@ -58,6 +58,12 @@ Pixies are designed to be daisy-chained, and run from right-to-left. Connecting 
 
 *You can use Dupont female-to-female jumpers to connect the displays, or solder directly to the headers. We also have [an EAGLE library available](https://github.com/connornishijima/Pixie/tree/master/extras/hardware) to work Pixie into your own PCBs!*
 
+## PIXIE PINOUT
+
+(From [the hardware datasheet](https://connornishijima.github.io/Pixie/extras/datasheet.html))
+
+![PINOUT](https://i.imgur.com/LnHboKm.png)
+
 If you have 4 or more displays in the chain, I recommend connecting *BOTH* ends of the chain to the 5V/GND lines of the power supply to avoid having dimmer characters at the end of the chain. (Due to the voltage drop across displays) Without doing so, you may notice the displays on the far end of the chain gradually falling into a darker color.
 
 ## Writing Arduino code for Pixies
