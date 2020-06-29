@@ -88,4 +88,6 @@ Once you've installed the Pixie library, go ahead and try this example code to m
     
 Change the **NUM_PIXIES** variable to match the number of Pixie PCBs you have wired up. When uploaded, you should see the seconds since boot (with hundreths) on your Pixies!
 
+## Moving Forward
+
 From here, I suggest trying out the other examples included with the Pixie library, as it covers many of the neat writing and bitmap functions that Pixie is capable of!
