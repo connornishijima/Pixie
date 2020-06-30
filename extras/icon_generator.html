@@ -55,6 +55,16 @@
 				font-size:18px;
 				font-family: 'Source Sans Pro', sans-serif;
 			}
+			#icon_count_container{
+				font-size: 34px;
+				font-weight: bold;
+				padding-top: 20px;
+				border-top: 2px solid #545454;
+				margin-top: 20px;
+			}
+			#icon_count{
+				color: #3ffd40;
+			}
 			.library_item{
 				display:inline-block;
 				margin-left:10px;
@@ -93,6 +103,11 @@
 			<input type="text" value="pix.set_icon(PIX_SMILE, 0);" id="code"></input>
 			<br>
 			<br>
+			<br>
+			<br>
+			<div id="icon_count_container">
+				Or... <span id="icon_count">X</span> BUILT-IN ICONS
+			</div>
 			<br>
 			<br>
 			<div id="library"></div>
@@ -138,6 +153,7 @@
 			function parse_library(data){
 				var lines = data.split(/\r?\n/);
 				var category = "";
+				var icon_count = 0;
 				for(var x in lines){
 					if(lines[x].substring(0,3) == "// "){
 						category = lines[x].substring(3);
@@ -146,6 +162,7 @@
 						var name_raw = lines[x].split(" ")[1].replace("[]","");
 						var name = title_case( replace_all( replace_all( name_raw, "PIX_",""), "_"," "));
 						var bytes = lines[x].split(" = ")[1];
+						icon_count++;
 						try{
 							library_visible[category][name_raw] = {							
 								"name":name,
@@ -161,6 +178,7 @@
 						}
 					}
 				}
+				document.getElementById("icon_count").innerHTML = icon_count;
 				console.log(library_visible);
 				render_library();
 			}
