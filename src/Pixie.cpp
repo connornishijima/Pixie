@@ -91,6 +91,7 @@ void Pixie::clear(){
 	for (uint16_t d = 0; d < disp_count*8; d++) {
 		display_buffer[d] = 0;
 	}
+	cursor_pos = 0;
 }
 
 void Pixie::set_pix(uint16_t x, uint16_t y, uint8_t state){
@@ -155,6 +156,7 @@ void Pixie::write(uint8_t* icon, uint8_t pos) {
 		display_buffer[8*pos+6] = icon[3];
 		display_buffer[8*pos+7] = icon[4];
 	}
+	set_cursor(pos+1);
 }
 
 void Pixie::write(uint8_t byte1, uint8_t byte2, uint8_t byte3, uint8_t byte4, uint8_t byte5, uint8_t pos){
@@ -168,6 +170,8 @@ void Pixie::write(uint8_t byte1, uint8_t byte2, uint8_t byte3, uint8_t byte4, ui
 		display_buffer[8*pos+5] = byte3;
 		display_buffer[8*pos+6] = byte4;
 		display_buffer[8*pos+7] = byte5;
+		
+		set_cursor(pos+1);
 	}
 }
 
@@ -209,7 +213,135 @@ void Pixie::write_char(char chr, uint8_t pos) {
 			write_byte(pgm_read_byte_far(col+(chr * 5 + 3)),  8*pos+6);
 			write_byte(pgm_read_byte_far(col+(chr * 5 + 4)),  8*pos+7);
 		}
+		
+		set_cursor(pos+1);
 	}
+}
+
+void Pixie::print(float input, uint8_t places){
+	uint8_t pos = cursor_pos;
+	cursor_pos++;
+	char char_buf[48];	
+	sprintf(char_buf, "%.*f", places, input);
+	write(char_buf, pos);
+}
+
+void Pixie::print(double input, uint8_t places){
+	uint8_t pos = cursor_pos;
+	cursor_pos++;
+	char char_buf[48];	
+	sprintf(char_buf, "%.*f", places, input);
+	write(char_buf, pos);
+}
+
+void Pixie::print(int32_t input){
+	uint8_t pos = cursor_pos;
+	cursor_pos++;
+	char char_buf[48];
+	ltoa(input,char_buf,10);
+	write(char_buf, pos);
+}
+
+void Pixie::print(uint32_t input){
+	uint8_t pos = cursor_pos;
+	cursor_pos++;
+	char char_buf[48];
+	ultoa(input,char_buf,10);
+	write(char_buf, pos);
+}
+
+#if defined(ESP8266) || defined(ESP32)
+	void Pixie::print(long unsigned int input){
+		uint8_t pos = cursor_pos;
+		cursor_pos++;
+		char char_buf[48];
+		ultoa(input,char_buf,10);
+		write(char_buf, pos);
+	}
+#endif
+
+void Pixie::print(char input){
+	print_char(input);
+}
+
+void Pixie::print(uint8_t* icon) {
+	uint8_t pos = cursor_pos;
+	cursor_pos++;
+	if(pos < disp_count){		
+		display_buffer[8*pos+0] = 0;
+		display_buffer[8*pos+1] = bright;
+		display_buffer[8*pos+2] = 0;
+		
+		display_buffer[8*pos+3] = icon[0];
+		display_buffer[8*pos+4] = icon[1];
+		display_buffer[8*pos+5] = icon[2];
+		display_buffer[8*pos+6] = icon[3];
+		display_buffer[8*pos+7] = icon[4];
+	}
+}
+
+void Pixie::print(uint8_t byte1, uint8_t byte2, uint8_t byte3, uint8_t byte4, uint8_t byte5){
+	uint8_t pos = cursor_pos;
+	cursor_pos++;
+	if(pos < disp_count){		
+		display_buffer[8*pos+0] = 0;
+		display_buffer[8*pos+1] = bright;
+		display_buffer[8*pos+2] = 0;
+		
+		display_buffer[8*pos+3] = byte1;
+		display_buffer[8*pos+4] = byte2;
+		display_buffer[8*pos+5] = byte3;
+		display_buffer[8*pos+6] = byte4;
+		display_buffer[8*pos+7] = byte5;
+	}
+}
+
+void Pixie::print(char* input){
+	uint8_t pos = cursor_pos;
+	uint8_t len = strlen(input);
+	if(len > disp_count-pos){
+		len = disp_count-pos;
+	}
+	for(uint8_t i = 0; i < len; i++){
+		print_char(input[i]);
+	}
+}
+
+void Pixie::print_char(char chr) {
+	uint8_t pos = cursor_pos;
+	cursor_pos++;
+	if(pos < disp_count){		
+		if (chr >= 32) {
+			chr -= 32;
+		}
+		
+		if(display_flipped){
+			pos = disp_count-1-pos;
+			
+			write_byte(0,      8*pos+0);
+			write_byte(bright, 8*pos+1);
+			write_byte(0,      8*pos+2);
+			write_byte(pgm_read_byte_far(col+(chr * 5 + 0)),  8*pos+7);
+			write_byte(pgm_read_byte_far(col+(chr * 5 + 1)),  8*pos+6);
+			write_byte(pgm_read_byte_far(col+(chr * 5 + 2)),  8*pos+5);
+			write_byte(pgm_read_byte_far(col+(chr * 5 + 3)),  8*pos+4);
+			write_byte(pgm_read_byte_far(col+(chr * 5 + 4)),  8*pos+3);
+		}
+		else{
+			write_byte(0,      8*pos+0);
+			write_byte(bright, 8*pos+1);
+			write_byte(0,      8*pos+2);
+			write_byte(pgm_read_byte_far(col+(chr * 5 + 0)),  8*pos+3);
+			write_byte(pgm_read_byte_far(col+(chr * 5 + 1)),  8*pos+4);
+			write_byte(pgm_read_byte_far(col+(chr * 5 + 2)),  8*pos+5);
+			write_byte(pgm_read_byte_far(col+(chr * 5 + 3)),  8*pos+6);
+			write_byte(pgm_read_byte_far(col+(chr * 5 + 4)),  8*pos+7);
+		}
+	}
+}
+
+void Pixie::set_cursor(uint8_t pos){
+	cursor_pos = pos;
 }
 
 void Pixie::write_brightness(uint8_t br, uint8_t pos) {

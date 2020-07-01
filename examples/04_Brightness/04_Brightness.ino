@@ -29,14 +29,14 @@ void fade_message(char* in) {
   for (uint8_t i = 0; i < 128; i += 4) { // Fade from black to full brightness
     pix.brightness(i);
     pix.clear();
-    pix.write(in);
+    pix.print(in);
     pix.show();
   }
   delay(250); // Wait a moment
   for (uint8_t i = 0; i < 128; i += 4) { // Fade from full brightness to black
     pix.brightness(127 - i);
     pix.clear();
-    pix.write(in);
+    pix.print(in);
     pix.show();
   }
   pix.brightness(0); // Fully black

@@ -34,8 +34,23 @@ class Pixie{
 	void write(float input, uint8_t places = 2, uint8_t pos = 0);
 	void write(double input, uint8_t places = 2, uint8_t pos = 0);
 	void write(uint8_t* icon, uint8_t pos = 0);
-	void write(uint8_t byte1, uint8_t byte2, uint8_t byte3, uint8_t byte4, uint8_t byte5, uint8_t pos = 0);
+	void write(uint8_t byte1, uint8_t byte2, uint8_t byte3, uint8_t byte4, uint8_t byte5, uint8_t pos = 0);	
 	void write_byte(uint8_t col, uint16_t pos);
+	
+	void print_char(char input);
+	void print(char input);
+	void print(char* input);
+	void print(int32_t input);
+	void print(uint32_t input);
+	#if defined(ESP8266) || defined(ESP32)
+		void print(long unsigned int input); // same as uint32_t, but Arduino is stupid
+	#endif
+	void print(float input, uint8_t places = 2);
+	void print(double input, uint8_t places = 2);
+	void print(uint8_t* icon);
+	void print(uint8_t byte1, uint8_t byte2, uint8_t byte3, uint8_t byte4, uint8_t byte5);
+	
+	void set_cursor(uint8_t pos);
 
 	void push_char(char chr);	
 	void push_byte(uint8_t col);
@@ -92,6 +107,7 @@ class Pixie{
 	uint8_t CLK_pin;
 	uint8_t DAT_pin;
 	uint8_t *display_buffer;
+	uint8_t cursor_pos = 0;
 	
 	bool display_flipped = false;
 };

@@ -1,12 +1,12 @@
 /*
-	Pixie ANIMATION Example
-	-----------------------
-	
-	By quickly writing to the displays in 5-column icon format,
-	it is possible to run animations!
-	
-	Animations frames can be created at:
-	https://connornishijima.github.io/Pixie/extras/icon_generator.html
+  Pixie ANIMATION Example
+  -----------------------
+  
+  By quickly writing to the displays in 5-column icon format,
+  it is possible to run animations!
+  
+  Animations frames can be created at:
+  https://connornishijima.github.io/Pixie/extras/icon_generator.html
 */
 
 #include "Pixie.h"
@@ -15,7 +15,7 @@
 #define DATA_PIN    12                    // Any digital pin
 Pixie pix(NUM_PIXIES, CLK_PIN, DATA_PIN); // Set up display buffer
 
-uint8_t animation[24][5] = { // 24 arrays of 5 uint8_t's
+uint8_t animation[24][5] = { // 24 arrays of 5 uint8_t's (Icons)
   {0x01,0x00,0x00,0x00,0x00},
   {0x01,0x01,0x00,0x00,0x00},
   {0x01,0x01,0x01,0x00,0x00},

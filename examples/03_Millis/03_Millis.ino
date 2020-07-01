@@ -19,6 +19,6 @@ void setup() {
 
 void loop() {
   pix.clear();
-  pix.push( millis()/1000.0, 2 ); // Show floating-point number to two decimal places (hundredths of a second)
+  pix.print( millis()/1000.0, 2 ); // Show floating-point number to two decimal places (hundredths of a second)
   pix.show();
 }
