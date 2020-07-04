@@ -14,7 +14,8 @@ Pixie::Pixie(uint8_t p_count, uint8_t c_pin, uint8_t d_pin){
 	display_buffer = new uint8_t[disp_count*8];  
 }
 
-void Pixie::begin(){
+void Pixie::begin(uint8_t speed){
+	clk_us = speed;
 	pinMode(CLK_pin, OUTPUT);
 	pinMode(DAT_pin, OUTPUT);
 	reset();
@@ -62,7 +63,9 @@ void Pixie::show(){
 			#if !defined(ESP8266) && !defined(ESP32)
 				digitalWrite(CLK_pin, HIGH);
 			#endif
+			
 			delayMicroseconds(clk_us);
+			
 			#ifdef ESP8266
 				GPOC = (1 << CLK_pin);
 			#endif
@@ -72,9 +75,9 @@ void Pixie::show(){
 			#if !defined(ESP8266) && !defined(ESP32)
 				digitalWrite(CLK_pin, LOW);
 			#endif
+			
 			delayMicroseconds(clk_us);
 		}
-		delayMicroseconds(clk_us);
 	}
 	delay(5);
 }
@@ -846,7 +849,7 @@ void Pixie::scroll_message(char* input, uint16_t wait_ms, bool instant){
 				
 				push_byte(pgm_read_byte_far(col+(chr * 5 + 0)));
 				show();
-				delay(2);
+				delay(2); // wait a bit to see animation
 				push_byte(pgm_read_byte_far(col+(chr * 5 + 1)));
 				show();
 				delay(2);

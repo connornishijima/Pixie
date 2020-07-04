@@ -291,7 +291,7 @@
 						<p>
 							PIXIE is a compact, chainable, <figurelink>(Figure 1)</figurelink> dual 5x7 LED dot-matrix display platform (compatible with Arduino) that offers full bitmap control with 7-bit global PWM and high refresh rates.<br>
 							<br>
-							Using only two GPIO for <em><strong>DATA</strong></em> and <em><strong>CLOCK</strong></em>, bits can be simultaneously shifted in and out of each PIXIE at up to 41.6KHz. <figurelink>(Figure 2)</figurelink>   Final frame rate depends on the number of displays in the chain. For example - assuming a full 41.6KHz clock speed:<br>
+							Using only two GPIO for <em><strong>DATA</strong></em> and <em><strong>CLOCK</strong></em>, bits can be simultaneously shifted in and out of each PIXIE at 39KHz (<strong>LEGACY_SPEED</strong>) or 67kHz (<strong>FULL_SPEED</strong>) <notelink>(Note 7)</notelink> <figurelink>(Figure 2)</figurelink>   Final frame rate depends on the number of displays in the chain. For example - assuming a 67kHz clock speed:<br>
 							<br>
 							<table class="table">
 								<tr class="table_labels">
@@ -300,27 +300,27 @@
 								</tr>
 								<tr>
 									<td><strong>2</strong> - (1 PIXIE)</td>
-									<td>~325.0</td>
+									<td>~145</td>
 								</tr>
 								<tr>
 									<td><strong>4</strong> - (2 PIXIES)</td>
-									<td>~162.5</td>
+									<td>~113</td>
 								</tr>
 								<tr>
 									<td><strong>6</strong> - (3 PIXIES)</td>
-									<td>~108.3</td>
+									<td>~93</td>
 								</tr>
 								<tr>
 									<td><strong>8</strong> - (4 PIXIES)</td>
-									<td>~81.2</td>
+									<td>~79</td>
 								</tr>
 								<tr>
 									<td><strong>12</strong> - (6 PIXIES)</td>
-									<td>~54.1</td>
+									<td>~61</td>
 								</tr>
 								<tr>
 									<td><strong>24</strong> - (12 PIXIES)</td>
-									<td>~27.0</td>
+									<td>~36</td>
 								</tr>
 							</table>
 							<br>
@@ -419,12 +419,12 @@
 					<tr id="SCL_row">
 						<td><oline>SCL</oline></td>
 						<td>9</td>
-						<td>(ATTINY SCK / IS31FL3730 I<sup>2</sup>C SCL line)</td>
+						<td>(IS31FL3730 I<sup>2</sup>C SCL line / ATTINY SCK)</td>
 					</tr>
 					<tr id="SDA_row">
 						<td><oline>SDA</oline></td>
 						<td>10</td>
-						<td>(ATTINY MOSI / IS31FL3730 I<sup>2</sup>C SDA line)</td>
+						<td>(IS31FL3730 I<sup>2</sup>C SDA line / ATTINY MOSI)</td>
 					</tr>
 					<tr>
 						<td>GND*</td>
@@ -526,10 +526,10 @@
 					<tr>
 						<td>DATA CLOCK frequency</td>
 						<td><notelink>(Note 3)</notelink></td>
-						<td>~330</td>
-						<td>41,000</td>
-						<td>41,600</td>
-						<td>Hz</td>
+						<td>39.0</td>
+						<td>39.0</td>
+						<td>67.0</td>
+						<td>kHz</td>
 					</tr>
 					<tr>
 						<td>DATA CLOCK <uline>LOW</uline> time for display latch</td>
@@ -880,7 +880,16 @@
 						<td>Fixed Hole X Offset dimension error (Alex @tinyledmatrix)</td>
 						<td>6/29/2020</td>
 					</tr>
+					<tr>
+						<td>1B</td>
+						<td>Added reference to the 67kHz FULL_SPEED mode added in firmware version 1.1.0 <notelink>(Note 7)</notelink></td>
+						<td>7/3/2020</td>
+					</tr>
 				</table>
+				<br>
+				<div class="note" id="note7">
+					<strong>NOTE 7:</strong> FULL_SPEED is only compatible <strong>with Pixies running firmware version 1.1.0 and up</strong>. Every new firmware release is <a href="https://github.com/connornishijima/Pixie/tree/master/examples/PIXIE_FIRMWARE">included in the Pixie library under "examples/PIXIE_FIRMWARE"</a> and can be flashed to a Pixie via an ICSP programmer such as an Arduino running the ArduinoISP sketch connected properly to the Pixie's <a href="?page=2">RESET, SCK, MISO, MOSI, 5V and GND pins</a>. More information about compiling and uploading the firmware is included in the firmware ".ino" itself.
+				</div>
 			</div>
 			<div class="footer"></div>
 		</div>
@@ -944,7 +953,7 @@
 					$(obj).attr("id", "page_"+(i+1));
 					var out_html = "";
 					out_html += "<div class='divider'></div>";
-					out_html += "<div class='foot_info'>Lixie Labs LLC / Connor Nishijima<br>REV. 1A (6/29/2020)</div>";
+					out_html += "<div class='foot_info'>Lixie Labs LLC / Connor Nishijima<br>REV. 1B (7/3/2020)</div>";
 					out_html += "<div class='page_num'>"+(i+1)+"</div>";
 					$(obj).html(out_html);
 					if((i+1) > page_count){

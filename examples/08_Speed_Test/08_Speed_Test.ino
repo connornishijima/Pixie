@@ -1,16 +1,20 @@
 /*
-  Pixie ANIMATION Example
+  Pixie SPEED_TEST Example
   -----------------------
   
-  By quickly writing to the displays in 5-column icon format,
-  it is possible to run animations!
+  Prints rapily to the Pixie chain for 1 second,
+  then shows how many frames per second were
+  achieved. This is dependent on how many
+  Pixies are in the chain (more is slower)
+  and which firmware the Pixies themselves
+  are running.
   
-  Animations frames can be created at:
-  https://connornishijima.github.io/Pixie/extras/icon_generator.html
+  1.0.0  = pix.begin(LEGACY_SPEED) // ~ 39kHz bitrate
+  1.1.0+ = pix.begin(FULL_SPEED)   // ~ 67kHz bitrate (Firmware 1.1.0+)
 */
 
 #include "Pixie.h"
-#define NUM_PIXIES  6                     // PCBs, not matrices
+#define NUM_PIXIES  12                    // PCBs, not matrices
 #define CLK_PIN     14                    // Any digital pin
 #define DATA_PIN    12                    // Any digital pin
 Pixie pix(NUM_PIXIES, CLK_PIN, DATA_PIN); // Set up display buffer
@@ -43,14 +47,27 @@ uint8_t animation[24][5] = { // 24 arrays of 5 uint8_t's (Icons)
 };
 
 void setup() {
+  Serial.begin(115200);
   pix.begin(); // Init display drivers
 }
 
 void loop() {
-  // The 24 cusotm icons in the array above are stored as column data,
-  // and are written to the left-most display in the chain.
-  for(uint8_t i = 0; i < 24; i++){
-    pix.write(animation[i], 0);
-    pix.show();
+  uint16_t FPS = 0;
+  uint32_t t_start = millis();
+  uint32_t t_end   = t_start + 1000;
+  while(millis() < t_end){
+    FPS++;
+    pix.clear();
+    pix.print(animation[FPS%24]);
+    pix.show();    
   }
+  pix.clear();
+  pix.print(FPS);
+  pix.print(" FPS!");
+  pix.show();
+  
+  // Print FPS to Serial as well
+  Serial.println(FPS);
+  // Wait a moment
+  delay(2000);
 }

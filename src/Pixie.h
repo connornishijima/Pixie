@@ -9,14 +9,21 @@
 #include "Arduino.h"
 
 // FONT SELECTION ---------
+// - There are two built-in fonts to choose from.
+//   Uncomment a single option below to choose.
+//   (font_alt has fancy numerals)
+
 	#include "font.h"
 //	#include "font_alt.h"
 // ------------------------
 
+#define LEGACY_SPEED 12  // ~39kHz bitrate
+#define FULL_SPEED   7   // ~67kHz bitrate (Firmware 1.1.0+)
+
 class Pixie{
   public:
     Pixie(uint8_t d_count, uint8_t c_pin, uint8_t d_pin);
-    void begin();
+    void begin(uint8_t speed = LEGACY_SPEED); // Defaults to LEGACY_SPEED
 	void flipped(bool enable);
 	void show();
 	void brightness(uint8_t b);
@@ -98,10 +105,10 @@ class Pixie{
 	void reset();
 	
   private:
-	const uint8_t clk_us = 12;
+	uint8_t clk_us = LEGACY_SPEED;
 
-	uint8_t pixie_count  = 6;
-	uint8_t disp_count   = 12;
+	uint8_t pixie_count  = 0;
+	uint8_t disp_count   = 0;
 	
 	uint8_t bright = 255;
 	uint8_t CLK_pin;
