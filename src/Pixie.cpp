@@ -200,21 +200,21 @@ void Pixie::write_char(char chr, uint8_t pos) {
 			write_byte(0,      8*pos+0);
 			write_byte(bright, 8*pos+1);
 			write_byte(0,      8*pos+2);
-			write_byte(pgm_read_byte_far(col+(chr * 5 + 0)),  8*pos+7);
-			write_byte(pgm_read_byte_far(col+(chr * 5 + 1)),  8*pos+6);
-			write_byte(pgm_read_byte_far(col+(chr * 5 + 2)),  8*pos+5);
-			write_byte(pgm_read_byte_far(col+(chr * 5 + 3)),  8*pos+4);
-			write_byte(pgm_read_byte_far(col+(chr * 5 + 4)),  8*pos+3);
+			write_byte(pgm_read_byte(col+(chr * 5 + 0)),  8*pos+7);
+			write_byte(pgm_read_byte(col+(chr * 5 + 1)),  8*pos+6);
+			write_byte(pgm_read_byte(col+(chr * 5 + 2)),  8*pos+5);
+			write_byte(pgm_read_byte(col+(chr * 5 + 3)),  8*pos+4);
+			write_byte(pgm_read_byte(col+(chr * 5 + 4)),  8*pos+3);
 		}
 		else{
 			write_byte(0,      8*pos+0);
 			write_byte(bright, 8*pos+1);
 			write_byte(0,      8*pos+2);
-			write_byte(pgm_read_byte_far(col+(chr * 5 + 0)),  8*pos+3);
-			write_byte(pgm_read_byte_far(col+(chr * 5 + 1)),  8*pos+4);
-			write_byte(pgm_read_byte_far(col+(chr * 5 + 2)),  8*pos+5);
-			write_byte(pgm_read_byte_far(col+(chr * 5 + 3)),  8*pos+6);
-			write_byte(pgm_read_byte_far(col+(chr * 5 + 4)),  8*pos+7);
+			write_byte(pgm_read_byte(col+(chr * 5 + 0)),  8*pos+3);
+			write_byte(pgm_read_byte(col+(chr * 5 + 1)),  8*pos+4);
+			write_byte(pgm_read_byte(col+(chr * 5 + 2)),  8*pos+5);
+			write_byte(pgm_read_byte(col+(chr * 5 + 3)),  8*pos+6);
+			write_byte(pgm_read_byte(col+(chr * 5 + 4)),  8*pos+7);
 		}
 		
 		set_cursor(pos+1);
@@ -324,21 +324,21 @@ void Pixie::print_char(char chr) {
 			write_byte(0,      8*pos+0);
 			write_byte(bright, 8*pos+1);
 			write_byte(0,      8*pos+2);
-			write_byte(pgm_read_byte_far(col+(chr * 5 + 0)),  8*pos+7);
-			write_byte(pgm_read_byte_far(col+(chr * 5 + 1)),  8*pos+6);
-			write_byte(pgm_read_byte_far(col+(chr * 5 + 2)),  8*pos+5);
-			write_byte(pgm_read_byte_far(col+(chr * 5 + 3)),  8*pos+4);
-			write_byte(pgm_read_byte_far(col+(chr * 5 + 4)),  8*pos+3);
+			write_byte(pgm_read_byte(col+(chr * 5 + 0)),  8*pos+7);
+			write_byte(pgm_read_byte(col+(chr * 5 + 1)),  8*pos+6);
+			write_byte(pgm_read_byte(col+(chr * 5 + 2)),  8*pos+5);
+			write_byte(pgm_read_byte(col+(chr * 5 + 3)),  8*pos+4);
+			write_byte(pgm_read_byte(col+(chr * 5 + 4)),  8*pos+3);
 		}
 		else{
 			write_byte(0,      8*pos+0);
 			write_byte(bright, 8*pos+1);
 			write_byte(0,      8*pos+2);
-			write_byte(pgm_read_byte_far(col+(chr * 5 + 0)),  8*pos+3);
-			write_byte(pgm_read_byte_far(col+(chr * 5 + 1)),  8*pos+4);
-			write_byte(pgm_read_byte_far(col+(chr * 5 + 2)),  8*pos+5);
-			write_byte(pgm_read_byte_far(col+(chr * 5 + 3)),  8*pos+6);
-			write_byte(pgm_read_byte_far(col+(chr * 5 + 4)),  8*pos+7);
+			write_byte(pgm_read_byte(col+(chr * 5 + 0)),  8*pos+3);
+			write_byte(pgm_read_byte(col+(chr * 5 + 1)),  8*pos+4);
+			write_byte(pgm_read_byte(col+(chr * 5 + 2)),  8*pos+5);
+			write_byte(pgm_read_byte(col+(chr * 5 + 3)),  8*pos+6);
+			write_byte(pgm_read_byte(col+(chr * 5 + 4)),  8*pos+7);
 		}
 	}
 }
@@ -527,11 +527,11 @@ void Pixie::push_char(char chr) {
 	}
 
 	if(display_flipped){
-		push_byte(pgm_read_byte_far(col+(chr * 5 + 0)));
-		push_byte(pgm_read_byte_far(col+(chr * 5 + 1)));
-		push_byte(pgm_read_byte_far(col+(chr * 5 + 2)));
-		push_byte(pgm_read_byte_far(col+(chr * 5 + 3)));
-		push_byte(pgm_read_byte_far(col+(chr * 5 + 4)));
+		push_byte(pgm_read_byte(col+(chr * 5 + 0)));
+		push_byte(pgm_read_byte(col+(chr * 5 + 1)));
+		push_byte(pgm_read_byte(col+(chr * 5 + 2)));
+		push_byte(pgm_read_byte(col+(chr * 5 + 3)));
+		push_byte(pgm_read_byte(col+(chr * 5 + 4)));
 		push_byte(0);
 		push_byte(bright);
 		push_byte(0);
@@ -540,11 +540,11 @@ void Pixie::push_char(char chr) {
 		push_byte(0);
 		push_byte(bright);
 		push_byte(0);
-		push_byte(pgm_read_byte_far(col+(chr * 5 + 0)));
-		push_byte(pgm_read_byte_far(col+(chr * 5 + 1)));
-		push_byte(pgm_read_byte_far(col+(chr * 5 + 2)));
-		push_byte(pgm_read_byte_far(col+(chr * 5 + 3)));
-		push_byte(pgm_read_byte_far(col+(chr * 5 + 4)));
+		push_byte(pgm_read_byte(col+(chr * 5 + 0)));
+		push_byte(pgm_read_byte(col+(chr * 5 + 1)));
+		push_byte(pgm_read_byte(col+(chr * 5 + 2)));
+		push_byte(pgm_read_byte(col+(chr * 5 + 3)));
+		push_byte(pgm_read_byte(col+(chr * 5 + 4)));
 	}
 }
 
@@ -689,18 +689,18 @@ void Pixie::shift_char(char chr) {
 		shift_byte(0);
 		shift_byte(bright);
 		shift_byte(0);
-		shift_byte(pgm_read_byte_far(col+(chr * 5 + 4)));
-		shift_byte(pgm_read_byte_far(col+(chr * 5 + 3)));
-		shift_byte(pgm_read_byte_far(col+(chr * 5 + 2)));
-		shift_byte(pgm_read_byte_far(col+(chr * 5 + 1)));
-		shift_byte(pgm_read_byte_far(col+(chr * 5 + 0)));
+		shift_byte(pgm_read_byte(col+(chr * 5 + 4)));
+		shift_byte(pgm_read_byte(col+(chr * 5 + 3)));
+		shift_byte(pgm_read_byte(col+(chr * 5 + 2)));
+		shift_byte(pgm_read_byte(col+(chr * 5 + 1)));
+		shift_byte(pgm_read_byte(col+(chr * 5 + 0)));
 	}
 	else{
-		shift_byte(pgm_read_byte_far(col+(chr * 5 + 4)));
-		shift_byte(pgm_read_byte_far(col+(chr * 5 + 3)));
-		shift_byte(pgm_read_byte_far(col+(chr * 5 + 2)));
-		shift_byte(pgm_read_byte_far(col+(chr * 5 + 1)));
-		shift_byte(pgm_read_byte_far(col+(chr * 5 + 0)));
+		shift_byte(pgm_read_byte(col+(chr * 5 + 4)));
+		shift_byte(pgm_read_byte(col+(chr * 5 + 3)));
+		shift_byte(pgm_read_byte(col+(chr * 5 + 2)));
+		shift_byte(pgm_read_byte(col+(chr * 5 + 1)));
+		shift_byte(pgm_read_byte(col+(chr * 5 + 0)));
 		shift_byte(0);
 		shift_byte(bright);
 		shift_byte(0);
@@ -847,19 +847,19 @@ void Pixie::scroll_message(char* input, uint16_t wait_ms, bool instant){
 					chr -= 32;
 				}			
 				
-				push_byte(pgm_read_byte_far(col+(chr * 5 + 0)));
+				push_byte(pgm_read_byte(col+(chr * 5 + 0)));
 				show();
 				delay(2); // wait a bit to see animation
-				push_byte(pgm_read_byte_far(col+(chr * 5 + 1)));
+				push_byte(pgm_read_byte(col+(chr * 5 + 1)));
 				show();
 				delay(2);
-				push_byte(pgm_read_byte_far(col+(chr * 5 + 2)));
+				push_byte(pgm_read_byte(col+(chr * 5 + 2)));
 				show();
 				delay(2);
-				push_byte(pgm_read_byte_far(col+(chr * 5 + 3)));
+				push_byte(pgm_read_byte(col+(chr * 5 + 3)));
 				show();
 				delay(2);
-				push_byte(pgm_read_byte_far(col+(chr * 5 + 4)));
+				push_byte(pgm_read_byte(col+(chr * 5 + 4)));
 				show();
 				delay(2);
 				push_byte(0);
@@ -919,19 +919,19 @@ void Pixie::scroll_message(char* input, uint16_t wait_ms, bool instant){
 				push_byte(0);
 				show();
 				delay(2);
-				push_byte(pgm_read_byte_far(col+(chr * 5 + 0)));
+				push_byte(pgm_read_byte(col+(chr * 5 + 0)));
 				show();
 				delay(2);
-				push_byte(pgm_read_byte_far(col+(chr * 5 + 1)));
+				push_byte(pgm_read_byte(col+(chr * 5 + 1)));
 				show();
 				delay(2);
-				push_byte(pgm_read_byte_far(col+(chr * 5 + 2)));
+				push_byte(pgm_read_byte(col+(chr * 5 + 2)));
 				show();
 				delay(2);
-				push_byte(pgm_read_byte_far(col+(chr * 5 + 3)));
+				push_byte(pgm_read_byte(col+(chr * 5 + 3)));
 				show();
 				delay(2);
-				push_byte(pgm_read_byte_far(col+(chr * 5 + 4)));
+				push_byte(pgm_read_byte(col+(chr * 5 + 4)));
 				show();
 				delay(2);
 				
@@ -975,11 +975,11 @@ void Pixie::scroll_message(char* input, uint16_t wait_ms, bool instant){
 					chr -= 32;
 				}
 				
-				push_byte(pgm_read_byte_far(col+(chr * 5 + 0)));
-				push_byte(pgm_read_byte_far(col+(chr * 5 + 1)));
-				push_byte(pgm_read_byte_far(col+(chr * 5 + 2)));
-				push_byte(pgm_read_byte_far(col+(chr * 5 + 3)));
-				push_byte(pgm_read_byte_far(col+(chr * 5 + 4)));
+				push_byte(pgm_read_byte(col+(chr * 5 + 0)));
+				push_byte(pgm_read_byte(col+(chr * 5 + 1)));
+				push_byte(pgm_read_byte(col+(chr * 5 + 2)));
+				push_byte(pgm_read_byte(col+(chr * 5 + 3)));
+				push_byte(pgm_read_byte(col+(chr * 5 + 4)));
 				push_byte(0);
 				push_byte(bright);
 				push_byte(0);
@@ -1009,11 +1009,11 @@ void Pixie::scroll_message(char* input, uint16_t wait_ms, bool instant){
 				push_byte(0);
 				push_byte(bright);
 				push_byte(0);
-				push_byte(pgm_read_byte_far(col+(chr * 5 + 0)));
-				push_byte(pgm_read_byte_far(col+(chr * 5 + 1)));
-				push_byte(pgm_read_byte_far(col+(chr * 5 + 2)));
-				push_byte(pgm_read_byte_far(col+(chr * 5 + 3)));
-				push_byte(pgm_read_byte_far(col+(chr * 5 + 4)));
+				push_byte(pgm_read_byte(col+(chr * 5 + 0)));
+				push_byte(pgm_read_byte(col+(chr * 5 + 1)));
+				push_byte(pgm_read_byte(col+(chr * 5 + 2)));
+				push_byte(pgm_read_byte(col+(chr * 5 + 3)));
+				push_byte(pgm_read_byte(col+(chr * 5 + 4)));
 				show();			
 				delay(wait_ms);
 			}
