@@ -1,3 +1,5 @@
+import wiringpi
+import time
 import os
 import sys
 
@@ -669,7 +671,24 @@ chars = {
   ]
 }
 
-def write(dat_pin, clk_pin, num_pixies, input):
+def send(data_pin, clk_pin, bits):
+	wiringpi.wiringPiSetup()
+
+	usleep = lambda x: time.sleep(x/1000000.0)
+
+	wiringpi.pinMode(data_pin, 1)
+	wiringpi.pinMode(clk_pin, 1)
+
+	for item in bits:
+        	wiringpi.digitalWrite(data_pin, int(item))
+        	wiringpi.digitalWrite(clk_pin, 1)
+        	usleep(12)
+        	wiringpi.digitalWrite(clk_pin, 0)
+        	usleep(12)
+
+	time.sleep(0.01)
+
+def write(dat_pin, clk_pin, num_pixies, input, system = "C"):
 	out_bits = ""
 	for item in input:
 		out_bits += "00000000"
@@ -684,4 +703,7 @@ def write(dat_pin, clk_pin, num_pixies, input):
 	while len(out_bits) < 128*num_pixies:
 		out_bits = "0"+out_bits
 
-	os.system("./pixie_write "+str(dat_pin)+" "+str(clk_pin)+" "+out_bits)
+	if system == "C":
+		os.system("./pixie_write "+str(dat_pin)+" "+str(clk_pin)+" "+out_bits)
+	else: # Python mode
+		send(dat_pin, clk_pin, out_bits)
