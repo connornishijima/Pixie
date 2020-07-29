@@ -1,5 +1,12 @@
 #   Pixie for Raspberry Pi Example
 #
+#	UPDATE: This module now has a Python-only mode that avoids C usage.
+#	This mode is slower, but should be more compatible across various platforms
+#	You can experiment with this using the "transfer_mode" variable below.
+#	WIRINGPI FOR PYTHON IS REQUIRED for Python mode, install it using the command:
+#
+#		sudo pip install wiringpi2
+#
 #   Steps to replicate:
 #       1. Add "import pixie_write as pix" to the top of your python code
 #       2. Call pix.write(DAT_pin, CLK_pin, num_pixies, *INPUT*) at any time to write to the displays!
@@ -52,6 +59,7 @@ import pixie_write as pix
 DAT_pin = 0
 CLK_pin = 2
 num_pixies = 2
+transfer_mode = "PYTHON" # Can be "C" or "PYTHON". "C" is faster, "PYTHON" is more compatible.
 
 for i in range(100):
-	pix.write(DAT_pin, CLK_pin, num_pixies, str( i/10.0 )) #counts to from 0 to 10 in steps of 0.1
+	pix.write(DAT_pin, CLK_pin, num_pixies, str( i/10.0 ), transfer_mode) #counts to from 0 to 10 in steps of 0.1
