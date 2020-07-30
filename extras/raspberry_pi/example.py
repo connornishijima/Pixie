@@ -1,29 +1,7 @@
-#   Pixie for Raspberry Pi Example
-#
-#   Steps to replicate:
-#       1. Add "import pixie_write as pix" to the top of your python code
-#       2. Call pix.write(num_pixies, *INPUT*) at any time to write to the displays!
-#
-#   *INPUT* can be any string or number casted to a string, such as str(123).
-#   The "pixie_write.py" file MUST be in the same directory as your own code!
-#
-#   There are two files in this directory:
-#       - "example.py"
-#           This is a stand-in for your own script
-#       - "pixie_write.py"
-#           This script (imported below) converts your input string to a
-#           binary bitstream to be blasted to the Pixies
-#
-#   The RasPi Pixie driver uses the SPI pins marked below, and
-#   needs SPI enabled using:
-#
-#     sudo raspi-config
-#
-#   ...and navigating to Interfacing -> SPI to enable it (and reboot)
-#
-#   Hookup Guide:
-#
-#         PI HEADER : (https://cdn.sparkfun.com/assets/learn_tutorials/4/2/4/header_pinout.jpg)
+# Pixie RasPi driver demo!
+# SPI must be enabled using "sudo raspi-config" under "Interfacing Options" (reboot after changing)
+
+# SPI HOOKUP:
 #   -----------------+
 #                    |
 #    PIX_VCC     X   |
@@ -48,14 +26,74 @@
 #          X     X   |
 #                    |
 
-import time
-import pixie_write as pix
-num_pixies = 2
+import pixie as pix # Import Pixie library
+import time         # Optional timekeeping module
 
-# Write string, wait 3 seconds
-pix.write(num_pixies, "TEST")
-time.sleep(3)
+NUM_PIXIES = 3
+pix.begin(NUM_PIXIES) # Init displays
 
-# Counts to from 0 to 99.9 in steps of 0.1
-for i in range(1000):
-	pix.write(num_pixies, str( i/10.0 ))
+# Count to 100
+for i in range(100):
+	pix.clear()
+	pix.write(i)
+	pix.show()
+
+# Scroll message
+pix.scroll_message("Scrolling message!")
+
+# Scroll message without stopping
+pix.scroll_message("Scrolling message!", 0)
+
+# Scroll message without animation
+pix.scroll_message("Scrolling message!", 250, True)
+
+# Push input to left-side of display
+pix.shift("PUSH")
+pix.show()
+time.sleep(1)
+
+# Push input to right-side of display
+pix.push("X")
+pix.show()
+time.sleep(1)
+
+# Push input to arbitrary display
+pix.write("Y",1)
+pix.show()
+time.sleep(1)
+
+# Set brightness
+pix.clear()
+pix.brightness(8) # 0-127
+pix.write("LOW")
+pix.show()
+
+time.sleep(1)
+
+pix.clear()
+pix.brightness(127) # 0-127
+pix.write("HIGH")
+pix.show()
+
+time.sleep(1)
+
+# Built in icons:
+pix.clear()
+pix.printout("L")
+pix.printout(pix.icons["PIX_HEART"])
+pix.printout("L")
+pix.show()
+time.sleep(2)
+
+# Custom icons:
+pix.push([0x5D,0x55,0x55,0x55,0x77])
+pix.show()
+time.sleep(2)
+pix.push([0x7F,0x40,0x7F,0x01,0x7F])
+pix.show()
+time.sleep(2)
+
+# Ta-da!
+pix.clear()
+pix.write("DONE")
+pix.show()
