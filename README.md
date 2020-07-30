@@ -33,7 +33,7 @@ Thank you for your order! Try our **[Getting Started Guide](https://github.com/c
 - Software Documentation
 - Hardware Datasheet
 - Pixie Icon Generator
-- Raspberry Pi Python Driver (Beta)
+- Raspberry Pi Python Driver
 - PCB Gerbers
 
 ## Software Documentation
