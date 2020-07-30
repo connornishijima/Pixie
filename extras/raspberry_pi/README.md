@@ -1,6 +1,6 @@
 # Pixie Python driver for Raspberry Pi
 
-This is a (mostly) complete port of version 1.2.2 of the Pixie Arduino library to a Python/SPI based module for Raspberry Pi!
+This is a (mostly) complete port of version 1.2.2 of the Pixie Arduino library to a Python/SPI-based module for Raspberry Pi!
 
 ## Notable differences:
 
