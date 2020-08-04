@@ -69,7 +69,7 @@ This library also contains a Pixie EAGLE library (In "extras/hardware") for addi
 
 ----------
 # Contributing
-Any advice or pull requests are welcome. :)
+Any advice or pull requests are welcome! *(This repository uses **snake_case**, not **camelCase**.)*
 
 ----------
 # License and Credits
