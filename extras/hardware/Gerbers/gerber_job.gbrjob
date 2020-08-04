@@ -1,7 +1,7 @@
 {
     "Header": {
         "Comment": "All values are metric (mm)",
-        "CreationDate": "2020-06-19T18:58:15Z",
+        "CreationDate": "2020-08-04T03:12:17Z",
         "GenerationSoftware": {
             "Application": "EAGLE",
             "Vendor": "Autodesk",
@@ -13,7 +13,7 @@
         "BoardThickness": 1.671119,
         "LayerNumber": 2,
         "Name": {
-            "ProjectId": "PIXIE"
+            "ProjectId": "lumipere"
         },
         "Owner": "  <>",
         "Size": {
