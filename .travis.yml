@@ -31,7 +31,7 @@ install:
    - arduino --install-library "WiFiManager","NTPClient"
 
 script:
-   - python run-clang-format.py -r .
+#   - python run-clang-format.py -r .
    - build_main_platforms
 
 # Generate and deploy documentation
