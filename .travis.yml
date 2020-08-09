@@ -18,13 +18,13 @@ addons:
       - clang-format-5.0
 env:
   global:
-#    - ARDUINO_IDE_VERSION="1.8.10"
+    - ARDUINO_IDE_VERSION="1.8.10"
      - PRETTYNAME="Pixie Arduino Library"
 # Optional, will default to "$TRAVIS_BUILD_DIR/Doxyfile"
 #    - DOXYFILE: $TRAVIS_BUILD_DIR/Doxyfile
 
 before_install:
-   - source <(curl -SLs https://raw.githubusercontent.com/adafruit/travis-ci-arduino/master/install.sh)
+   - source <(curl -SLs https://raw.githubusercontent.com/connornishijima/travis_scripts/master/pixie_travis.sh)
    - curl -SLs https://raw.githubusercontent.com/adafruit/travis-ci-arduino/master/run-clang-format.py > run-clang-format.py
 
 install:
