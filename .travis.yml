@@ -25,7 +25,7 @@ env:
 
 before_install:
    - source <(curl -SLs https://raw.githubusercontent.com/connornishijima/travis_scripts/master/Pixie/install.sh)
-   - curl -SLs https://raw.githubusercontent.com/adafruit/travis-ci-arduino/master/run-clang-format.py > run-clang-format.py
+#   - curl -SLs https://raw.githubusercontent.com/adafruit/travis-ci-arduino/master/run-clang-format.py > run-clang-format.py
 
 install:
    - arduino --install-library "WiFiManager","NTPClient"
