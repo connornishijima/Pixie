@@ -79,7 +79,7 @@ fi
 export ARDUINO_HEX_DIR=arduino_build_$TRAVIS_BUILD_NUMBER
 
 # link test library folder to the arduino libraries folder
-ln -s $TRAVIS_BUILD_DIR $HOME/arduino_ide/libraries/Pixie
+ln -s $TRAVIS_BUILD_DIR $HOME/arduino_ide/libraries/Pixie_Testing
 
 # add the arduino CLI to our PATH
 export PATH="$HOME/arduino_ide:$PATH"
@@ -89,7 +89,7 @@ echo -e "${YELLOW}INSTALLING DEPENDENCIES"
 echo "########################################################################";
 
 # install dependancy libraries in library.properties
-grep "depends=" $HOME/arduino_ide/libraries/Pixie/library.properties | sed 's/depends=//' | sed -n 1'p' |  tr ',' '\n' | while read word; do arduino --install-library "$word"; done
+grep "depends=" $HOME/arduino_ide/libraries/Pixie_Testing/library.properties | sed 's/depends=//' | sed -n 1'p' |  tr ',' '\n' | while read word; do arduino --install-library "$word"; done
 
 # install the zero, esp8266, and adafruit board packages
 echo -n "ADD PACKAGE INDEX: "
@@ -869,7 +869,7 @@ if [[ ! $# -eq 0 ]] ; then
 export ARDUINO_HEX_DIR=arduino_build_$TRAVIS_BUILD_NUMBER
 
 # link test library folder to the arduino libraries folder
-ln -s $TRAVIS_BUILD_DIR $HOME/arduino_ide/libraries/Pixie
+ln -s $TRAVIS_BUILD_DIR $HOME/arduino_ide/libraries/Pixie_Testing
 
 # add the arduino CLI to our PATH
 export PATH="$HOME/arduino_ide:$PATH"

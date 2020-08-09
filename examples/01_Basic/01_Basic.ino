@@ -92,7 +92,7 @@ void loop() {
   // INTEGER WRITING FUNCTIONS -------------------------
 
   // Count from -100 to 100
-  for(int16_t i = -100; i <= 100; i++){
+  for(int i = -100; i <= 100; i++){
     pix.clear();       // Clears the PIXIE chain
     pix.print(i);
     pix.show();        // Pushes changes to the PIXIE chain
