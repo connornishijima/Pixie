@@ -129,6 +129,12 @@ void Pixie::write(int16_t input, uint8_t pos){
 	write(char_buf, pos);
 }
 
+void Pixie::write(uint16_t input, uint8_t pos){
+	char char_buf[48];
+	uitoa(input,char_buf,10);
+	write(char_buf, pos);
+}
+
 void Pixie::write(int32_t input, uint8_t pos){
 	char char_buf[48];
 	ltoa(input,char_buf,10);
@@ -248,6 +254,14 @@ void Pixie::print(int16_t input){
 	cursor_pos++;
 	char char_buf[48];
 	itoa(input,char_buf,10);
+	write(char_buf, pos);
+}
+
+void Pixie::print(uint16_t input){
+	uint8_t pos = cursor_pos;
+	cursor_pos++;
+	char char_buf[48];
+	uitoa(input,char_buf,10);
 	write(char_buf, pos);
 }
 
@@ -426,6 +440,17 @@ void Pixie::push(int16_t input){
 	}
 }
 
+void Pixie::push(uint16_t input){
+	char char_buf[48];
+	uitoa(input,char_buf,10);
+	for(uint8_t i = 0; i < 48; i++){
+		if(char_buf[i] == 0){
+			break;
+		}
+		push_char(char_buf[i]);
+	}
+}
+
 void Pixie::push(int32_t input){
 	char char_buf[48];
 	ltoa(input,char_buf,10);
@@ -595,6 +620,15 @@ void Pixie::shift(int16_t input){
 	const uint8_t len = get_length((int32_t)input);
 	char char_buf[len];
 	itoa(input,char_buf,10);
+	for(uint8_t i = 0; i < len; i++){
+		shift_char(char_buf[len-1-i]);
+	}
+}
+
+void Pixie::shift(uint16_t input){
+	const uint8_t len = get_length((int32_t)input);
+	char char_buf[len];
+	uitoa(input,char_buf,10);
 	for(uint8_t i = 0; i < len; i++){
 		shift_char(char_buf[len-1-i]);
 	}
