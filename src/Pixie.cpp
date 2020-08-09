@@ -1,55 +1,40 @@
 /*!
  * @file Pixie.cpp
  *
- * @mainpage Adafruit FXOS8700 accel/mag sensor driver
+ * @mainpage Pixie library for Arduino!
  *
  * @section intro_sec Introduction
  *
- * This is the documentation for Adafruit's FXOS8700 driver for the
+ * This is the documentation for Lixie Labs' Pixie library for the
  * Arduino platform.  It is designed specifically to work with the
- * Adafruit FXOS8700 breakout: https://www.adafruit.com/products/3463
- *
- * These sensors use I2C to communicate, 2 pins (SCL+SDA) are required
- * to interface with the breakout.
- *
- * Adafruit invests time and resources providing this open source code,
- * please support Adafruit and open-source hardware by purchasing
- * products from Adafruit!
- *
- * @section dependencies Dependencies
- *
- * This library depends on <a href="https://github.com/adafruit/Adafruit_Sensor">
- * Adafruit_Sensor</a> being present on your system. Please make sure you have
- * installed the latest version before using this library.
+ * Pixie line of displays:
+ * 
+ * https://www.tindie.com/products/connornishijima/pixie-chainable-57-led-displays-for-arduino/
  *
  * @section author Author
  *
- * Written by Kevin "KTOWN" Townsend for Adafruit Industries.
+ * Written by Connor Nishijima for Lixie Labs.
  *
  * @section license License
  *
- * BSD license, all text here must be included in any redistribution.
- *
+ * GPLv3 license, all text here must be included in any redistribution.
  */
-
-/*
-  Pixie.cpp - Library for controlling Pixie Displays!
-  Created by Connor Nishijima, June 8th 2020.
-  Released under the GPLv3 license.
-*/
 
 #include "Pixie.h"
 
-/**
-Used to initialize the Pixie library. Example usage before setup() would be:
-<pre>
-Pixie pix(p_count, c_pin, d_pin);
-</pre>
-"pix" can be anything you want, as long as it's reflected in the rest of your code. Because each of these functions are wrapped in the Pixie class, you'll use them like this:
-<pre>
-pix.write(num);
-</pre>
+/**************************************************************************/
+/*!
+	Used to initialize the Pixie library. Example usage before setup() would be:
+	<pre>
+	Pixie pix(p_count, c_pin, d_pin);
+	</pre>
+	"pix" can be anything you want, as long as it's reflected in the rest of your code. 
+	Because each of these functions are wrapped in the Pixie class, you'll use them like this:
+	<pre>
+	pix.write(num);
+	</pre>
 */
+/**************************************************************************/
 Pixie::Pixie(uint8_t p_count, uint8_t c_pin, uint8_t d_pin){
 	CLK_pin = c_pin;
 	DAT_pin = d_pin;
