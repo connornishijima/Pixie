@@ -11,7 +11,9 @@ fi
 # Uno is ATmega328, Zero is SAMD21G18, ESP8266, Leonardo is ATmega32u4, M4 is SAMD51, Mega is ATmega2560, ESP32
 
 #export MAIN_PLATFORMS='declare -A main_platforms=( [uno]="arduino:avr:uno" [esp8266]="esp8266:esp8266:huzzah:eesz=4M3M,xtal=160" [leonardo]="arduino:avr:leonardo" [mega2560]="arduino:avr:mega:cpu=atmega2560" [esp32]="esp32:esp32:featheresp32:FlashFreq=80" )'
-export MAIN_PLATFORMS='declare -A main_platforms=( [uno]="arduino:avr:uno" [mega2560]="arduino:avr:mega:cpu=atmega2560" [esp8266]="esp8266:esp8266:huzzah:eesz=4M3M,xtal=160" [esp32]="esp32:esp32:featheresp32:FlashFreq=80")'
+export MAIN_PLATFORMS='declare -A main_platforms=([mega2560]="arduino:avr:mega:cpu=atmega2560")'
+
+#export MAIN_PLATFORMS='declare -A main_platforms=( [uno]="arduino:avr:uno" [mega2560]="arduino:avr:mega:cpu=atmega2560" [esp8266]="esp8266:esp8266:huzzah:eesz=4M3M,xtal=160" [esp32]="esp32:esp32:featheresp32:FlashFreq=80")'
 
 # associative array for other platforms that can be called explicitly in .travis.yml configs
 # this will be eval'd in the functions below because arrays can't be exported
