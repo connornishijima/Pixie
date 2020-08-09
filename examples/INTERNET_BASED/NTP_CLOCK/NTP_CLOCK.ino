@@ -49,11 +49,18 @@
 #define DATA_PIN        12    // (D6) Any digital pin
 #define BUZZER          13    // (D7) Any digital pin
 
-#include <ESP8266WiFi.h>         // https://github.com/esp8266/Arduino
-#include <DNSServer.h>           //  |
-#include <ESP8266WebServer.h>    //  |
-#include <WiFiUdp.h>             //  |
-#include <FS.h>                  // <
+// Stupid ESP8266/32 Compatibility
+#ifdef ESP8266
+  #include <ESP8266WiFi.h>
+  #include <ESP8266WebServer.h>
+#elif defined(ESP32)
+  #include <WiFi.h>
+  #include <WebServer.h>
+#endif
+// Other WiFi libraries that don't have stupid names
+#include <DNSServer.h>
+#include <WiFiUdp.h>
+#include <FS.h>
 
 #include <WiFiManager.h>         // https://github.com/tzapu/WiFiManager            <--------------------------- EXTERNAL LIBRARY NEEDED
 #include <NTPClient.h>           // https://github.com/arduino-libraries/NTPClient  <--------------------------- EXTERNAL LIBRARY NEEDED
