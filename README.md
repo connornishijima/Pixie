@@ -71,7 +71,7 @@ This library also contains a Pixie EAGLE library (In "extras/hardware") for addi
 # Build Status
 [![Build Status](https://travis-ci.com/connornishijima/Pixie.svg?branch=master)](https://travis-ci.com/connornishijima/Pixie)
 
-Pixie for Arduino is automatically tested against:
+Pixie for Arduino is automatically tested with Travis CI against:
 - ATmega328p (Uno)
 - ATmega2560 (Mega)
 - ATmega32u4 (Leonardo)
@@ -79,6 +79,8 @@ Pixie for Arduino is automatically tested against:
 - ESP32
 
 *Currently untested are STM/Cortex or SAMD platforms such as the Teensy 3+ and Arduino MKR.*
+
+Is it marked "Failing"? **No worries!** If you install Pixie using the Arduino Library Manager, you'll be getting the latest stable release. *This GitHub repo is under frequent changes, and some of these changes may be breaking at times.*
 
 ----------
 # Contributing
