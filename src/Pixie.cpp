@@ -1,3 +1,37 @@
+/*!
+ * @file Pixie.cpp
+ *
+ * @mainpage Adafruit FXOS8700 accel/mag sensor driver
+ *
+ * @section intro_sec Introduction
+ *
+ * This is the documentation for Adafruit's FXOS8700 driver for the
+ * Arduino platform.  It is designed specifically to work with the
+ * Adafruit FXOS8700 breakout: https://www.adafruit.com/products/3463
+ *
+ * These sensors use I2C to communicate, 2 pins (SCL+SDA) are required
+ * to interface with the breakout.
+ *
+ * Adafruit invests time and resources providing this open source code,
+ * please support Adafruit and open-source hardware by purchasing
+ * products from Adafruit!
+ *
+ * @section dependencies Dependencies
+ *
+ * This library depends on <a href="https://github.com/adafruit/Adafruit_Sensor">
+ * Adafruit_Sensor</a> being present on your system. Please make sure you have
+ * installed the latest version before using this library.
+ *
+ * @section author Author
+ *
+ * Written by Kevin "KTOWN" Townsend for Adafruit Industries.
+ *
+ * @section license License
+ *
+ * BSD license, all text here must be included in any redistribution.
+ *
+ */
+
 /*
   Pixie.cpp - Library for controlling Pixie Displays!
   Created by Connor Nishijima, June 8th 2020.
@@ -6,6 +40,16 @@
 
 #include "Pixie.h"
 
+/**
+Used to initialize the Pixie library. Example usage before setup() would be:
+<pre>
+Pixie pix(p_count, c_pin, d_pin);
+</pre>
+"pix" can be anything you want, as long as it's reflected in the rest of your code. Because each of these functions are wrapped in the Pixie class, you'll use them like this:
+<pre>
+pix.write(num);
+</pre>
+*/
 Pixie::Pixie(uint8_t p_count, uint8_t c_pin, uint8_t d_pin){
 	CLK_pin = c_pin;
 	DAT_pin = d_pin;
@@ -14,10 +58,13 @@ Pixie::Pixie(uint8_t p_count, uint8_t c_pin, uint8_t d_pin){
 	display_buffer = new uint8_t[disp_count*8];  
 }
 
-/** @ingroup init
-Initializes the display buffer and clears the displays (Should be called once in the Arduino setup() function)
-@param speed Can either be omitted/LEGACY_SPEED (39kHz) or FULL_SPEED (67kHz)
+/**************************************************************************/
+/*!
+    @brief	Initializes the display buffer and clears the displays (Should be called once in the Arduino setup() function)
+	
+    @param	speed Can either be omitted/LEGACY_SPEED (39kHz) or FULL_SPEED (67kHz)
 */
+/**************************************************************************/
 void Pixie::begin(uint8_t speed){
 	clk_us = speed;
 	pinMode(CLK_pin, OUTPUT);
@@ -25,10 +72,22 @@ void Pixie::begin(uint8_t speed){
 	reset();
 }
 
+/**************************************************************************/
+/*!
+    @brief	Allows for flipping the display buffer 180 degrees for Pixies mounted upside-down
+	
+    @param	enable Enable flipped display buffer
+*/
+/**************************************************************************/
 void Pixie::flipped(bool enable){
 	display_flipped = enable;
 }
 
+/**************************************************************************/
+/*!
+    @brief	Latches the current display buffer and writes it to the Pixie chain
+*/
+/**************************************************************************/
 void Pixie::show(){
 	uint16_t byte_count = 0;
 	for (uint16_t b = 0; b < disp_count * 8; b++) {
@@ -86,6 +145,13 @@ void Pixie::show(){
 	delay(5);
 }
 
+/**************************************************************************/
+/*!
+    @brief	Sets the brightness of the Pixie chain using a 7-bit range (0-127)
+	
+    @param	b 7-bit brightness level to set.
+*/
+/**************************************************************************/
 void Pixie::brightness(uint8_t b){
 	bright = b;
 	bitWrite(bright,7,1); // set bit 7 (MSB) to 1 to signify PWM byte to PIXIE
@@ -94,6 +160,11 @@ void Pixie::brightness(uint8_t b){
 	}
 }
 
+/**************************************************************************/
+/*!
+    @brief	Clears the display buffer
+*/
+/**************************************************************************/
 void Pixie::clear(){
 	for (uint16_t d = 0; d < disp_count*8; d++) {
 		display_buffer[d] = 0;
@@ -101,6 +172,15 @@ void Pixie::clear(){
 	cursor_pos = 0;
 }
 
+/**************************************************************************/
+/*!
+    @brief	Sets a pixel at coordinate (**x**,**y**) to **state**.
+	
+    @param	x		X coordinate
+	@param	y		Y coordinate
+	@param	state	On (true) or off (false)
+*/
+/**************************************************************************/
 void Pixie::set_pix(uint16_t x, uint16_t y, uint8_t state){
 	uint16_t max_x = disp_count*8-1;
 	uint8_t max_y = 6;
@@ -115,42 +195,100 @@ void Pixie::set_pix(uint16_t x, uint16_t y, uint8_t state){
 	}
 }
 
+/**************************************************************************/
+/*!
+    @brief	Writes a floating-point number to the Pixies up to a specified decimal precision.
+	
+    @param	input	Number to write
+	@param	places	Number of decimal places to write
+	@param	pos     Position in the chain to start writing
+*/
+/**************************************************************************/
 void Pixie::write(float input, uint8_t places, uint8_t pos){
 	char char_buf[48];	
 	sprintf(char_buf, "%.*f", places, input);
 	write(char_buf, pos);
 }
 
+/**************************************************************************/
+/*!
+    @brief	Writes a double floating-point number to the Pixies up to a specified decimal precision.
+	
+    @param	input	Number to write
+	@param	places	Number of decimal places to write
+	@param	pos     Position in the chain to start writing
+*/
+/**************************************************************************/
 void Pixie::write(double input, uint8_t places, uint8_t pos){
 	char char_buf[48];	
 	sprintf(char_buf, "%.*f", places, input);
 	write(char_buf, pos);
 }
 
+/**************************************************************************/
+/*!
+    @brief	Writes a 16-bit signed integer to the Pixies starting at a specified position.
+	
+    @param	input	Number to write
+	@param	pos     Position in the chain to start writing
+*/
+/**************************************************************************/
 void Pixie::write(int16_t input, uint8_t pos){
 	char char_buf[48];
 	itoa(input,char_buf,10);
 	write(char_buf, pos);
 }
 
+/**************************************************************************/
+/*!
+    @brief	Writes a 16-bit unsigned integer to the Pixies starting at a specified position.
+	
+    @param	input	Number to write
+	@param	pos     Position in the chain to start writing
+*/
+/**************************************************************************/
 void Pixie::write(uint16_t input, uint8_t pos){
 	char char_buf[48];
 	utoa(input,char_buf,10);
 	write(char_buf, pos);
 }
 
+/**************************************************************************/
+/*!
+    @brief	Writes a 32-bit signed integer to the Pixies starting at a specified position.
+	
+    @param	input	Number to write
+	@param	pos     Position in the chain to start writing
+*/
+/**************************************************************************/
 void Pixie::write(int32_t input, uint8_t pos){
 	char char_buf[48];
 	ltoa(input,char_buf,10);
 	write(char_buf, pos);
 }
 
+/**************************************************************************/
+/*!
+    @brief	Writes a 32-bit unsigned integer to the Pixies starting at a specified position.
+	
+    @param	input	Number to write
+	@param	pos     Position in the chain to start writing
+*/
+/**************************************************************************/
 void Pixie::write(uint32_t input, uint8_t pos){
 	char char_buf[48];
 	ultoa(input,char_buf,10);
 	write(char_buf, pos);
 }
 
+/**************************************************************************/
+/*!
+    @brief	Writes a 32-bit unsigned integer to the Pixies starting at a specified position.
+	
+    @param	input	Number to write
+	@param	pos     Position in the chain to start writing
+*/
+/**************************************************************************/
 #if defined(ESP8266) || defined(ESP32)
 	void Pixie::write(long unsigned int input, uint8_t pos){
 		char char_buf[48];
@@ -159,10 +297,26 @@ void Pixie::write(uint32_t input, uint8_t pos){
 	}
 #endif
 
+/**************************************************************************/
+/*!
+    @brief	Writes a char to the Pixies at a specified position.
+	
+    @param	input	char to write
+	@param	pos     Position in the chain to start writing
+*/
+/**************************************************************************/
 void Pixie::write(char input, uint8_t pos){
 	write_char(input, pos);
 }
 
+/**************************************************************************/
+/*!
+    @brief	Writes a Pixie Icon to the Pixies at a specified position.
+	
+    @param	input	Icon to write
+	@param	pos     Position in the chain to start writing
+*/
+/**************************************************************************/
 void Pixie::write(uint8_t* icon, uint8_t pos) {
 	if(pos < disp_count){		
 		display_buffer[8*pos+0] = 0;
@@ -178,6 +332,18 @@ void Pixie::write(uint8_t* icon, uint8_t pos) {
 	set_cursor(pos+1);
 }
 
+/**************************************************************************/
+/*!
+    @brief	Writes a custom Pixie Icon to the Pixies at a specified position.
+	
+    @param	byte1	Icon (column 1)
+	@param	byte2	Icon (column 2)
+	@param	byte3	Icon (column 3)
+	@param	byte4	Icon (column 4)
+	@param	byte5	Icon (column 5)
+	@param	pos     Position in the chain to start writing
+*/
+/**************************************************************************/
 void Pixie::write(uint8_t byte1, uint8_t byte2, uint8_t byte3, uint8_t byte4, uint8_t byte5, uint8_t pos){
 	if(pos < disp_count){		
 		display_buffer[8*pos+0] = 0;
@@ -194,6 +360,14 @@ void Pixie::write(uint8_t byte1, uint8_t byte2, uint8_t byte3, uint8_t byte4, ui
 	}
 }
 
+/**************************************************************************/
+/*!
+    @brief	Writes a char pointer/array to the Pixies at a specified position.
+	
+    @param	input	char[]/char* to write
+	@param	pos     Position in the chain to start writing
+*/
+/**************************************************************************/
 void Pixie::write(char* input, uint8_t pos){
 	uint8_t len = strlen(input);
 	if(len > disp_count-pos){
@@ -204,6 +378,14 @@ void Pixie::write(char* input, uint8_t pos){
 	}
 }
 
+/**************************************************************************/
+/*!
+    @brief	Writes a char to the Pixies at a specified position.
+	
+    @param	chr		char to write
+	@param	pos     Position in the chain to start writing
+*/
+/**************************************************************************/
 void Pixie::write_char(char chr, uint8_t pos) {
 	if(pos < disp_count){		
 		if (chr >= 32) {

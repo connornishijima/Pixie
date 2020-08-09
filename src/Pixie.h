@@ -1,3 +1,23 @@
+/*!
+ * @file Adafruit_FXOS8700.h
+ *
+ * This is part of Adafruit's FXOS8700 driver for the Arduino platform.  It is
+ * designed specifically to work with the Adafruit FXOS8700 breakout:
+ * https://www.adafruit.com/products/3463
+ *
+ * These sensors use I2C to communicate, 2 pins (SCL+SDA) are required
+ * to interface with the breakout.
+ *
+ * Adafruit invests time and resources providing this open source code,
+ * please support Adafruit and open-source hardware by purchasing
+ * products from Adafruit!
+ *
+ * Written by Kevin "KTOWN" Townsend for Adafruit Industries.
+ *
+ * BSD license, all text here must be included in any redistribution.
+ *
+ */
+
 /*
   Pixie.h - Library for controlling Pixie Displays!
   Created by Connor Nishijima, June 8th 2020.
@@ -20,6 +40,11 @@
 #define LEGACY_SPEED 12  // ~39kHz bitrate
 #define FULL_SPEED   7   // ~67kHz bitrate (Firmware 1.1.0+)
 
+/**************************************************************************/
+/*! 
+    @brief	Pixie class, containing all of the coolest functions!
+*/
+/**************************************************************************/
 class Pixie{
   public:
     Pixie(uint8_t d_count, uint8_t c_pin, uint8_t d_pin);
