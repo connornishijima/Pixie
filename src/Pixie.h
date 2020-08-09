@@ -34,6 +34,7 @@ class Pixie{
 	void write(char input,    uint8_t pos = 0);
 	void write(char* input,   uint8_t pos = 0);
 	void write(int16_t input, uint8_t pos = 0);
+	void write(uint16_t input, uint8_t pos = 0);
 	void write(int32_t input, uint8_t pos = 0);
 	void write(uint32_t input, uint8_t pos = 0);
 	#if defined(ESP8266) || defined(ESP32)
@@ -49,6 +50,7 @@ class Pixie{
 	void print(char input);
 	void print(char* input);
 	void print(int16_t input);
+	void print(uint16_t input);
 	void print(int32_t input);
 	void print(uint32_t input);
 	#if defined(ESP8266) || defined(ESP32)
@@ -66,6 +68,7 @@ class Pixie{
 	void push(char input);
 	void push(char* input);
 	void push(int16_t input);
+	void push(uint16_t input);
 	void push(int32_t input);
 	void push(uint32_t input);
 	#if defined(ESP8266) || defined(ESP32)
@@ -81,6 +84,7 @@ class Pixie{
 	void shift(char input);
 	void shift(char* input);
 	void shift(int16_t input);
+	void shift(uint16_t input);
 	void shift(int32_t input);
 	void shift(uint32_t input);
 	#if defined(ESP8266) || defined(ESP32)
