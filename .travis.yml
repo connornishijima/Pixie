@@ -24,7 +24,7 @@ env:
 #    - DOXYFILE: $TRAVIS_BUILD_DIR/Doxyfile
 
 before_install:
-   - source <(curl -SLs https://raw.githubusercontent.com/connornishijima/travis_scripts/master/Pixie/install.sh)
+   - source <(curl -SLs https://raw.githubusercontent.com/connornishijima/Pixie/master/travis/install.sh)
 #   - curl -SLs https://raw.githubusercontent.com/adafruit/travis-ci-arduino/master/run-clang-format.py > run-clang-format.py
 
 install:
