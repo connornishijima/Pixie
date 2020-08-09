@@ -14,6 +14,10 @@ Pixie::Pixie(uint8_t p_count, uint8_t c_pin, uint8_t d_pin){
 	display_buffer = new uint8_t[disp_count*8];  
 }
 
+/** @ingroup init
+Initializes the display buffer and clears the displays (Should be called once in the Arduino setup() function)
+@param speed Can either be omitted/LEGACY_SPEED (39kHz) or FULL_SPEED (67kHz)
+*/
 void Pixie::begin(uint8_t speed){
 	clk_us = speed;
 	pinMode(CLK_pin, OUTPUT);
