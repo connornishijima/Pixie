@@ -68,6 +68,19 @@ This library also contains a Pixie EAGLE library (In "extras/hardware") for addi
 3. Rename the folder from "Pixie-master" to "Pixie".
 
 ----------
+# Build Status
+[![Build Status](https://travis-ci.com/connornishijima/Pixie.svg?branch=master)](https://travis-ci.com/connornishijima/Pixie)
+
+Pixie for Arduino is automatically tested against:
+- ATmega328p (Uno)
+- ATmega2560 (Mega)
+- ATmega32u4 (Leonardo)
+- ESP8266
+- ESP32
+
+*Currently untested are STM/Cortex or SAMD platforms such as the Teensy 3+ and Arduino MKR.*
+
+----------
 # Contributing
 Any advice or pull requests are welcome! *(This repository uses **snake_case**, not **camelCase**.)*
 
