@@ -47,7 +47,7 @@
 
 #define CLK_PIN         14    // (D5) Any digital pin
 #define DATA_PIN        12    // (D6) Any digital pin
-#define BUZZER          13    // (D7) Any digital pin
+#define BUZZER          13    // (D7) Any digital pin (Doesn't work on ESP32, see beep() function)
 
 // Stupid ESP8266/32 Compatibility
 #ifdef ESP8266
@@ -273,7 +273,9 @@ void init_displays() {
 }
 
 void beep(uint16_t freq, uint16_t len_ms) {
-  tone(BUZZER, freq, len_ms);
+  #ifndef ESP32
+    tone(BUZZER, freq, len_ms); // Sorry, no tone() for you apparently. Espressif devs won't add a simple tone() abstraction to the official ESP32 core. Sorry!
+  #endif
 }
 
 void beep_dual(uint16_t freq1, uint16_t freq2, uint16_t len) {
