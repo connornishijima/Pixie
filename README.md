@@ -71,7 +71,7 @@ This library also contains a Pixie EAGLE library (In "extras/hardware") for addi
 # Build Status
 [![Build Status](https://travis-ci.com/connornishijima/Pixie.svg?branch=master)](https://travis-ci.com/connornishijima/Pixie)
 
-Pixie for Arduino is automatically tested with Travis CI against:
+Pixie for Arduino is automatically tested with Travis CI against: 
 - ATmega328p (Uno)
 - ATmega2560 (Mega)
 - ATmega32u4 (Leonardo)
