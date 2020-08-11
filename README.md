@@ -92,4 +92,7 @@ Any advice or pull requests are welcome! *(This repository uses **snake_case**, 
 
 I work full-time as a Tindie seller providing income for my wife and I. You are free to make your own Pixies with the infomation provided in this repository, but **please be ethical and *do not sell clones***. If you modify any information from this repository, and have used it to make improvements to my hardware design that you truly think makes your version superior to the original (and thus could compete in sales due to these advantages) then - at the very least - **please attribute** Lixie Labs LLC if you sell them. (As required by the GPLv3 License below and included in the root of this repository.)
 
+### Accepted Pull Requests:
+- **ivankravets** - [Fix Broken JSON](https://github.com/connornishijima/Pixie/pull/1)
+
 **Released under the [GPLv3 License](http://www.gnu.org/licenses/gpl-3.0.en.html).**
