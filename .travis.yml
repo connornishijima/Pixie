@@ -1,5 +1,4 @@
 language: c
-sudo: false
 cache:
   directories:
     - ~/arduino_ide
