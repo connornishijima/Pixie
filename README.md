@@ -55,13 +55,13 @@ This library also contains a Pixie EAGLE library (In "extras/hardware") for addi
 ----------
 # Arduino Library Installation
 
-**With Arduino Library Manager:** ***(RECOMMENDED)***
+**With Arduino Library Manager:** ***(Stable - RECOMMENDED)***
 
 1. Open *Sketch > Include Library > Manage Libraries* in the Arduino IDE.
 2. Search for "Pixie" by Connor Nishijima, and select the latest version.
 3. Click the Install button and Arduino will prepare the library and examples for you!
 
-**Manual Install:**
+**Manual Install:** (Hourly Builds)
 
 1. Click "Clone or Download" above to get an "Pixie-master.zip" file.
 2. Extract its contents to the libraries folder in your Arduino sketchbook. ("C:/Users/**YOUR_USERNAME**/Documents/Arduino/libraries" on Windows)
