@@ -1,7 +1,7 @@
 ![Pixie](extras/img/modules_banner.png)
 
 ----------
-# Pixie for Arduino
+# Pixie for Arduino 
 
 https://www.tindie.com/products/connornishijima/pixie-chainable-dual-57-micro-led-displays/
 
