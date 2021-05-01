@@ -1,6 +1,13 @@
 ![Pixie](extras/img/modules_banner.png)
 
 ----------
+
+### New to Pixies?
+
+Thank you for your order! Try our **[Getting Started Guide](https://github.com/connornishijima/Pixie/blob/master/getting_started.md)** to get them wired up!
+
+----------
+
 # Pixie for Arduino 
 
 https://www.tindie.com/products/connornishijima/pixie-chainable-dual-57-micro-led-displays/
@@ -20,10 +27,6 @@ https://www.tindie.com/products/connornishijima/pixie-chainable-dual-57-micro-le
 
 ![PIXIE](https://i.imgur.com/s4ye4Uu.jpg)
 *Pixies mounted into a home-made case!*
-
-# New to Pixies?
-
-Thank you for your order! Try our **[Getting Started Guide](https://github.com/connornishijima/Pixie/blob/master/getting_started.md)** to get them wired up!
 
 ## Included in this repository:
 
