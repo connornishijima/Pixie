@@ -1,10 +1,10 @@
-![Pixie](extras/img/modules_banner.png)
-
 ----------
 
 ### New to Pixies?
 
 Thank you for your order! Try our **[Getting Started Guide](https://github.com/connornishijima/Pixie/blob/master/getting_started.md)** to get them wired up!
+
+![Pixie](extras/img/modules_banner.png)
 
 ----------
 
