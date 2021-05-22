@@ -22,8 +22,6 @@ Other than that, usage is identical to the original library!
 
 ### SPI must be enabled using "sudo raspi-config" under "Interfacing Options" (reboot after changing)
 
-### This library depends on the spidev library. To install it, just run "pip3 install -r requirements.txt"
-
 #### SPI HOOKUP:
     -----------------+
                      |

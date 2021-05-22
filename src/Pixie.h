@@ -19,8 +19,22 @@
 //	#include "font_alt.h"
 // ------------------------
 
+#define LEGACY 0  // Original Pixies with 128 bit buffer
+#define PRO    1  // Pixie Pro with 104-bit buffer
+
 #define LEGACY_SPEED 12  // ~39kHz bitrate
 #define FULL_SPEED   7   // ~67kHz bitrate (Firmware 1.1.0+)
+
+#define PIX_WRITE       0
+#define PIX_LED_FLIP    1
+#define PIX_ROW_CURRENT 2
+#define PIX_RESET 		3
+
+#define mA_5   8
+#define mA_10  9
+#define mA_35 14
+#define mA_40  0
+#define mA_45  1
 
 /**************************************************************************/
 /*! 
@@ -29,13 +43,14 @@
 /**************************************************************************/
 class Pixie{
   public:
-    Pixie(uint8_t d_count, uint8_t c_pin, uint8_t d_pin);
+    Pixie(uint8_t d_count, uint8_t c_pin, uint8_t d_pin, uint8_t p_type = LEGACY);
     void begin(uint8_t speed = LEGACY_SPEED); // Defaults to LEGACY_SPEED
-	void flipped(bool enable);
-	void show();
+	void show(bool fill_com = true);
 	void brightness(uint8_t b);
 	void write_brightness(uint8_t bright, uint8_t pos);
 	void clear();
+	
+	void command(uint8_t com, uint8_t data);
 	
 	void write_char(char input, uint8_t pos = 0);
 	void write(char input,    uint8_t pos = 0);
@@ -112,6 +127,8 @@ class Pixie{
 	uint8_t get_length(float input, uint8_t places);
 		
 	void scroll_message(char* input, uint16_t wait_ms = 100, bool instant = false);
+	void scroll(char* input);
+	void smooth_scroll(char* input);
 		
 	void set_pix(uint16_t x, uint16_t y, uint8_t state);
 	
@@ -120,8 +137,11 @@ class Pixie{
 	void reset();
 	
   private:
+	void calc_parity();
+	void fill_commands();
 	uint8_t clk_us = LEGACY_SPEED;
 
+	uint8_t pix_type = LEGACY;
 	uint8_t pixie_count  = 0;
 	uint8_t disp_count   = 0;
 	
@@ -130,6 +150,7 @@ class Pixie{
 	uint8_t DAT_pin;
 	uint8_t *display_buffer;
 	uint8_t cursor_pos = 0;
+	bool push_flip = false;
 	
 	bool display_flipped = false;
 };

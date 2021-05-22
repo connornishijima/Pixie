@@ -1,14 +1,7 @@
-----------
-
-### New to Pixies?
-
-Thank you for your order! Try our **[Getting Started Guide](https://github.com/connornishijima/Pixie/blob/master/getting_started.md)** to get them wired up!
-
 ![Pixie](extras/img/modules_banner.png)
 
 ----------
-
-# Pixie for Arduino 
+# Pixie for Arduino
 
 https://www.tindie.com/products/connornishijima/pixie-chainable-dual-57-micro-led-displays/
 
@@ -27,6 +20,10 @@ https://www.tindie.com/products/connornishijima/pixie-chainable-dual-57-micro-le
 
 ![PIXIE](https://i.imgur.com/s4ye4Uu.jpg)
 *Pixies mounted into a home-made case!*
+
+# New to Pixies?
+
+Thank you for your order! Try our **[Getting Started Guide](https://github.com/connornishijima/Pixie/blob/master/getting_started.md)** to get them wired up!
 
 ## Included in this repository:
 
@@ -74,7 +71,7 @@ This library also contains a Pixie EAGLE library (In "extras/hardware") for addi
 # Build Status
 [![Build Status](https://travis-ci.com/connornishijima/Pixie.svg?branch=master)](https://travis-ci.com/connornishijima/Pixie)
 
-Pixie for Arduino is automatically tested with Travis CI against: 
+Pixie for Arduino is automatically tested with Travis CI against:
 - ATmega328p (Uno)
 - ATmega2560 (Mega)
 - ATmega32u4 (Leonardo)
@@ -94,8 +91,5 @@ Any advice or pull requests are welcome! *(This repository uses **snake_case**, 
 **Developed by Connor Nishijima (Copyright 2020)**
 
 I work full-time as a Tindie seller providing income for my wife and I. You are free to make your own Pixies with the infomation provided in this repository, but **please be ethical and *do not sell clones***. If you modify any information from this repository, and have used it to make improvements to my hardware design that you truly think makes your version superior to the original (and thus could compete in sales due to these advantages) then - at the very least - **please attribute** Lixie Labs LLC if you sell them. (As required by the GPLv3 License below and included in the root of this repository.)
-
-### Accepted Pull Requests:
-- **ivankravets** - [Fix Broken JSON](https://github.com/connornishijima/Pixie/pull/1)
 
 **Released under the [GPLv3 License](http://www.gnu.org/licenses/gpl-3.0.en.html).**
