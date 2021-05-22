@@ -28,7 +28,7 @@
 #define PIX_WRITE       0
 #define PIX_LED_FLIP    1
 #define PIX_ROW_CURRENT 2
-#define PIX_RESET 		3
+#define PIX_RESET 	3
 
 #define mA_5   8
 #define mA_10  9
@@ -44,41 +44,41 @@
 class Pixie{
   public:
     Pixie(uint8_t d_count, uint8_t c_pin, uint8_t d_pin, uint8_t p_type = LEGACY);
-    void begin(uint8_t speed = LEGACY_SPEED); // Defaults to LEGACY_SPEED
+        void begin(uint8_t speed = LEGACY_SPEED); // Defaults to LEGACY_SPEED
 	void show(bool fill_com = true);
 	void brightness(uint8_t b);
 	void write_brightness(uint8_t bright, uint8_t pos);
 	void clear();
 	
-	void command(uint8_t com, uint8_t data);
+	void command(uint8_t com, uint8_t data = 0);
 	
 	void write_char(char input, uint8_t pos = 0);
-	void write(char input,    uint8_t pos = 0);
-	void write(char* input,   uint8_t pos = 0);
-	void write(int16_t input, uint8_t pos = 0);
+	void write(char     input, uint8_t pos = 0);
+	void write(char*    input, uint8_t pos = 0);
+	void write(int16_t  input, uint8_t pos = 0);
 	void write(uint16_t input, uint8_t pos = 0);
-	void write(int32_t input, uint8_t pos = 0);
+	void write(int32_t  input, uint8_t pos = 0);
 	void write(uint32_t input, uint8_t pos = 0);
 	#if defined(ESP8266) || defined(ESP32)
 		void write(long unsigned int input, uint8_t pos = 0); // same as uint32_t, but Arduino is stupid
 	#endif
-	void write(float input, uint8_t places = 2, uint8_t pos = 0);
+	void write(float  input, uint8_t places = 2, uint8_t pos = 0);
 	void write(double input, uint8_t places = 2, uint8_t pos = 0);
 	void write(uint8_t* icon, uint8_t pos = 0);
 	void write(uint8_t byte1, uint8_t byte2, uint8_t byte3, uint8_t byte4, uint8_t byte5, uint8_t pos = 0);	
 	void write_byte(uint8_t col, uint16_t pos);
 	
 	void print_char(char input);
-	void print(char input);
-	void print(char* input);
-	void print(int16_t input);
+	void print(char     input);
+	void print(char*    input);
+	void print(int16_t  input);
 	void print(uint16_t input);
-	void print(int32_t input);
+	void print(int32_t  input);
 	void print(uint32_t input);
 	#if defined(ESP8266) || defined(ESP32)
 		void print(long unsigned int input); // same as uint32_t, but Arduino is stupid
 	#endif
-	void print(float input, uint8_t places = 2);
+	void print(float  input, uint8_t places = 2);
 	void print(double input, uint8_t places = 2);
 	void print(uint8_t* icon);
 	void print(uint8_t byte1, uint8_t byte2, uint8_t byte3, uint8_t byte4, uint8_t byte5);
@@ -87,32 +87,32 @@ class Pixie{
 
 	void push_char(char chr);	
 	void push_byte(uint8_t col);
-	void push(char input);
-	void push(char* input);
-	void push(int16_t input);
+	void push(char     input);
+	void push(char*    input);
+	void push(int16_t  input);
 	void push(uint16_t input);
-	void push(int32_t input);
+	void push(int32_t  input);
 	void push(uint32_t input);
 	#if defined(ESP8266) || defined(ESP32)
 		void push(long unsigned int input); // same as uint32_t, but Arduino is stupid
 	#endif
-	void push(float input, uint8_t places = 2);
+	void push(float  input, uint8_t places = 2);
 	void push(double input, uint8_t places = 2);
 	void push(uint8_t* icon);
 	void push(uint8_t byte1, uint8_t byte2, uint8_t byte3, uint8_t byte4, uint8_t byte5);
 	
 	void shift_char(char chr);	
 	void shift_byte(uint8_t col);
-	void shift(char input);
-	void shift(char* input);
-	void shift(int16_t input);
+	void shift(char     input);
+	void shift(char*    input);
+	void shift(int16_t  input);
 	void shift(uint16_t input);
-	void shift(int32_t input);
+	void shift(int32_t  input);
 	void shift(uint32_t input);
 	#if defined(ESP8266) || defined(ESP32)
 		void shift(long unsigned int input); // same as uint32_t, but Arduino is stupid
 	#endif
-	void shift(float input, uint8_t places = 2);
+	void shift(float  input, uint8_t places = 2);
 	void shift(double input, uint8_t places = 2);
 	void shift(uint8_t* icon);
 	void shift(uint8_t byte1, uint8_t byte2, uint8_t byte3, uint8_t byte4, uint8_t byte5);
