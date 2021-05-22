@@ -1230,7 +1230,7 @@ uint8_t Pixie::get_length(uint32_t input){
 			return 1;
 		}
 		uint8_t places = 0;
-		while(abs(uint32_t(input)) >= 1){
+		while(abs(int32_t(input)) >= 1){
 			input /= 10;
 			places++;
 		}
