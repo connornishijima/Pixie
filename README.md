@@ -86,7 +86,7 @@ Is it marked "Failing"? **No worries!** If you install Pixie using the Arduino L
 
 ----------
 # Contributing
-Any advice or pull requests are welcome! *(This repository uses **snake_case**, not **camelCase**.)*
+Any advice or pull requests are welcome! *(This repository uses **snake_case**, not **camelCase**.)* :)
 
 ----------
 # License and Credits
