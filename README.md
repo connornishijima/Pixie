@@ -17,6 +17,8 @@ https://www.tindie.com/products/connornishijima/pixie-chainable-dual-57-micro-le
 - 5.1mm * 7.6mm matrix size (19.92 ppi)
 - 20.6mm * 34.7mm package
 - M2.5 mouting holes
+- Controllable LED current (Pixie Pro)
+- Parity bit error detection (Pixie Pro)
 
 ![PIXIE](https://i.imgur.com/s4ye4Uu.jpg)
 *Pixies mounted into a home-made case!*
@@ -90,6 +92,6 @@ Any advice or pull requests are welcome! *(This repository uses **snake_case**, 
 # License and Credits
 **Developed by Connor Nishijima (Copyright 2020)**
 
-I work full-time as a Tindie seller providing income for my wife and I. You are free to make your own Pixies with the infomation provided in this repository, but **please be ethical and *do not sell clones***. If you modify any information from this repository, and have used it to make improvements to my hardware design that you truly think makes your version superior to the original (and thus could compete in sales due to these advantages) then - at the very least - **please attribute** Lixie Labs LLC if you sell them. (As required by the GPLv3 License below and included in the root of this repository.)
+I work full-time as a Tindie seller providing income for my family. You are free to make your own Pixies with the infomation provided in this repository, but **please be ethical and *do not sell clones***. If you modify any information from this repository, and have used it to make improvements to my hardware design that you truly think makes your version superior to the original (and thus could compete in sales due to these advantages) then - at the very least - **please attribute** Lixie Labs LLC. if you sell them. (As required by the GPLv3 License below and included in the root of this repository.)
 
 **Released under the [GPLv3 License](http://www.gnu.org/licenses/gpl-3.0.en.html).**
