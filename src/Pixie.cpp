@@ -111,7 +111,6 @@ void Pixie::show(bool fill_com){
 	for (uint16_t i = 0; i < total_bytes; i++) {
 		for (uint8_t b = 0; b < 8; b++) {			
 			if(bitRead(display_buffer[i], 7 - b)){
-				//Serial.print("1");
 				#ifdef ESP8266
 					GPOS = (1 << DAT_pin);
 				#endif
@@ -124,7 +123,6 @@ void Pixie::show(bool fill_com){
 				#endif
 			}
 			else{
-				//Serial.print("0");
 				#ifdef ESP8266
 					GPOC = (1 << DAT_pin);
 				#endif
@@ -161,9 +159,7 @@ void Pixie::show(bool fill_com){
 			
 			delayMicroseconds(clk_us);
 		}
-		//Serial.println();
 	}
-	//Serial.println("\n");
 	
 	if(pix_type == PRO){
 		delay(3);
