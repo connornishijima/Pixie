@@ -14,9 +14,9 @@
 */
 
 #include "Pixie.h"
-#define NUM_PIXIES  12                    // PCBs, not matrices
-#define CLK_PIN     14                    // Any digital pin
-#define DATA_PIN    12                    // Any digital pin
+#define NUM_PIXIES  6                     // PCBs, not matrices
+#define CLK_PIN     4                     // Any digital pin
+#define DATA_PIN    5                     // Any digital pin
 Pixie pix(NUM_PIXIES, CLK_PIN, DATA_PIN); // Set up display buffer
 
 uint8_t animation[24][5] = { // 24 arrays of 5 uint8_t's (Icons)

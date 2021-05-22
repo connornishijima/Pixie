@@ -45,8 +45,8 @@
 #define MIN_BRIGHTNESS  32    // 7-bit brightness during NIGHT_DIMMING
 #define MAX_BRIGHTNESS  127   // 7-bit brightness during daytime
 
-#define CLK_PIN         14    // (D5) Any digital pin
-#define DATA_PIN        12    // (D6) Any digital pin
+#define CLK_PIN         4     // (D2) Any digital pin
+#define DATA_PIN        5     // (D1) Any digital pin
 #define BUZZER          13    // (D7) Any digital pin (Doesn't work on ESP32, see beep() function)
 
 // Stupid ESP8266/32 Compatibility
