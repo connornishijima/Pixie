@@ -99,6 +99,7 @@ void Pixie::fill_commands(){
 */
 /**************************************************************************/
 void Pixie::show(bool fill_com){
+	yield();
 	uint16_t total_bytes = disp_count * 8;
 	if(pix_type == PRO){
 		total_bytes = pixie_count * 13;
@@ -108,17 +109,31 @@ void Pixie::show(bool fill_com){
 		calc_parity();
 	}
 	
+	#ifdef SAMD_SERIES
+		EPortType port_clk   = g_APinDescription[CLK_pin].ulPort;
+		uint32_t pin_clk     = g_APinDescription[CLK_pin].ulPin;
+		uint32_t pinMask_clk = (1ul << pin_clk);
+		EPortType port_dat   = g_APinDescription[DAT_pin].ulPort;
+		uint32_t pin_dat     = g_APinDescription[DAT_pin].ulPin;
+		uint32_t pinMask_dat = (1ul << pin_dat);
+	#endif
+	
 	for (uint16_t i = 0; i < total_bytes; i++) {
-		for (uint8_t b = 0; b < 8; b++) {			
-			if(bitRead(display_buffer[i], 7 - b)){
+		for (uint8_t b = 0; b < 8; b++) {
+			if(bitRead(display_buffer[i], 7-b)){
 				#ifdef ESP8266
 					GPOS = (1 << DAT_pin);
 				#endif
+				
 				#ifdef ESP32
 					GPIO.out_w1ts = ((uint32_t)1 << DAT_pin);
 				#endif
 				
-				#if !defined(ESP8266) && !defined(ESP32)
+				#ifdef SAMD_SERIES
+					PORT->Group[port_dat].OUTSET.reg = pinMask_dat;
+				#endif
+				
+				#if !defined(ESP8266) && !defined(ESP32) && !defined(SAMD_SERIES)
 					digitalWrite(DAT_pin, HIGH);
 				#endif
 			}
@@ -126,11 +141,16 @@ void Pixie::show(bool fill_com){
 				#ifdef ESP8266
 					GPOC = (1 << DAT_pin);
 				#endif
+				
 				#ifdef ESP32
 					GPIO.out_w1tc = ((uint32_t)1 << DAT_pin);
 				#endif
 				
-				#if !defined(ESP8266) && !defined(ESP32)
+				#ifdef SAMD_SERIES
+					PORT->Group[port_dat].OUTCLR.reg = pinMask_dat;
+				#endif
+				
+				#if !defined(ESP8266) && !defined(ESP32) && !defined(SAMD_SERIES)
 					digitalWrite(DAT_pin, LOW);
 				#endif
 			}
@@ -141,7 +161,10 @@ void Pixie::show(bool fill_com){
 			#ifdef ESP32
 				GPIO.out_w1ts = ((uint32_t)1 << CLK_pin);
 			#endif
-			#if !defined(ESP8266) && !defined(ESP32)
+			#ifdef SAMD_SERIES
+				PORT->Group[port_clk].OUTSET.reg = pinMask_clk;
+			#endif
+			#if !defined(ESP8266) && !defined(ESP32) && !defined(SAMD_SERIES)
 				digitalWrite(CLK_pin, HIGH);
 			#endif
 			
@@ -149,11 +172,15 @@ void Pixie::show(bool fill_com){
 			
 			#ifdef ESP8266
 				GPOC = (1 << CLK_pin);
+				ESP.wdtFeed();
 			#endif
 			#ifdef ESP32
 				GPIO.out_w1tc = ((uint32_t)1 << CLK_pin);
 			#endif
-			#if !defined(ESP8266) && !defined(ESP32)
+			#ifdef SAMD_SERIES
+				PORT->Group[port_clk].OUTCLR.reg = pinMask_clk;
+			#endif
+			#if !defined(ESP8266) && !defined(ESP32) && !defined(SAMD_SERIES)
 				digitalWrite(CLK_pin, LOW);
 			#endif
 			
@@ -161,12 +188,29 @@ void Pixie::show(bool fill_com){
 		}
 	}
 	
+	#ifdef ESP8266
+		GPOC = (1 << DAT_pin);
+	#endif
+	#ifdef ESP32
+		GPIO.out_w1tc = ((uint32_t)1 << DAT_pin);
+	#endif
+	#ifdef SAMD_SERIES
+		PORT->Group[port_dat].OUTCLR.reg = pinMask_dat;
+	#endif
+	
+	#if !defined(ESP8266) && !defined(ESP32) && !defined(SAMD_SERIES)
+		digitalWrite(DAT_pin, LOW);
+	#endif
+	
 	if(pix_type == PRO){
-		delay(3);
+		yield();
+		delayMicroseconds(1750);		
 	}
 	else{
 		delay(7);
 	}
+	
+	yield();
 }
 
 /**************************************************************************/
