@@ -1,4 +1,4 @@
-# Getting Started with PIXIE
+# Getting Started with PIXIE and PIXIE PRO
 
 ![PIXIE](https://i.imgur.com/rmpfoyw.jpg)
 
@@ -8,7 +8,7 @@
 
 ## Microcontroller
 
-Any AVR/Arduino or ESP8266/32/derivative microcontroller can be used to control Pixie displays. There is a Pixie library available for the Arduino IDE:
+Any AVR/Arduino, ESP8266/32/derivative, or SAMD microcontroller can be used to control Pixie displays. There is a Pixie library available for the Arduino IDE:
 
 ### Installing the Pixie Library
 
@@ -34,7 +34,7 @@ When finished, an example folder structure for Windows should be:
 
 The on-board ATTINY45 is nominally powered with 5 volts DC to maintain the 16MHz clock. If you have a 3V3-logic microcontroller (ESP8266/32), you may or may not have to use [a level shifter](https://www.adafruit.com/product/1787). However, I have successfully run Pixies off of a 3.3V Wemos D1 Mini (ESP8266 controller) without needing a level shifter - even with the ATTINY45 powered by the 5 volt line.
 
-A potential workaround is underpowering the Pixies with a 3.3V power line, but this will only be 66% of the brightness 5V power provides.
+A potential workaround is underpowering the Pixies with a 3.3V power line, but this will only be 66% of the brightness 5V power provides, and *may* destabilize the 16MHz internal oscillator.
 
 #### Full Brightness
 
@@ -68,10 +68,10 @@ If you have 4 or more displays in the chain, I recommend connecting *BOTH* ends 
 Once you've installed the Pixie library, go ahead and try this example code to make sure everything is working:
 
     #include "Pixie.h"
-    #define NUM_PIXIES  6                     // PCBs, not matrices
-    #define CLK_PIN     14                    // Any digital pin
-    #define DATA_PIN    12                    // Any digital pin
-    Pixie pix(NUM_PIXIES, CLK_PIN, DATA_PIN); // Set up display buffer
+    #define NUM_PIXIES  6                          // PCBs, not matrices
+    #define CLK_PIN     14                         // Any digital pin
+    #define DATA_PIN    12                         // Any digital pin
+    Pixie pix(NUM_PIXIES, CLK_PIN, DATA_PIN, PRO); // Set up display buffer
     
     void setup() {
       pix.begin(); // Init display drivers
@@ -82,9 +82,17 @@ Once you've installed the Pixie library, go ahead and try this example code to m
       pix.push( millis()/1000.0, 2 ); // Show floating-point number to two decimal places (hundredths of a second)
       pix.show();
     }
-    
+
+**NOTE: If you're not using a Pixie Pro, you don't need the "PRO" in *Pixie pix();***
+
 Change the **NUM_PIXIES** variable to match the number of Pixie PCBs you have wired up. When uploaded, you should see the seconds since boot (with hundreths) on your Pixies!
 
 ## Moving Forward
+
+Once again, if you're using a ***Pixie Pro***, the **Pixie pix(NUM_PIXIES, CLK_PIN, DATA_PIN)** constructor *needs* a "PRO" at the end in all code uploaded, like so:
+    
+    Pixie pix(NUM_PIXIES, CLK_PIN, DATA_PIN, PRO); <-- HERE
+
+Otherwise, the data will be sent out in a way that Pixie Pro does not recognize, and your image will be distorted!
 
 From here, I suggest trying out the other examples included with the Pixie library, as it covers many of the neat writing and bitmap functions that Pixie is capable of!
